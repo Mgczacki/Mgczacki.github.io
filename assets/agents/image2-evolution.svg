@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 310">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+  </defs>
+
+  <!-- Timeline line -->
+  <line x1="50" y1="115" x2="610" y2="115" stroke="#e5e5e5" stroke-width="2"/>
+
+  <!-- Stage 1: Bespoke LLM -->
+  <circle cx="100" cy="115" r="6" fill="#111"/>
+  <!-- Icon: single box -->
+  <rect x="72" y="42" width="56" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="100" y="65" text-anchor="middle" font-size="11" font-weight="600" fill="#111">LLM</text>
+  <line x1="56" y1="60" x2="68" y2="60" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <!-- Label -->
+  <text x="100" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Bespoke</text>
+  <text x="100" y="156" text-anchor="middle" font-size="10" fill="#666">Manual prompts</text>
+
+  <!-- Stage 2: Workflows -->
+  <circle cx="270" cy="115" r="6" fill="#111"/>
+  <!-- Icon: state machine (3 small boxes connected) -->
+  <rect x="237" y="42" width="30" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <rect x="275" y="32" width="30" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <rect x="275" y="58" width="30" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <line x1="267" y1="50" x2="275" y2="43" stroke="#111" stroke-width="1"/>
+  <line x1="267" y1="58" x2="275" y2="65" stroke="#111" stroke-width="1"/>
+  <line x1="290" y1="54" x2="290" y2="58" stroke="#111" stroke-width="1"/>
+  <text x="270" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Workflows</text>
+  <text x="270" y="156" text-anchor="middle" font-size="10" fill="#666">State machines</text>
+
+  <!-- Stage 3: Agentic routing -->
+  <circle cx="440" cy="115" r="6" fill="#111"/>
+  <!-- Icon: agent with branching tool calls -->
+  <rect x="418" y="38" width="44" height="28" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="440" y="57" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Agent</text>
+  <line x1="425" y1="66" x2="415" y2="78" stroke="#111" stroke-width="1.2"/>
+  <line x1="440" y1="66" x2="440" y2="80" stroke="#111" stroke-width="1.2"/>
+  <line x1="455" y1="66" x2="465" y2="78" stroke="#111" stroke-width="1.2"/>
+  <circle cx="415" cy="82" r="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <circle cx="440" cy="84" r="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <circle cx="465" cy="82" r="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="440" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Agentic Routing</text>
+  <text x="440" y="156" text-anchor="middle" font-size="10" fill="#666">Dynamic tools</text>
+
+  <!-- Stage 4: Subagent delegation -->
+  <circle cx="600" cy="115" r="6" fill="#111"/>
+  <!-- Icon: tree of agents -->
+  <rect x="582" y="30" width="36" height="22" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="600" y="45" text-anchor="middle" font-size="8" font-weight="600" fill="#111">A</text>
+  <line x1="592" y1="52" x2="580" y2="62" stroke="#111" stroke-width="1.2"/>
+  <line x1="608" y1="52" x2="620" y2="62" stroke="#111" stroke-width="1.2"/>
+  <rect x="564" y="64" width="32" height="18" rx="3" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <rect x="604" y="64" width="32" height="18" rx="3" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <text x="580" y="77" text-anchor="middle" font-size="7" fill="#111">A1</text>
+  <text x="620" y="77" text-anchor="middle" font-size="7" fill="#111">A2</text>
+  <text x="600" y="142" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Subagents</text>
+  <text x="600" y="156" text-anchor="middle" font-size="10" fill="#666">Hierarchical</text>
+
+  <!-- Connecting arrows between stages -->
+  <line x1="128" y1="115" x2="244" y2="115" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="298" y1="115" x2="414" y2="115" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="468" y1="115" x2="574" y2="115" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Three fundamental questions -->
+  <line x1="100" y1="185" x2="600" y2="185" stroke="#e5e5e5" stroke-width="1"/>
+
+  <text x="140" y="210" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Partition of work</text>
+  <text x="140" y="224" text-anchor="middle" font-size="10" fill="#666">Who does what?</text>
+
+  <text x="340" y="210" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Partition of responsibility</text>
+  <text x="340" y="224" text-anchor="middle" font-size="10" fill="#666">Who is accountable?</text>
+
+  <text x="540" y="210" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Partition of knowledge</text>
+  <text x="540" y="224" text-anchor="middle" font-size="10" fill="#666">Who knows what?</text>
+
+  <!-- Question mark indicators -->
+  <text x="140" y="250" text-anchor="middle" font-size="18" fill="#e5e5e5" font-weight="300">?</text>
+  <text x="340" y="250" text-anchor="middle" font-size="18" fill="#e5e5e5" font-weight="300">?</text>
+  <text x="540" y="250" text-anchor="middle" font-size="18" fill="#e5e5e5" font-weight="300">?</text>
+</svg>

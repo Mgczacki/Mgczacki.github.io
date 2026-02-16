@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 300">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+  </defs>
+
+  <!-- LEFT: Context Window (scratchpad) -->
+  <!-- Notepad shape -->
+  <rect x="40" y="40" width="180" height="160" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <!-- Spiral binding dots -->
+  <circle cx="55" cy="55" r="3" fill="#e5e5e5"/>
+  <circle cx="55" cy="75" r="3" fill="#e5e5e5"/>
+  <circle cx="55" cy="95" r="3" fill="#e5e5e5"/>
+  <circle cx="55" cy="115" r="3" fill="#e5e5e5"/>
+  <circle cx="55" cy="135" r="3" fill="#e5e5e5"/>
+  <circle cx="55" cy="155" r="3" fill="#e5e5e5"/>
+  <circle cx="55" cy="175" r="3" fill="#e5e5e5"/>
+  <!-- Lines (token stream representation) -->
+  <line x1="72" y1="58" x2="200" y2="58" stroke="#e5e5e5" stroke-width="1"/>
+  <line x1="72" y1="78" x2="195" y2="78" stroke="#e5e5e5" stroke-width="1"/>
+  <line x1="72" y1="98" x2="180" y2="98" stroke="#e5e5e5" stroke-width="1"/>
+  <line x1="72" y1="118" x2="202" y2="118" stroke="#e5e5e5" stroke-width="1"/>
+  <line x1="72" y1="138" x2="170" y2="138" stroke="#e5e5e5" stroke-width="1"/>
+  <line x1="72" y1="158" x2="190" y2="158" stroke="#e5e5e5" stroke-width="1"/>
+  <line x1="72" y1="178" x2="160" y2="178" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- Label -->
+  <text x="130" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Context Window</text>
+  <text x="130" y="242" text-anchor="middle" font-size="11" fill="#666">Ephemeral scratchpad</text>
+  <text x="130" y="258" text-anchor="middle" font-size="11" fill="#666">Linear token stream</text>
+
+  <!-- CENTER: Not-equal symbol -->
+  <text x="330" y="130" text-anchor="middle" font-size="42" font-weight="300" fill="#111">≠</text>
+
+  <!-- Bidirectional "Tools" arrows -->
+  <line x1="245" y1="110" x2="290" y2="110" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="415" y1="110" x2="370" y2="110" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="268" y="100" font-size="9" fill="#666">Tools</text>
+  <text x="390" y="100" font-size="9" fill="#666">Tools</text>
+
+  <!-- RIGHT: State (structured) -->
+  <!-- Structured object: connected boxes -->
+  <rect x="440" y="42" width="80" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="480" y="65" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Schema</text>
+
+  <rect x="540" y="42" width="80" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="580" y="65" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Config</text>
+
+  <rect x="440" y="100" width="80" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="480" y="123" text-anchor="middle" font-size="9" font-weight="600" fill="#111">KG Node</text>
+
+  <rect x="540" y="100" width="80" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="580" y="123" text-anchor="middle" font-size="9" font-weight="600" fill="#111">DB Table</text>
+
+  <rect x="490" y="158" width="80" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="530" y="181" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Index</text>
+
+  <!-- Connection lines between state boxes -->
+  <line x1="520" y1="60" x2="540" y2="60" stroke="#111" stroke-width="1"/>
+  <line x1="480" y1="78" x2="480" y2="100" stroke="#111" stroke-width="1"/>
+  <line x1="580" y1="78" x2="580" y2="100" stroke="#111" stroke-width="1"/>
+  <line x1="520" y1="118" x2="540" y2="118" stroke="#111" stroke-width="1"/>
+  <line x1="500" y1="136" x2="510" y2="158" stroke="#111" stroke-width="1"/>
+  <line x1="560" y1="136" x2="550" y2="158" stroke="#111" stroke-width="1"/>
+
+  <!-- Label -->
+  <text x="530" y="225" text-anchor="middle" font-size="13" font-weight="700" fill="#111">State</text>
+  <text x="530" y="242" text-anchor="middle" font-size="11" fill="#666">Persistent, structured</text>
+  <text x="530" y="258" text-anchor="middle" font-size="11" fill="#666">Classes, graphs, databases</text>
+</svg>

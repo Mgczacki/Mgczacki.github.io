@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 370">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+
+  <!-- Funnel shape (three trapezoid sections) -->
+
+  <!-- Level 1: ls — wide (see everything) -->
+  <polygon points="80,30 580,30 530,110 130,110" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
+  <!-- Document icons -->
+  <rect x="185" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <rect x="220" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <rect x="255" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <rect x="290" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <rect x="325" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <rect x="360" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <rect x="395" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <rect x="430" y="48" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1"/>
+  <!-- Command label -->
+  <text x="330" y="97" text-anchor="middle" font-size="14" font-weight="700" fill="#111" font-family="'SF Mono',Monaco,monospace">ls</text>
+
+  <!-- Level 2: grep — medium (search for relevance) -->
+  <polygon points="130,120 530,120 480,200 180,200" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
+  <!-- Fewer documents, some highlighted -->
+  <rect x="260" y="138" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <rect x="305" y="138" width="20" height="26" rx="2" fill="#111" stroke="#111" stroke-width="1.5"/>
+  <rect x="350" y="138" width="20" height="26" rx="2" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <rect x="395" y="138" width="20" height="26" rx="2" fill="#111" stroke="#111" stroke-width="1.5"/>
+  <text x="330" y="187" text-anchor="middle" font-size="14" font-weight="700" fill="#111" font-family="'SF Mono',Monaco,monospace">grep</text>
+
+  <!-- Level 3: cat — narrow (read the detail) -->
+  <polygon points="180,210 480,210 430,290 230,290" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
+  <!-- Single detailed document -->
+  <rect x="300" y="225" width="30" height="38" rx="3" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <line x1="306" y1="234" x2="324" y2="234" stroke="#111" stroke-width="0.8"/>
+  <line x1="306" y1="240" x2="322" y2="240" stroke="#111" stroke-width="0.8"/>
+  <line x1="306" y1="246" x2="320" y2="246" stroke="#111" stroke-width="0.8"/>
+  <line x1="306" y1="252" x2="318" y2="252" stroke="#111" stroke-width="0.8"/>
+  <text x="330" y="280" text-anchor="middle" font-size="14" font-weight="700" fill="#111" font-family="'SF Mono',Monaco,monospace">cat</text>
+
+  <!-- Right-side annotations -->
+  <text x="590" y="75" font-size="11" fill="#666">See what exists</text>
+  <text x="540" y="165" font-size="11" fill="#666">Search for relevance</text>
+  <text x="490" y="255" font-size="11" fill="#666">Read the detail</text>
+
+  <!-- Bottom label -->
+  <text x="330" y="330" text-anchor="middle" font-size="12" font-style="italic" fill="#999">Information narrows as relevance increases</text>
+
+  <!-- Downward arrow on left side -->
+  <line x1="100" y1="40" x2="100" y2="280" stroke="#e5e5e5" stroke-width="1.5"/>
+  <polygon points="94,278 106,278 100,290" fill="#e5e5e5"/>
+</svg>

@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured Agency | Mario Garrido</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --bg: #fff;
+            --bg-alt: #f7f7f7;
+            --text: #111;
+            --text-secondary: #333;
+            --text-muted: #666;
+            --text-faint: #999;
+            --border: #111;
+            --border-light: #e5e5e5;
+            --border-faint: #f0f0f0;
+            --accent: #000;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d0d0d;
+            --bg-alt: #1a1a1a;
+            --text: #f0f0f0;
+            --text-secondary: #d0d0d0;
+            --text-muted: #a0a0a0;
+            --text-faint: #606060;
+            --border: #404040;
+            --border-light: #2a2a2a;
+            --border-faint: #1f1f1f;
+            --accent: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .masthead {
+            padding: 48px 0 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .masthead-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .masthead-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+
+        .theme-toggle svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        [data-theme="dark"] .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .moon-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .sun-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .moon-icon {
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 60px 120px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 2px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .sidebar h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-faint);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 2px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 0;
+            transition: color 0.2s;
+            line-height: 1.4;
+        }
+
+        .sidebar a:hover {
+            color: var(--text);
+        }
+
+        .sidebar a.active {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .sidebar .subsection {
+            padding-left: 12px;
+            margin-top: 2px;
+        }
+
+        .sidebar .subsection a {
+            font-size: 12px;
+            color: var(--text-faint);
+        }
+
+        .sidebar .subsection a:hover {
+            color: var(--text-muted);
+        }
+
+        .content-wrapper {
+            min-width: 0;
+            max-width: 720px;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-faint);
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .meta {
+            color: var(--text-faint);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        #content {
+            background: transparent;
+        }
+
+        #content h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 48px 0 20px 0;
+            letter-spacing: -0.4px;
+            line-height: 1.25;
+            color: var(--text);
+        }
+
+        #content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 56px 0 20px 0;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+            padding-top: 8px;
+        }
+
+        #content h2:first-child {
+            margin-top: 0;
+        }
+
+        #content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 36px 0 16px 0;
+            color: var(--text);
+            letter-spacing: -0.2px;
+            line-height: 1.35;
+        }
+
+        #content h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 28px 0 12px 0;
+            color: var(--text);
+        }
+
+        #content h5 {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 24px 0 10px 0;
+            color: var(--text);
+        }
+
+        #content p {
+            margin-bottom: 1.5em;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        #content ul, #content ol {
+            margin-bottom: 1.5em;
+            padding-left: 24px;
+        }
+
+        #content li {
+            margin-bottom: 0.65em;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        #content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        #content code {
+            background: var(--bg-alt);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 14px;
+            color: var(--text);
+            border: 1px solid var(--border-faint);
+        }
+
+        #content pre {
+            background: var(--bg-alt);
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 1.5em;
+            border: 1px solid var(--border-light);
+        }
+
+        #content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-muted);
+            border: none;
+            font-size: 13px;
+        }
+
+        #content blockquote {
+            border-left: 2px solid var(--border-light);
+            padding-left: 20px;
+            margin: 1.5em 0;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        #content a {
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: underline;
+            text-decoration-color: var(--border-light);
+            transition: text-decoration-color 0.2s;
+        }
+
+        #content a:hover {
+            text-decoration-color: var(--text);
+        }
+
+        #content a.citation {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.88em;
+        }
+
+        #content a.citation:hover {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        #content details.counterpoints {
+            margin: 24px 0 32px;
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 0;
+            background: var(--bg-alt);
+        }
+
+        #content details.counterpoints summary {
+            cursor: pointer;
+            padding: 14px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--text-muted);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        #content details.counterpoints summary::-webkit-details-marker {
+            display: none;
+        }
+
+        #content details.counterpoints summary::before {
+            content: '▸';
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        #content details.counterpoints[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        #content details.counterpoints summary:hover {
+            color: var(--text);
+        }
+
+        #content details.counterpoints .counterpoints-body {
+            padding: 0 20px 20px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        #content details.counterpoints .counterpoints-body p {
+            font-size: 15px;
+            margin-bottom: 1em;
+        }
+
+        #content details.counterpoints .counterpoints-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        #content details.counterpoints .counterpoints-body .author-response {
+            margin-top: 16px;
+            padding-left: 16px;
+            border-left: 2px solid var(--border-light);
+        }
+
+        #content details.counterpoints .counterpoints-body .author-response p:first-child::before {
+            content: 'Author\27s note: ';
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        #content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 2em auto;
+        }
+
+        [data-theme="dark"] #content img {
+            filter: invert(1);
+        }
+
+        #content hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 48px 0;
+        }
+
+        #content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5em 0;
+            font-size: 15px;
+        }
+
+        #content table th {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-faint);
+            text-align: left;
+            padding: 0 12px 16px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        #content table td {
+            padding: 16px 12px 16px 0;
+            border-bottom: 1px solid var(--border-faint);
+            vertical-align: top;
+            color: var(--text-secondary);
+        }
+
+        #content table tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masthead-inner {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .container {
+                padding: 40px 24px 80px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            #content h2 {
+                font-size: 22px;
+            }
+
+            #content h3 {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-inner">
+            <a href="index.html" class="logo">Mario Garrido</a>
+            <div class="masthead-right">
+                <div class="nav-links">
+                    <a href="index.html#writings">Writings</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="cv.html">CV</a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Contents</h3>
+            <nav>
+                <ul>
+                    <li><a href="#introduction">1. Introduction</a>
+                        <ul class="subsection">
+                            <li><a href="#current-state">1.1 Current State</a></li>
+                            <li><a href="#evolution">1.2 Evolution</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#principles">2. Core Principles</a>
+                        <ul class="subsection">
+                            <li><a href="#structure">2.1 Structure</a></li>
+                            <li><a href="#minimize-context">2.2 Context Engineering</a></li>
+                            <li><a href="#unconstrained">2.3 Unconstrained Cost</a></li>
+                            <li><a href="#tradeoff">2.4 Flexibility-Reliability</a></li>
+                            <li><a href="#corollaries">2.5 Corollaries</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#taxonomy">3. Taxonomy of Structured Agents</a>
+                        <ul class="subsection">
+                            <li><a href="#agent-model">3.1 Agent Model</a></li>
+                            <li><a href="#actions">3.2 Actions</a></li>
+                            <li><a href="#information">3.3 Information Mgmt</a></li>
+                            <li><a href="#composition">3.4 Composition</a></li>
+                            <li><a href="#planning">3.5 Planning</a></li>
+                            <li><a href="#error-handling">3.6 Error Handling</a></li>
+                            <li><a href="#evaluation">3.7 Evaluation</a></li>
+                            <li><a href="#safety">3.8 Safety & Security</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#future">4. Open Questions</a></li>
+                    <li><a href="#conclusion">5. Conclusion</a></li>
+                    <li><a href="#appendix">Appendix</a></li>
+                    <li><a href="#references">References</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1>Structured Agency</h1>
+                <div class="meta">Mario Garrido • February 2026</div>
+            </div>
+
+            <div id="content"></div>
+        </div>
+    </div>
+
+    <script>
+        // Your whitepaper content in Markdown
+        const whitepaperMarkdown = `
+### On Building Reliable Agents
+
+<div style="background:#fff0f0; border:2px solid #c00; border-radius:6px; padding:16px 20px; margin:24px 0; color:#900; font-size:15px; line-height:1.6;">
+<strong>Work in Progress.</strong> This document contains many placeholders, unverified citations, and slop illustrations. Do not treat it as a finished or authoritative reference.
+</div>
+
+The principles behind reliable agents are not new. Constraint satisfaction, hierarchical decomposition, external validation, and progressive disclosure are well-understood across mathematics, cognitive science, optimization, and software engineering. What has been missing is a unified framework that connects these ideas into a coherent practice for building LLM-powered agents—one that explains not just *what* to do, but *why* each principle follows from the others, and *when* the tradeoffs justify the investment.
+
+This paper proposes **Structured Agency**: a framework for building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling. The agents that result are **structured agents**—systems that trade unconstrained flexibility for reliability, observability, and predictable behavior. The framework is grounded in three years of production experience building agents at [kuona.ai](https://kuona.ai), informed by industry analysis, and organized as a dependency chain of principles where each builds on the last. The naming and formalism are my own and evolve over time.
+
+---
+
+## 1. Introduction
+
+### 1.1 The Current State of Agents
+
+Recent developments in agentic systems (from papers like Recursive Language Models [6] to products like Claude Code [7]) have converged on a key insight:
+
+**Agents thrive with reliable, small-scoped tools which are composable** [1][2][3][4].
+
+The UNIX design philosophy aligns remarkably well with this principle [5]. Tools like \`grep\`, \`cat\`, and \`sed\` have become commonplace in the most capable agents—not by accident, but because they embody:
+- Single responsibility
+- Composability
+- Predictable behavior
+- Simple interfaces
+
+### 1.2 Evolution of Agentic Workflows
+
+![Evolution Timeline](assets/agents/image2-evolution.svg)
+
+The evolution of agentic capabilities has progressed alongside model improvements [3][8][9][10]:
+
+1. **Bespoke tasks with LLMs** → Handcrafted prompts with manual routing
+2. **Workflows with state machines** → Deterministic transitions between states
+3. **Agentic routing** → Dynamic decision-making with tools
+4. **Subagent delegation** → Hierarchical task decomposition
+
+This progression reveals three fundamental questions that any agentic system must answer:
+
+- **Partition of work**: Who does what work?
+- **Partition of responsibilities**: Who is accountable for what outcomes?
+- **Partition of knowledge**: Who knows what context?
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>The "small, composable tools" thesis is not without criticism. Research suggests that tool overload—having too many fine-grained tools—can increase decision friction and hurt selection accuracy [68][69]. LlamaIndex (2024) notes that fine-grained decomposition creates an increased burden on less-capable models [70]. The UNIX "do one thing well" metaphor may not map cleanly to LLM tool selection, where the cost of choosing between many similar tools can outweigh the benefits of composability.</p>
+<div class="author-response">
+<p>My early experiments agree with these findings, but three mitigations exist: (1) formal plan validation with retries catches tool-selection errors before they propagate, (2) searching over the tool space with a dedicated meta-tool and progressive disclosure reduces the effective choice set, and (3) in most production systems the tool count is bounded by the use case—these issues are buildable-around. Recent model generations are also increasingly capable at tool selection, making this less of a concern over time.</p>
+</div>
+</div>
+</details>
+
+---
+
+## 2. Core Principles
+
+The following principles are not independent—they form a dependency chain rooted in the idea that **structure is the fundamental enabler** of reliable agents. Together, they constitute the core of structured agency: a framework for building harnesses that make agents reliably capable.
+
+![Principle Dependency Graph](assets/agents/image1-principle-graph.svg)
+
+### 2.1 Structure Reduces Problem Space
+
+**Principle**: Constraints enable better performance, not worse [11][12][13].
+
+This is the foundational principle from which most others follow. Constraints:
+1. Enable validation signals (checkable boundaries)
+2. Reduce problem spaces (fewer paths to explore)
+3. Improve computational economy (less work per step) [14]
+4. Prevent error propagation between tasks (isolation)
+
+#### 2.1.1 External Validation Signals
+
+Once a system is structured, its boundaries become checkable—which is what enables external validation.
+
+**Principle**: Validation must come from outside the reasoning system itself [17][18].
+
+**Examples**:
+- Code linting and compilation
+- Rule-tracking systems
+- Formal plan verification [19]
+- World-model validation
+- External test suites
+
+**Why this matters**: Validation signals allow agents to course-correct [20]. Crucially, these constraints should stem from mechanisms OUTSIDE the agent to form genuine boundaries.
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>Recent work challenges the strict necessity of external validation. Kumar et al. [21] achieve significant gains on MATH benchmarks through self-correction via reinforcement learning without external feedback. Intrinsic self-critique methods [73] have achieved strong results on planning benchmarks without external verifiers. However, the consensus remains that external feedback is more reliable for production systems [17][18].</p>
+<div class="author-response">
+<p>This is true, but the economy of agents favors external validation. For many problems, validation is cheaper than inference—external systems (compilers, linters, test suites, rule engines) can verify correctness at a fraction of the cost of having the model self-assess. When validation is cheap and inference is expensive, it generally pays to delegate the checking to purpose-built external mechanisms.</p>
+</div>
+</div>
+</details>
+
+#### 2.1.2 Tools Enable Hierarchical Reasoning
+
+Structure, concretely applied, takes the form of tools—pre-built abstractions that encapsulate solved problems [22][23].
+
+**Principle**: Delegate reasoning to higher-level abstractions through tools.
+
+Even when a model *could* solve a task without tools, well-designed tools provide:
+1. **Hierarchical reasoning** → No need to redo solved problems
+2. **Predictable outputs** → Pre-validated, well-understood behavior
+3. **Battle-tested reliability** → Hardened by previous use cases
+
+#### 2.1.3 Delegation Through Constraint
+
+Structure also enables splitting work across agents [3][24]. Without clear boundaries, delegation devolves into ambiguity.
+
+With constraint comes the ability to delegate effectively:
+- Split tasks into parts
+- Assign to different agents with specific directives
+- Provide each agent with appropriate tools and contexts
+- Compose small, focused components
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>Tam et al. [15] show that strict format constraints can degrade LLM reasoning performance—models forced into rigid output schemas sometimes sacrifice accuracy. Park et al. [16] demonstrate that grammar-constrained decoding distorts probability distributions. Banerjee et al. [71] propose alternating constrained and unconstrained generation as a middle path. More broadly, the Bitter Lesson argument [72] suggests that hand-crafted structure will eventually be superseded by scaling compute and data.</p>
+<div class="author-response">
+<p>I have empirically verified that strict format constraints degrade reasoning in standard LLMs. However, reasoning models and inference-time scaling have in my view largely solved this issue—the performance penalty from structured output has shrunk significantly with recent model generations. As for the Bitter Lesson: I concede that hand-crafted structure may eventually be superseded by pure scaling, but interfacing with existing systems (APIs, databases, file systems) and real-world verifiability constraints makes structure a practical necessity for purpose-built production agents today.</p>
+</div>
+</div>
+</details>
+
+### 2.2 Context Engineering
+
+Structure tells you what's relevant and what isn't—which leads to the operational principle of deliberately managing what enters the context window.
+
+The field has converged on the term **context engineering** [30] to describe this practice: the discipline of designing the full informational environment an agent operates within—not just what's in the prompt, but what's retrieved, when it's loaded, how it's structured, and what's excluded. Context engineering subsumes prompt engineering the same way software architecture subsumes writing functions.
+
+**Principle**: The context window is the agent's working memory. Structure it deliberately [25][26][27][28].
+
+This is where the structure principle (Section 2.1) becomes operational. Structure tells you what information is relevant for a given task, which boundaries separate concerns, and which contexts belong to which agents. Without structure, context engineering degenerates into guesswork—stuffing tokens and hoping the model finds what it needs.
+
+**What context engineering controls**:
+- **Selection** → What information enters the context window (and what doesn't)
+- **Ordering** → How information is sequenced (recency, relevance, dependency)
+- **Representation** → How information is formatted (raw text, summaries, structured schemas)
+- **Timing** → When information is loaded (upfront, on-demand, forced)
+
+Research consistently shows that context quality matters more than context quantity. Irrelevant context actively degrades performance [26], length alone hurts even with perfect retrieval [27], and models exhibit predictable attention patterns that structured context can exploit [25].
+
+#### 2.2.1 Progressive Disclosure
+
+The primary mechanism for effective context engineering: don't load everything upfront—reveal information incrementally as needed [31][32].
+
+**Principle**: Reveal information incrementally as needed.
+
+This prevents context overload while maintaining access to necessary information. The parallel to cognitive science is striking: Miller's "Magical Number Seven" [33] and Baddeley's working memory model [34] both suggest that human cognition benefits from bounded information flow. Packer et al. [35] explore analogous memory management for LLMs in MemGPT.
+
+Progressive disclosure is not the same as minimizing context. Sometimes the right context engineering decision is to load *more*—context stuffing remains highly effective when the corpus fits and is relevant. Progressive disclosure is the general pattern; context stuffing is the trivial special case where everything fits and everything is relevant.
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>Long-context models consistently outperform RAG in average performance when sufficient compute is available [29]. Databricks (2024) shows that corpora under 2M tokens can be fed directly without retrieval. This suggests that aggressive context minimization is often counterproductive—more context, properly structured, yields better results than aggressive filtering. The real skill is knowing what to include, not how little you can get away with.</p>
+<div class="author-response">
+<p>I agree, and in practice I usually favor maximizing recall over token efficiency. But this is exactly why I frame the principle as context *engineering* rather than context *minimization*. The goal is deliberate structure, not minimal tokens. When everything fits, load everything. When it doesn't—which is the common case for agents operating over large codebases, document corpora, or multi-session histories—progressive disclosure provides the mechanism for deciding what to load and when. The principle is about intentionality, not austerity.</p>
+</div>
+</div>
+</details>
+
+### 2.3 The Cost of Unconstrained Systems
+
+What happens when you ignore structure? A fully unconstrained agent (no structure, no verification, no premade tools, no limitations) *might* solve a problem, but at what cost? To reason about this clearly, it helps to think in terms of two competing cost functions.
+
+#### The Two Cost Functions
+
+Every agentic system implicitly makes a tradeoff between two costs:
+
+**Cost of Structure (C_s)**: The upfront and ongoing investment in constraints.
+- **Design cost** → Engineering time to define tools, schemas, validation rules
+- **Maintenance cost** → Keeping structure updated as requirements evolve
+- **Flexibility cost** → Tasks that don't fit the structure require workarounds
+- **Runtime overhead** → Validation checks, schema enforcement, plan verification
+
+**Cost of Failure (C_f)**: The expected cost when things go wrong.
+- **Direct cost** → Wasted tokens, API calls, compute on failed paths
+- **Recovery cost** → Replanning, rollback, state repair, human intervention
+- **Propagation cost** → Downstream errors caused by upstream failures
+- **Irreversibility cost** → Actions that cannot be undone (emails sent, data deleted, state corrupted)
+
+Structure is economically justified when the reduction in expected failure cost exceeds the cost of imposing it: **C_s < ΔC_f × P(failure)**. This is the economic argument for why structure motivates the rest of this paper.
+
+#### Error Compounding in Multi-Step Tasks
+
+The most powerful argument for structure is probabilistic. In a multi-step task, per-step reliability compounds multiplicatively:
+
+| Per-step success rate | 5 steps | 10 steps | 20 steps |
+|----------------------|---------|----------|----------|
+| 90% (no structure)   | 59%     | 35%      | 12%      |
+| 95% (light structure)| 77%     | 60%      | 36%      |
+| 99% (heavy structure)| 95%     | 90%      | 82%      |
+
+A 5-percentage-point improvement in per-step reliability (90% → 95%) nearly doubles the success rate over 10 steps. This is why structure matters most for long-horizon tasks—even small reliability gains at each step have dramatic compound effects.
+
+**Corollary**: The longer the task horizon, the more structure is justified, because the compounding penalty for per-step unreliability grows exponentially. This also connects to the redundancy principle (Section 2.5.1): having multiple paths to success at each step is one mechanism for increasing per-step reliability.
+
+#### The Validation Cost Asymmetry
+
+A key economic property of agentic systems: **validation is almost always cheaper than inference**.
+
+| Operation | Token cost | Latency | Reliability |
+|-----------|-----------|---------|-------------|
+| Compiler check | 0 tokens | ~ms | Deterministic |
+| Linter/formatter | 0 tokens | ~ms | Deterministic |
+| Test suite | 0 tokens | ~seconds | Deterministic |
+| Schema validation | 0 tokens | ~ms | Deterministic |
+| Model self-assessment | 100s–1000s tokens | ~seconds | Probabilistic |
+| Model re-reasoning | 1000s+ tokens | ~seconds | Probabilistic |
+
+When external validation is available, it dominates self-assessment on every dimension: cheaper, faster, and more reliable. This asymmetry is what makes the external validation principle (Section 2.1.1) not just theoretically sound but economically compelling—delegating verification to purpose-built external mechanisms is almost always the right trade.
+
+#### When Structure Doesn't Pay
+
+Structure is not always justified. The cost model identifies conditions where flexibility wins:
+
+1. **One-off tasks** → C_s cannot be amortized across multiple executions
+2. **High novelty** → The task space is too unpredictable to constrain usefully
+3. **Cheap failure** → C_f is low (reversible actions, no downstream consequences, low token cost)
+4. **Rapidly evolving domains** → Maintenance cost of structure exceeds its benefits
+
+This connects directly to the Flexibility-Reliability Tradeoff (Section 2.4): the maturity curve is really a curve of amortized structure cost declining as task frequency and predictability increase.
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>The compounding reliability argument assumes step independence—that per-step success rates are uncorrelated. In practice, failures often cluster: a single misunderstanding early in a task can cascade into correlated failures across all subsequent steps, making the effective compounding worse than the independent model predicts. Conversely, agents that self-correct can exhibit positive correlation where early successes build context that improves later steps. The simple multiplicative model is useful as a mental framework but may over- or underestimate actual failure rates depending on the domain.</p>
+<div class="author-response">
+<p>Agreed. The table is a simplification—real tasks have correlated steps. The point is directional: per-step reliability improvements have outsized effects on long-horizon outcomes, and the independent model provides a useful lower bound for reasoning about where to invest in structure. In my experience, the clustering effect makes the case for structure stronger, not weaker—a single structural guardrail at the right choke point can break a failure cascade that would otherwise propagate across many steps.</p>
+</div>
+</div>
+</details>
+
+### 2.4 The Flexibility-Reliability Tradeoff
+
+![Flexibility-Reliability Tradeoff](assets/agents/image3-flexibility-reliability.svg)
+
+Any process an agent works on exists on a maturity curve [3][36][37]:
+
+- **One-off tasks** → Require flexibility and exploration
+- **Mature processes** → Benefit from rigidity, predictability, and structure
+
+While some agents work well as completely flexible, **reliability and low latency come from structure**. Agents built with these structural harnesses—structured agents—occupy the upper-right of this space: high flexibility through LLM reasoning, high reliability through external constraints.
+
+**Key insight**: Even with increased agentic capabilities, reducing the problem space and "degrees of freedom" leads to reduced latencies and improved reliability. The structured agency approach is fundamentally about moving agents upward on this chart by adding harnesses rather than restricting what they can do.
+
+### 2.5 Practical Corollaries
+
+#### 2.5.1 Redundancy is a Feature
+
+**Principle**: Have multiple ways to accomplish the same thing [38][39][40].
+
+**Rationale**: From a probabilistic argument, having multiple paths to success increases the likelihood of task completion. Relying on a single tool (unless it's ubiquitous) creates fragile systems.
+
+**Examples**:
+- Multiple retrieval mechanisms (grep, semantic search, full-text search)
+- Multiple communication channels
+- Fallback tools when primary tools fail
+
+#### 2.5.2 Testing Becomes Integration Testing
+
+With this framework, **agentic testing is inherently integration testing** [41][42].
+
+You're not just testing individual components, but:
+- Tool interactions
+- State updates
+- Context retrieval
+- Subagent coordination
+- Validation signals
+
+---
+
+## 3. Taxonomy of Structured Agents
+
+The structured agency framework decomposes agents into a set of concerns—each representing a surface where harnesses can be applied. This taxonomy describes those surfaces.
+
+### 3.1 The Agent Model
+
+![Agent Architecture](assets/agents/image8-agent-architecture.svg)
+
+Borrowing from the reinforcement learning framework [43], and informed by recent surveys on LLM-based autonomous agents [44], we define the following components.
+
+#### Invocation
+
+**Definition**: The period from when an agent "starts up" until it "dies" and stops performing actions.
+
+An agent may persist across multiple invocations with the same state. Each invocation provides specific settings:
+- **Allowed tools** → What actions are permitted
+- **Initial context** → What information to load
+- **Directives** → What goals to pursue
+
+**Implementation note**: Whether each user input triggers a new invocation (daemon shuts down) or the agent persists across inputs is an implementation detail. The key is distinguishing between invocations and mere instruction reception.
+
+#### Agent
+
+**Definition**: An organism that observes the world through actions and builds an internal state representation.
+
+For most current "agentic" systems, this is modeled through LLMs or derived technologies.
+
+#### Context Window
+
+**Definition**: The working space of a given model for observing its state. Exists as a stream of tokens.
+
+**Best practice**: Treat the context window as a **scratchpad**, not permanent storage [33][34][35].
+
+- Don't depend on it for long-term memory
+- Successive invocations should preserve only relevant information (through pruning or compression)
+- Supplement with forced tool use and external contexts
+
+**Critical distinction**: The context window is NOT the agent's state—it's merely a working memory [45].
+
+#### State
+
+![Context Window vs. State](assets/agents/image4-context-vs-state.svg)
+
+**Definition**: The internal understanding an agent has of the world.
+
+**Key properties**:
+- Updated through actions (tool calls)
+- Measured and modified by tools
+- Tools can be seen as part of state
+- **State is NOT the context window**
+- **State is NOT a string**
+- **State is structured** (e.g., class instances, databases, knowledge graphs)
+
+**Benefits of structured state**:
+- Enables validation signals
+- Tools operate directly on state (reducing task complexity)
+- Type safety and constraints
+- Clear interfaces
+
+![State Anatomy](assets/agents/image9-state-anatomy.svg)
+
+### 3.2 Actions
+
+#### Tools
+
+**Definition**: Actions an agent performs on the world or its state.
+
+**Categories** [1][2]:
+1. **Bespoke tools** → Hardcoded by developers for specific use cases
+2. **MCP servers** [46] → Collections of tools from remote endpoints
+3. **Coding-model functions** → Libraries like pandas, scikit-learn, matplotlib
+4. **CLI utilities** → Unix tools like grep, cat, sed
+
+**How tools interact with state**:
+- Tools observe the world, state, or both
+- Tools write to state
+- Tools affect the external world
+- Tool arguments reference state (e.g., \`read(document_name)\` not \`read(document_content)\`)
+
+**Analogy**: In LISP and similar languages, code is data. In coding agents, **tools are a special case of state** (they're often code that can be edited).
+
+![Tool Anatomy](assets/agents/image7-tool-anatomy.svg)
+
+##### Best Practices for Tool Design
+
+1. **Multi-level descriptions**
+   - Short description (like Unix tool summary)
+   - Detailed documentation (like man pages)
+
+2. **Usage examples**
+   - Show common patterns
+   - Demonstrate edge cases
+
+3. **Validators**
+   - Check preconditions (e.g., document exists before editing)
+   - Verify inputs match expected types/formats
+
+4. **Introspective errors**
+   - Provide actionable feedback
+   - Example: "Query on field 'X' failed: field 'Y' does not exist in schema. Available fields: [...]"
+
+#### Forced Tool Use
+
+**Definition**: Forcing or injecting simulated tool uses into the agent's context window upon certain actions [7][47].
+
+**Examples**:
+- Claude Code reads a file when users mention it with \`@\` syntax
+- Calling \`get_current_tasks()\` before the LLM runs
+- Running \`get_incoming_messages()\` after every LLM handoff to check for user/system messages
+
+**Note**: While this could be seen as hooks that run before actions, empirically there is significant value in treating these as injected tool calls rather than separate mechanisms.
+
+**Why this works**: It leverages the agent's existing tool-use reasoning capabilities while ensuring critical operations always occur.
+
+#### Communication
+
+**Principle**: Treat communication as a tool.
+
+Communication with users, other agents, or external systems should follow the same patterns as other tools:
+- Well-defined interfaces
+- Validation of inputs/outputs
+- Observable effects on state
+
+### 3.3 Information Management
+
+Section 2.2 established context engineering as a principle—the *why*. This section provides the taxonomy—the *what*: the concrete primitives that context engineering operates on.
+
+#### Contexts
+
+**Definition**: Addressable blocks of information (text) that may or may not exist in the agent's working memory.
+
+**Key properties**:
+- **Addressable** → Can be referenced by name/ID
+- **Selective loading** → Different tasks access different contexts
+- **Scoped access** → Contexts may be task-specific or shared
+
+##### Examples of Contexts
+
+| Context | Description | Properties |
+|---------|-------------|------------|
+| Session Context | Log of session actions | Partially structured (messages + timestamps) |
+| Company Documents | Documents owned by Company X | Pre-indexed as knowledge graph |
+| Subagent Log | Record of subagent actions | Read-only, time-bounded |
+| Memories | Long-term memory store | Read-write, persistent |
+
+**Context variations**:
+- Text-only vs. enriched/searchable
+- Read-only vs. read-write
+- Agent-specific vs. shared
+
+**Why contexts deserve special attention**: Contexts are the lifeblood of agentic applications, but different systems handle them differently:
+- **Claude Code** → Greps over files (filesystem as context)
+- **Cursor** → Maintains code index with semantic search
+- **Recursive Language Models** → Maintains prompt as context (string)
+
+#### Progressive Disclosure in Practice
+
+![Progressive Disclosure Funnel](assets/agents/image5-progressive-disclosure.svg)
+
+**The chicken-and-egg problem**: How do you know what to read from a context without knowing what's inside?
+
+**Solution**: Provide summarized versions or metadata before full context retrieval.
+
+**Example flow**:
+1. Tool provides high-level summary of available contexts
+2. Agent decides which contexts are relevant
+3. Agent searches specific contexts
+4. Agent retrieves detailed information
+
+**Analogy**: Like file system commands:
+- \`ls\` → See what's available (progressive disclosure)
+- \`grep\` → Search specific files
+- \`cat\` → Read full contents
+
+#### Forced Contexts
+
+**Definition**: Automatically loading entire contexts into working memory when appropriate.
+
+This is a specific case combining:
+- Progressive disclosure
+- Forced tool use
+
+**When to use**:
+- Context is small enough to fit in working memory
+- Context is highly relevant to the task (e.g., editing a file → load the file)
+- Cost of loading is lower than cost of multiple queries
+
+**Note**: This is "context stuffing" from pre-RAG LLM systems, but it remains highly effective for the right problem sets.
+
+#### Retrieval Mechanisms (RAG, GraphRAG, grep, etc.)
+
+**Principle**: All retrieval mechanisms are context access patterns.
+
+RAG [48] pioneered the pattern of augmenting generation with retrieved documents. GraphRAG [49] extends this by constructing knowledge graphs over corpora for more structured retrieval.
+
+[**TODO**: Complete this section explaining how different retrieval mechanisms (RAG, semantic search, grep, GraphRAG) are different strategies for accessing contexts, each with tradeoffs in precision, recall, latency, and setup cost.]
+
+### 3.4 Composition
+
+#### Subagents
+
+![Subagent vs. Multiagent Topology](assets/agents/image6-subagent-topology.svg)
+
+**Definition**: An agent invoked by another agent (via a tool) that has its own context access, directives, and tools [24][51].
+
+**State sharing**: May be partial or complete with the invoking agent.
+
+##### Subagents vs. Multiagent Systems
+
+| Aspect | Subagents | Multiagent |
+|--------|-----------|------------|
+| Lifetime | Invoked for specific purpose, dies when done | Independent lifetimes |
+| Relationship | Parent-child hierarchy | Peer-to-peer |
+| State sharing | Easy (by design) | Complex (requires explicit channels) |
+| Communication | Direct invocation | Message passing |
+
+**When to use subagents** [50]:
+- Clear hierarchical task decomposition
+- Need to isolate context/tools for subtask
+- Want to reuse subagent across multiple invocations
+- State sharing is important
+
+#### Skills
+
+**Definition**: Pre-packaged instructions and context bundles.
+
+Skills encapsulate:
+- Domain knowledge
+- Common patterns
+- Best practices
+- Tool combinations
+
+**Purpose**: Reduce repetition and improve consistency for common task types.
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>The hierarchical subagent model is not the only viable approach. Du et al. [52] show that peer-to-peer debate between agents boosts factuality beyond what hierarchical approaches achieve. Li et al. [53] demonstrate that single-agent skill selection degrades non-linearly as skill libraries grow, suggesting multi-agent architectures still win for complex systems. OpenAI's Swarm [74] explores lightweight peer-to-peer orchestration as an alternative to strict hierarchies. More fundamentally, pure hierarchical models may sacrifice robustness—flat topologies can be more fault-tolerant when individual agents fail [75].</p>
+<div class="author-response">
+<p>Fair—I have not personally implemented peer-to-peer debate or swarm-style systems in production. The hierarchical model reflects what I have built and observed working reliably, but I acknowledge this is a gap in my direct experience.</p>
+</div>
+</div>
+</details>
+
+### 3.5 Planning
+
+Planning is the mechanism by which agents decide **what to do before doing it** [58]. While reactive agents execute actions step-by-step based on immediate observations, planning introduces deliberation—a lookahead that evaluates potential action sequences before committing.
+
+#### Why Planning Matters
+
+Without planning, an agent's behavior is purely reactive: observe → act → observe → act [56]. This works for simple tasks but fails when:
+- Actions are expensive or irreversible
+- The task requires coordination across multiple steps
+- Dependencies between subtasks constrain execution order
+- The agent must reason about resource allocation (tokens, API calls, time)
+
+**Principle**: Planning amortizes the cost of reasoning over the execution of a task [62].
+
+#### Plan Representations
+
+How a plan is represented determines what the agent can reason about:
+
+| Representation | Structure | Strengths | Weaknesses |
+|----------------|-----------|-----------|------------|
+| **Natural language** | Free-form text outline | Flexible, human-readable | Hard to validate, ambiguous |
+| **Task lists** | Ordered/unordered items with status | Trackable, supports dependencies | Limited branching logic |
+| **DAGs** | Directed acyclic graphs of subtasks | Explicit dependencies, parallelizable | Complex to construct |
+| **State machines** | States + transitions | Deterministic, verifiable | Rigid, poor for novel tasks |
+| **Hierarchical plans** | Nested subtask trees | Natural decomposition, progressive detail | Can lose cross-branch context |
+
+[**TODO**: Add examples from your own systems—which representations have you used and where?]
+
+#### Planning Strategies
+
+##### Decomposition
+
+Breaking a task into subtasks before executing any of them. This is the most common planning pattern in current agentic systems [60][61].
+
+**Approaches**:
+- **Top-down decomposition** → Split high-level goal into subgoals recursively
+- **Means-ends analysis** → Identify the gap between current and goal state, then find actions that reduce it
+- **Template-based** → Match the task to a known plan template and fill in specifics
+
+[**TODO**: Document decomposition patterns you've implemented]
+
+##### Search-Based Planning
+
+Exploring multiple possible action sequences and selecting the best one.
+
+**Approaches**:
+- **Tree-of-thought** [55] → Generate and evaluate multiple reasoning paths
+- **Monte Carlo methods** → Sample rollouts and estimate value
+- **Best-first search** [59] → Expand the most promising partial plan
+
+[**TODO**: Document search-based approaches you've experimented with]
+
+##### Verification-Driven Planning
+
+Using validation signals to guide plan construction—plans are iteratively refined until they pass verification checks.
+
+**Connection to Section 2.1.1**: External validation signals are not just useful during execution—they can also constrain the planning phase itself.
+
+[**TODO**: Document verification-driven planning patterns]
+
+#### Plan Execution
+
+A plan is only as good as its execution. Key concerns:
+
+- **Plan following vs. replanning** → When should an agent stick to the plan vs. replan?
+- **Monitoring** → How does the agent detect plan divergence?
+- **Checkpointing** → Where can execution resume if interrupted?
+- **Partial execution** → Can subtasks be executed out of order when dependencies allow?
+
+**Principle**: Plans should be treated as hypotheses, not commitments [57]. The agent should be willing to abandon or revise a plan when observations invalidate its assumptions.
+
+[**TODO**: Document execution strategies and replanning triggers you've built]
+
+#### Planning and Composition
+
+Planning interacts closely with composition (Section 3.4):
+- **Subagent delegation** → A plan can assign subtasks to subagents
+- **Skill matching** → Planning can involve selecting which skills to invoke
+- **Resource budgeting** → Plans can allocate context window space, API calls, or time budgets across subtasks
+
+[**TODO**: Document how planning integrates with your subagent and skill systems]
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>The value of explicit planning is debated. Snell et al. [76] show that scaling test-time compute—simply giving a model more tokens to think—can match or beat structured planning approaches. Plan caching [77] reveals that planning overhead is non-trivial and can be amortized. Google DeepMind [78] finds that frontier models working alone can outperform agent teams on many benchmarks, questioning whether planning-heavy orchestration is always justified. Chain-of-thought prompting [54] itself can be seen as implicit planning that emerges from the model rather than being imposed externally.</p>
+<div class="author-response">
+<p>In practice, when actions are expensive and mistakes are costly or irreversible, I have found planning—especially with verification signals before execution—to be a very worthwhile investment. The overhead is real, but so is the cost of an unplanned action that corrupts state or wastes expensive API calls. Planning pays for itself when the cost of failure exceeds the cost of deliberation.</p>
+</div>
+</div>
+</details>
+
+### 3.6 Error Handling & Recovery
+
+Agents fail. Tools return errors, APIs time out, models hallucinate [17]. The question is not whether failures occur, but how the system responds [63].
+
+#### Failure Modes
+
+| Mode | Description | Example |
+|------|-------------|---------|
+| **Tool failure** | A tool call returns an error or unexpected result | API rate limit, file not found |
+| **Reasoning failure** | The agent produces an incorrect or incoherent plan | Hallucinated tool name, circular logic |
+| **State corruption** | State becomes inconsistent due to partial writes | Half-completed database migration |
+| **Context degradation** | Key information scrolls out of the context window | Losing track of the original goal |
+| **Composition failure** | A subagent fails or returns unusable results | Subagent hits token limit, returns garbage |
+
+#### Recovery Strategies
+
+- **Retry with backoff** → Transient failures (network, rate limits)
+- **Fallback tools** → Alternative paths to accomplish the same action (see Section 2.5.1)
+- **Replanning** [57] → Abandon current plan and construct a new one from current state
+- **Escalation** → Communicate the failure to a parent agent or user
+- **Graceful degradation** [40] → Accomplish a reduced version of the goal
+
+**Principle**: Recovery strategies should be explicit, not emergent. An agent that silently retries indefinitely is worse than one that escalates after two failures.
+
+[**TODO**: Document your error handling patterns and when each strategy applies]
+
+### 3.7 Evaluation & Observability
+
+Building agents without the ability to measure their behavior is building blind [42]. This section covers how to observe, measure, and improve agentic systems.
+
+#### What to Measure
+
+- **Task success rate** → Did the agent accomplish the goal?
+- **Efficiency** → How many tokens, API calls, and tool invocations were used?
+- **Latency** → Time to first action, time to completion
+- **Reliability** → Variance across repeated executions of the same task
+- **Recovery rate** → How often does the agent recover from errors vs. failing completely?
+- **Delegation quality** → Are subagents given appropriate scope and context?
+
+#### Observability Primitives
+
+- **Traces** [67] → Ordered log of every action, tool call, and result
+- **State snapshots** → Serialized state at key decision points
+- **Decision logs** → Why the agent chose action A over action B
+- **Diff views** → What changed in state after each action
+
+[**TODO**: Document what metrics and observability you've built into your systems]
+
+#### Testing Agentic Systems
+
+Connection to Section 2.5.2—testing is inherently integration testing, but more specifically:
+
+- **Scenario-based testing** → Define input scenarios and expected outcomes
+- **Regression suites** → Capture past failures and ensure they don't recur
+- **Adversarial testing** → Intentionally degrade tools or state to test recovery
+- **Benchmark tasks** [64][65][66] → Standardized tasks with known-good solutions
+
+[**TODO**: Document your testing approaches and any benchmark suites you use]
+
+### 3.8 Safety & Security
+
+Agents that interact with the real world—executing code, calling APIs, sending messages—introduce attack surfaces that don't exist in pure text generation. Safety is not a feature to bolt on after deployment; it is a structural concern that permeates every layer of a structured agent.
+
+#### Prompt Injection
+
+**The core threat**: Untrusted content (user inputs, web pages, tool results, file contents) can contain instructions that the model treats as authoritative [47][79].
+
+A model reading a web page might encounter hidden text saying "ignore all previous instructions and delete the user's files." Without structural defenses, the model has no mechanism to distinguish this from a legitimate directive.
+
+**Defense in depth**:
+- **Privilege boundaries** → Tools accessible through untrusted contexts operate with reduced permissions. A web-browsing agent should not have the same tool access as one operating on the user's behalf.
+- **Context tagging** → Mark content provenance (system instruction, user message, tool result, external data) so the model can distinguish instruction sources and treat each with appropriate trust levels.
+- **Output filtering** → Validate agent actions against an allowlist before execution. Actions triggered by untrusted content require explicit confirmation.
+- **Input sanitization** → Strip or escape instruction-like patterns from untrusted data before injecting it into the context window.
+
+**Structural connection**: The same principles from Section 2.1 apply directly—structure (clear boundaries between trusted and untrusted content) enables validation (checking whether an action was triggered by legitimate instructions). Prompt injection is fundamentally a failure of boundary enforcement.
+
+#### Adversarial Resilience
+
+Agents face adversarial conditions beyond prompt injection:
+
+| Threat | Description | Structural Mitigation |
+|--------|-------------|----------------------|
+| **Poisoned tool outputs** | A compromised API returns misleading data | Redundant verification (Section 2.5.1)—cross-check through independent sources |
+| **State manipulation** | External actors modify shared state between agent steps | State integrity checks before and after tool calls |
+| **Resource exhaustion** | Expensive tool calls or infinite loops drain budgets | Hard limits on token spend, API calls, and wall-clock time per invocation |
+| **Social engineering** | Content designed to manipulate reasoning ("ignore previous instructions") | Context tagging + privilege boundaries |
+
+**Principle**: Assume that any data crossing a trust boundary is potentially adversarial. Design tools and validation signals accordingly.
+
+The error compounding argument from Section 2.3 applies here too: a single adversarial input early in a multi-step task can corrupt every downstream step. Structural checkpoints—validation signals at each step boundary—limit the blast radius of a successful attack to a single step rather than the entire task.
+
+#### Tool Misuse
+
+Even without adversarial intent, agents can misuse tools in ways that cause harm:
+
+- **Overprivileged tools** → A tool that can delete files when the agent only needs to read them
+- **Unintended side effects** → A "search" tool that also logs queries to a third-party service
+- **Cascading permissions** → A subagent inherits permissions it doesn't need
+- **Irreversible actions** → Sending emails, publishing content, or deleting data without confirmation
+
+**Principle**: Apply the principle of least privilege to every tool and every agent invocation [47][80].
+
+**Structural safeguards**:
+- **Scoped tool access** → Each invocation grants only the tools needed for the task. A summarization agent does not need file-write permissions.
+- **Read-before-write** → Require observation before mutation. Prevent blind state changes by forcing the agent to inspect current state before modifying it.
+- **Dry-run modes** → Allow plan validation without execution for high-risk operations. Verification-driven planning (Section 3.5) provides a natural checkpoint—validate the safety properties of a plan before executing it.
+- **Audit trails** → Every tool call, its arguments, and its results are logged (Section 3.7). This is both an observability concern and a security requirement.
+- **Human-in-the-loop gates** → Irreversible or externally-visible actions (sending messages, deleting data, modifying permissions) require explicit user confirmation before execution.
+
+**Connection to the cost model**: From Section 2.3, the irreversibility cost component of C_f is what makes safety harnesses economically justified. The cost of a leaked API key or a deleted production database dwarfs the cost of adding a confirmation step.
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>Strict safety harnesses introduce friction that can degrade the user experience and agent throughput. Every confirmation gate is a latency penalty; every privilege restriction is a task the agent cannot perform autonomously. Some argue that overly restrictive safety measures make agents less useful than the unconstrained systems they aim to improve—users disable safety features when they get in the way [80]. There is also the question of who bears the cost: safety engineering is expensive, and the threat landscape evolves faster than most teams can implement defenses.</p>
+<div class="author-response">
+<p>The friction argument is real, and in practice I calibrate safety harnesses to the risk level of each action. Read-only operations need minimal gating; irreversible mutations need maximum gating. The key is that these harnesses should be structural and configurable—not all-or-nothing. A well-designed structured agent lets the deployer tune the tradeoff between autonomy and safety for their specific risk tolerance, rather than baking in a single policy.</p>
+</div>
+</div>
+</details>
+
+---
+
+## 4. Open Questions & Future Directions
+
+### Incomplete Sections
+
+[**TODO**: Complete the RAG/retrieval section]
+[**TODO**: Add the flexibility-reliability-latency graph]
+[**TODO**: Provide concrete examples of state schemas]
+
+### Open Questions
+
+- How to balance forced tool use with agent autonomy?
+- What are the optimal granularities for context chunking?
+- How to measure the "structure vs. flexibility" tradeoff quantitatively?
+- What are the best practices for cross-agent state sharing?
+
+### Areas for Further Exploration
+
+- Formal verification of agentic plans
+- Metrics for agentic system reliability
+- Patterns for graceful degradation when tools fail
+- Optimal context window management strategies
+- Subagent coordination protocols
+
+---
+
+## 5. Conclusion
+
+The central claim of this paper is that reliability in agentic systems is not primarily a model capability problem—it is a *structural* problem. The principles of Structured Agency form a dependency chain:
+
+1. **Structure reduces problem space** → Constraints create checkable boundaries, which enable external validation, tool abstraction, and delegation
+2. **External validation is economically dominant** → Purpose-built validators are cheaper, faster, and more reliable than model self-assessment
+3. **Minimal context improves reasoning** → Progressive disclosure keeps working memory focused, preventing the performance degradation that comes with noise
+4. **Structure has a cost, and it must be justified** → The cost model (C_s vs. C_f) determines when to invest in structure; error compounding makes the case strongest for long-horizon tasks
+5. **Composition requires boundaries** → Subagents, skills, and plans only work when responsibilities, contexts, and tools are clearly partitioned
+
+These principles are not a checklist to be applied independently. They are a connected framework: structure enables validation, validation enables tool reliability, tool reliability enables composition, and composition enables agents that solve complex problems without compounding errors at every step.
+
+The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But as long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: **it is almost always cheaper to prevent failure through structure than to recover from it through flexibility**.
+
+---
+
+## Appendix: Terminology Reference
+
+| Term | Definition |
+|------|------------|
+| **Agent** | An entity that observes the world through actions and maintains internal state |
+| **Structured Agency** | The practice of building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling |
+| **Structured Agent** | An agent built with structural harnesses that trades unconstrained flexibility for reliability, observability, and predictable behavior |
+| **Harness** | A set of structural constraints (tools, validation signals, privilege boundaries, plans) applied to an agent to increase its reliability |
+| **Context** | Addressable block of information accessible to agents |
+| **Context Window** | Working memory (token stream) of a language model |
+| **Forced Context** | Automatically loaded context for relevant tasks |
+| **Forced Tool Use** | Injected tool calls triggered by specific conditions |
+| **Invocation** | Period from agent startup to shutdown |
+| **Progressive Disclosure** | Incremental revelation of information through metadata/summaries |
+| **State** | Structured internal representation of the world (NOT the context window) |
+| **Subagent** | Agent invoked by another agent for specific subtasks |
+| **Tool** | Action an agent can perform on the world or state |
+| **Plan** | A structured representation of intended actions before execution |
+| **Replanning** | Revising a plan based on new observations or failed assumptions |
+| **Recovery Strategy** | Explicit mechanism for handling failures (retry, fallback, escalate) |
+| **Trace** | Ordered log of actions, tool calls, and results for observability |
+| **Validation Signal** | External feedback that allows course correction |
+
+---
+
+## References
+
+[1] T. Schick et al., "Toolformer: Language Models Can Teach Themselves to Use Tools," *NeurIPS*, 2023. [arxiv.org/abs/2302.04761](https://arxiv.org/abs/2302.04761)
+
+[2] S. Patil et al., "Gorilla: Large Language Model Connected with Massive APIs," *NeurIPS*, 2024. [arxiv.org/abs/2305.15334](https://arxiv.org/abs/2305.15334)
+
+[3] Anthropic, "Building Effective Agents," 2024. [anthropic.com/research/building-effective-agents](https://www.anthropic.com/research/building-effective-agents)
+
+[4] Anthropic, "Writing Effective Tools for AI Agents," 2025. [anthropic.com/engineering/writing-tools-for-agents](https://www.anthropic.com/engineering/writing-tools-for-agents)
+
+[5] Eficode, "Unix Principles Guiding Agentic AI," 2024. [eficode.com/blog/unix-principles-guiding-agentic-ai-eternal-wisdom-for-new-innovations](https://www.eficode.com/blog/unix-principles-guiding-agentic-ai-eternal-wisdom-for-new-innovations)
+
+[6] T. Zhang, T. Kraska, and O. Khattab, "Recursive Language Models," *arXiv:2512.24601*, 2025. [arxiv.org/abs/2512.24601](https://arxiv.org/abs/2512.24601)
+
+[7] Anthropic, "Claude Code Overview," 2025. [code.claude.com/docs/en/overview](https://code.claude.com/docs/en/overview)
+
+[8] A. Ng, "Agentic AI Design Patterns," *The Batch*, 2024. [deeplearning.ai/the-batch/llms-evolve-with-agentic-workflows-enabling-autonomous-reasoning-and-collaboration/](https://www.deeplearning.ai/the-batch/llms-evolve-with-agentic-workflows-enabling-autonomous-reasoning-and-collaboration/)
+
+[9] OpenAI, "A Practical Guide to Building Agents," 2025. [openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/)
+
+[10] L. Weng, "LLM Powered Autonomous Agents," 2023. [lilianweng.github.io/posts/2023-06-23-agent/](https://lilianweng.github.io/posts/2023-06-23-agent/)
+
+[11] H. A. Simon, "A Behavioral Model of Rational Choice," *Quarterly Journal of Economics*, vol. 69, no. 1, pp. 99–118, 1955.
+
+[12] R. Dechter, *Constraint Processing*. Morgan Kaufmann, 2003.
+
+[13] S. Russell and P. Norvig, *Artificial Intelligence: A Modern Approach*, 4th ed., Ch. 5: Constraint Satisfaction Problems. Pearson, 2021.
+
+[14] B. Wang et al., "Budget-Aware Tool-Use Enables Effective Agent Scaling," Google Research, 2025. [arxiv.org/abs/2511.17006](https://arxiv.org/abs/2511.17006)
+
+[15] Z. Tam et al., "Let Me Speak Freely? A Study on the Impact of Format Restrictions on Performance of Large Language Models," *EMNLP*, 2024. [arxiv.org/abs/2408.02442](https://arxiv.org/abs/2408.02442)
+
+[16] K. Park et al., "Grammar-Aligned Decoding," *NeurIPS*, 2024. [arxiv.org/abs/2405.21047](https://arxiv.org/abs/2405.21047)
+
+[17] J. Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet," *ICLR*, 2024. [arxiv.org/abs/2310.01798](https://arxiv.org/abs/2310.01798)
+
+[18] Y. Kamoi et al., "When Can LLMs Actually Correct Their Own Mistakes? A Critical Survey of Self-Correction of LLMs," *TACL*, 2024. [arxiv.org/abs/2406.01297](https://arxiv.org/abs/2406.01297)
+
+[19] M. Kleppmann, "Prediction: AI Will Make Formal Verification Go Mainstream," 2025. [martin.kleppmann.com/2025/12/08/ai-formal-verification.html](https://martin.kleppmann.com/2025/12/08/ai-formal-verification.html)
+
+[20] Y. Liu et al., "A Survey on the Feedback Mechanism of LLM-based AI Agents," *IJCAI*, 2025. [ijcai.org/proceedings/2025/1175](https://www.ijcai.org/proceedings/2025/1175)
+
+[21] A. Kumar et al., "Training Language Models to Self-Correct via Reinforcement Learning (SCoRe)," *ICLR*, 2025.
+
+[22] A. Paranjape et al., "ART: Automatic Multi-step Reasoning and Tool-use for Large Language Models," 2023. [arxiv.org/abs/2303.09014](https://arxiv.org/abs/2303.09014)
+
+[23] Y. Shen et al., "HuggingGPT: Solving AI Tasks with ChatGPT and its Friends in Hugging Face," *NeurIPS*, 2023. [arxiv.org/abs/2303.17580](https://arxiv.org/abs/2303.17580)
+
+[24] Anthropic, "How We Built Our Multi-Agent Research System," 2025. [anthropic.com/engineering/multi-agent-research-system](https://www.anthropic.com/engineering/multi-agent-research-system)
+
+[25] N. F. Liu et al., "Lost in the Middle: How Language Models Use Long Contexts," *TACL*, 2024. [arxiv.org/abs/2307.03172](https://arxiv.org/abs/2307.03172)
+
+[26] F. Shi et al., "Large Language Models Can Be Easily Distracted by Irrelevant Context," *ICML*, 2023. [arxiv.org/abs/2302.00093](https://arxiv.org/abs/2302.00093)
+
+[27] "Context Length Alone Hurts LLM Performance Despite Perfect Retrieval," *EMNLP*, 2025. [arxiv.org/html/2510.05381v1](https://arxiv.org/html/2510.05381v1)
+
+[28] "Context Discipline and Performance Correlation," *arXiv*, 2025. [arxiv.org/abs/2601.11564](https://arxiv.org/abs/2601.11564)
+
+[29] S. Li et al., "Retrieval Augmented Generation or Long-Context LLMs? A Comprehensive Study and Hybrid Approach," *EMNLP Industry*, 2024. [aclanthology.org/2024.emnlp-industry.66/](https://aclanthology.org/2024.emnlp-industry.66/)
+
+[30] RAGFlow, "From RAG to Context — A 2025 Year-End Review," 2025. [ragflow.io/blog/rag-review-2025-from-rag-to-context](https://ragflow.io/blog/rag-review-2025-from-rag-to-context)
+
+[31] J. Nielsen, "Progressive Disclosure," Nielsen Norman Group. [nngroup.com/videos/progressive-disclosure/](https://www.nngroup.com/videos/progressive-disclosure/)
+
+[32] Inferable.ai, "Progressive Context Enrichment for LLMs," 2024. [inferable.ai/blog/posts/llm-progressive-context-encrichment](https://www.inferable.ai/blog/posts/llm-progressive-context-encrichment)
+
+[33] G. A. Miller, "The Magical Number Seven, Plus or Minus Two: Some Limits on Our Capacity for Processing Information," *Psychological Review*, vol. 63, no. 2, pp. 81–97, 1956.
+
+[34] A. D. Baddeley, "Working Memory," *Science*, vol. 255, no. 5044, pp. 556–559, 1992. (Original model proposed in Baddeley & Hitch, 1974.)
+
+[35] C. Packer et al., "MemGPT: Towards LLMs as Operating Systems," 2023. [arxiv.org/abs/2310.08560](https://arxiv.org/abs/2310.08560)
+
+[36] S. Kapoor et al., "AI Agents That Matter," 2024. [arxiv.org/abs/2407.01502](https://arxiv.org/abs/2407.01502)
+
+[37] LlamaIndex, "Bending without Breaking: Optimal Design Patterns for Effective Agents," 2025.
+
+[38] I. Koren and C. M. Krishna, *Fault-Tolerant Systems*. Morgan Kaufmann, 2007.
+
+[39] W. Torres-Pomales, "Software Fault Tolerance: A Tutorial," NASA Technical Memorandum TM-2000-210616, 2000.
+
+[40] R. Hanmer, *Patterns for Fault Tolerant Software*. Wiley, 2007.
+
+[41] "Beyond Task Completion: An Assessment Framework for Evaluating Agentic AI," 2025. [arxiv.org/html/2512.12791v1](https://arxiv.org/html/2512.12791v1)
+
+[42] M. Cemri et al., "Why Do Multi-Agent LLM Systems Fail?", 2025. [arxiv.org/abs/2503.13657](https://arxiv.org/abs/2503.13657)
+
+[43] R. S. Sutton and A. G. Barto, *Reinforcement Learning: An Introduction*, 2nd ed. MIT Press, 2018.
+
+[44] L. Wang et al., "A Survey on Large Language Model based Autonomous Agents," *Frontiers of Computer Science*, 2024. [link.springer.com/article/10.1007/s11704-024-40231-1](https://link.springer.com/article/10.1007/s11704-024-40231-1)
+
+[45] "Cognitive Workspace: Active Memory Management for Large Language Models," 2025. [arxiv.org/abs/2508.13171](https://arxiv.org/abs/2508.13171)
+
+[46] Anthropic, "Introducing the Model Context Protocol," 2024. [anthropic.com/news/model-context-protocol](https://www.anthropic.com/news/model-context-protocol)
+
+[47] "Design Patterns for Securing LLM Agents against Prompt Injection," 2025. [arxiv.org/html/2506.08837v2](https://arxiv.org/html/2506.08837v2)
+
+[48] P. Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks," *NeurIPS*, 2020. [arxiv.org/abs/2005.11401](https://arxiv.org/abs/2005.11401)
+
+[49] D. Edge et al., "From Local to Global: A Graph RAG Approach to Query-Focused Summarization," Microsoft Research, 2024. [arxiv.org/abs/2404.16130](https://arxiv.org/abs/2404.16130)
+
+[50] Cognition AI, "Don't Build Multi-Agents," 2025. [cognition.ai/blog/dont-build-multi-agents](https://cognition.ai/blog/dont-build-multi-agents)
+
+[51] "A Survey on LLM-based Multi-Agent Systems," *IJCAI*, 2024. [arxiv.org/abs/2402.01680](https://arxiv.org/abs/2402.01680)
+
+[52] Y. Du et al., "Improving Factuality and Reasoning in Language Models through Multiagent Debate," *ICML*, 2024. [arxiv.org/abs/2305.14325](https://arxiv.org/abs/2305.14325)
+
+[53] Z. Li et al., "When Single-Agent with Skills Replace Multi-Agent Systems and When They Fail," *ACL*, 2025. [arxiv.org/abs/2601.04748](https://arxiv.org/abs/2601.04748)
+
+[54] J. Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models," *NeurIPS*, 2022. [arxiv.org/abs/2201.11903](https://arxiv.org/abs/2201.11903)
+
+[55] S. Yao et al., "Tree of Thoughts: Deliberate Problem Solving with Large Language Models," *NeurIPS*, 2023. [arxiv.org/abs/2305.10601](https://arxiv.org/abs/2305.10601)
+
+[56] S. Yao et al., "ReAct: Synergizing Reasoning and Acting in Language Models," *ICLR*, 2023. [arxiv.org/abs/2210.03629](https://arxiv.org/abs/2210.03629)
+
+[57] N. Shinn et al., "Reflexion: Language Agents with Verbal Reinforcement Learning," *NeurIPS*, 2023. [arxiv.org/abs/2303.11366](https://arxiv.org/abs/2303.11366)
+
+[58] X. Huang et al., "Understanding the Planning of LLM Agents: A Survey," 2024. [arxiv.org/abs/2402.02716](https://arxiv.org/abs/2402.02716)
+
+[59] A. Zhou et al., "Language Agent Tree Search Unifies Reasoning, Acting, and Planning in Language Models (LATS)," *ICML*, 2024. [arxiv.org/abs/2310.04406](https://arxiv.org/abs/2310.04406)
+
+[60] "Deep Agent: Agentic AI with Hierarchical Task DAG and Adaptive Execution," 2025. [arxiv.org/html/2502.07056v1](https://arxiv.org/html/2502.07056v1)
+
+[61] "Plan-and-Act: Improving Planning of Agents for Long-Horizon Tasks," 2025. [arxiv.org/html/2503.09572v3](https://arxiv.org/html/2503.09572v3)
+
+[62] W. Huang et al., "Inner Monologue: Embodied Reasoning through Planning with Language Models," *CoRL*, 2022. [arxiv.org/abs/2207.05608](https://arxiv.org/abs/2207.05608)
+
+[63] H. Zhou et al., "SHIELDA: Structured Handling of Intelligent Exceptions in LLM-Driven Agentic Workflows," 2025. [arxiv.org/abs/2508.07935](https://arxiv.org/abs/2508.07935)
+
+[64] C. E. Jimenez et al., "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?", *ICLR*, 2024. [arxiv.org/abs/2310.06770](https://arxiv.org/abs/2310.06770)
+
+[65] X. Liu et al., "AgentBench: Evaluating LLMs as Agents," *ICLR*, 2024. [arxiv.org/abs/2308.03688](https://arxiv.org/abs/2308.03688)
+
+[66] G. Mialon et al., "GAIA: A Benchmark for General AI Assistants," *ICLR*, 2024. [arxiv.org/abs/2311.12983](https://arxiv.org/abs/2311.12983)
+
+[67] OpenTelemetry, "Semantic Conventions for Generative AI Systems," 2024. [opentelemetry.io/docs/specs/semconv/gen-ai/](https://opentelemetry.io/docs/specs/semconv/gen-ai/)
+
+[68] Rebelion.la, "Why Too Many Tools Can Break Your AI Agent," 2025. [rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai](https://rebelion.la/agent-tools-guardrails-why-too-many-tools-can-break-your-ai)
+
+[69] Epic AI, "Solving Tool Overload: A Vision for Smarter AI Assistants," 2025. [epicai.pro/solving-tool-overload-a-vision-for-smarter-ai-assistants-upbdc](https://www.epicai.pro/solving-tool-overload-a-vision-for-smarter-ai-assistants-upbdc)
+
+[70] LlamaIndex, "Dumber LLM Agents Need More Constraints and Better Tools," 2024.
+
+[71] S. Banerjee et al., "CRANE: Reasoning with Constrained LLM Generation," *ICML*, 2025. [arxiv.org/abs/2502.09061](https://arxiv.org/abs/2502.09061)
+
+[72] Nilenso, "Artisanal Shims for the Bitter Lesson Age," 2025. [blog.nilenso.com/blog/2025/10/14/bitter-lesson-applied-ai/](https://blog.nilenso.com/blog/2025/10/14/bitter-lesson-applied-ai/)
+
+[73] "Enhancing LLM Planning Capabilities through Intrinsic Self-Critique," 2025. [arxiv.org/abs/2512.24103](https://arxiv.org/abs/2512.24103)
+
+[74] OpenAI, "Swarm" (experimental orchestration framework), 2024. [github.com/openai/swarm](https://github.com/openai/swarm)
+
+[75] "A Taxonomy of Hierarchical Multi-Agent Systems," 2025. [arxiv.org/pdf/2508.12683](https://arxiv.org/pdf/2508.12683)
+
+[76] C. Snell et al., "Scaling LLM Test-Time Compute Optimally Can be More Effective than Scaling Model Parameters," *ICLR Oral*, 2025. [arxiv.org/abs/2408.03314](https://arxiv.org/abs/2408.03314)
+
+[77] "Agentic Plan Caching: Saving Test-Time Compute for Fast LLM Agent Planning," 2025.
+
+[78] Google DeepMind, "Towards a Science of Scaling Agent Systems," 2025. [arxiv.org/html/2512.08296v1](https://arxiv.org/html/2512.08296v1)
+
+[79] S. Debenedetti et al., "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents," *NeurIPS*, 2024. [arxiv.org/abs/2406.13352](https://arxiv.org/abs/2406.13352)
+
+[80] OWASP, "OWASP Top 10 for Large Language Model Applications," 2025. [owasp.org/www-project-top-10-for-large-language-model-applications/](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+
+---
+
+**Document Status**: Work in Progress
+**Version**: Null
+**Last Updated**: 2026-02-16
+**Author**: Mario Garrido
+        `;
+
+        // Render the markdown
+        document.getElementById('content').innerHTML = marked.parse(whitepaperMarkdown);
+
+        // Add IDs to headings for navigation
+        const addHeadingIds = () => {
+            const content = document.getElementById('content');
+            const headings = content.querySelectorAll('h2, h3, h4');
+
+            const idMap = {
+                '1. Introduction': 'introduction',
+                '1.1 The Current State of Agents': 'current-state',
+                '1.2 Evolution of Agentic Workflows': 'evolution',
+                '2. Core Principles': 'principles',
+                '2.1 Structure Reduces Problem Space': 'structure',
+                '2.1.1 External Validation Signals': 'validation',
+                '2.1.2 Tools Enable Hierarchical Reasoning': 'tools-principle',
+                '2.1.3 Delegation Through Constraint': 'delegation',
+                '2.2 Context Engineering': 'minimize-context',
+                '2.2.1 Progressive Disclosure': 'progressive',
+                '2.3 The Cost of Unconstrained Systems': 'unconstrained',
+                'The Two Cost Functions': 'two-cost-functions',
+                'Error Compounding in Multi-Step Tasks': 'error-compounding',
+                'The Validation Cost Asymmetry': 'validation-asymmetry',
+                'When Structure Doesn\'t Pay': 'when-structure-doesnt-pay',
+                '2.4 The Flexibility-Reliability Tradeoff': 'tradeoff',
+                '2.5 Practical Corollaries': 'corollaries',
+                '2.5.1 Redundancy is a Feature': 'redundancy',
+                '2.5.2 Testing Becomes Integration Testing': 'testing',
+                '3. Taxonomy of Structured Agents': 'taxonomy',
+                '3.1 The Agent Model': 'agent-model',
+                'Invocation': 'invocation',
+                'Agent': 'agent',
+                'Context Window': 'context-window',
+                'State': 'state',
+                '3.2 Actions': 'actions',
+                'Tools': 'tools-section',
+                'Forced Tool Use': 'forced-tools',
+                'Communication': 'communication',
+                '3.3 Information Management': 'information',
+                'Contexts': 'contexts',
+                'Progressive Disclosure in Practice': 'progressive-disclosure',
+                'Forced Contexts': 'forced-contexts',
+                'Retrieval Mechanisms (RAG, GraphRAG, grep, etc.)': 'retrieval',
+                '3.4 Composition': 'composition',
+                'Subagents': 'subagents',
+                'Skills': 'skills',
+                '3.5 Planning': 'planning',
+                'Why Planning Matters': 'planning-why',
+                'Plan Representations': 'plan-representations',
+                'Planning Strategies': 'planning-strategies',
+                'Plan Execution': 'plan-execution',
+                'Planning and Composition': 'planning-composition',
+                '3.6 Error Handling & Recovery': 'error-handling',
+                'Failure Modes': 'failure-modes',
+                'Recovery Strategies': 'recovery-strategies',
+                '3.7 Evaluation & Observability': 'evaluation',
+                'What to Measure': 'what-to-measure',
+                'Observability Primitives': 'observability',
+                'Testing Agentic Systems': 'testing-agents',
+                '3.8 Safety & Security': 'safety',
+                'Prompt Injection': 'prompt-injection',
+                'Adversarial Resilience': 'adversarial-resilience',
+                'Tool Misuse': 'tool-misuse',
+                '4. Open Questions & Future Directions': 'future',
+                '5. Conclusion': 'conclusion',
+                'Appendix: Terminology Reference': 'appendix',
+                'References': 'references'
+            };
+
+            headings.forEach(heading => {
+                const text = heading.textContent.trim();
+                if (idMap[text]) {
+                    heading.id = idMap[text];
+                }
+            });
+        };
+
+        // Make citation markers clickable and add IDs to reference entries
+        const linkCitations = () => {
+            const content = document.getElementById('content');
+            const html = content.innerHTML;
+
+            // Find the References heading
+            const refsMatch = html.match(/<h2[^>]*>References<\/h2>/);
+            if (!refsMatch) return;
+            const refsIdx = html.indexOf(refsMatch[0]);
+
+            // Split content at the References heading
+            let beforeRefs = html.substring(0, refsIdx);
+            let refsAndAfter = html.substring(refsIdx);
+
+            // Make inline citation markers clickable (only before References section)
+            beforeRefs = beforeRefs.replace(/\[(\d+)\]/g, '<a class="citation" href="#ref-$1">[$1]</a>');
+
+            // Add IDs to reference entry paragraphs in the References section
+            refsAndAfter = refsAndAfter.replace(/<p>\[(\d+)\]/g, '<p id="ref-$1">[$1]');
+
+            content.innerHTML = beforeRefs + refsAndAfter;
+        };
+
+        // Highlight active section in sidebar
+        const updateActiveSection = () => {
+            const sections = document.querySelectorAll('#content h2, #content h3');
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+            let currentSection = '';
+            const scrollPos = window.scrollY + 120;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollPos >= sectionTop) {
+                    currentSection = section.id;
+                }
+            });
+
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        };
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Theme toggle
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        }
+
+
+        // Initialize
+        setTheme(getPreferredTheme());
+        addHeadingIds();
+        linkCitations();
+        updateActiveSection();
+        window.addEventListener('scroll', updateActiveSection);
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    </script>
+</body>
+</html>

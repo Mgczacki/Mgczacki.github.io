@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+    <marker id="am" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="30" text-anchor="middle" font-size="11" font-weight="600" fill="#999">AGENT ARCHITECTURE</text>
+
+  <!-- WORLD (large encompassing region, top) -->
+  <rect x="40" y="50" width="620" height="120" rx="8" fill="#f7f7f7" stroke="#111" stroke-width="2"/>
+  <text x="350" y="82" text-anchor="middle" font-size="18" font-weight="700" fill="#111">World</text>
+  <text x="350" y="102" text-anchor="middle" font-size="11" fill="#666">External environment: files, APIs, databases, users, other systems</text>
+  <!-- World internals -->
+  <rect x="75" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="112" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Files</text>
+  <rect x="165" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="202" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">APIs</text>
+  <rect x="255" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="292" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Databases</text>
+  <rect x="345" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="382" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Users</text>
+  <rect x="435" y="118" width="95" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="482" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Other Agents</text>
+  <rect x="545" y="118" width="80" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
+  <text x="585" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Services</text>
+
+  <!-- ACTIONS / TOOLS (middle band) -->
+  <rect x="140" y="210" width="420" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="350" y="237" text-anchor="middle" font-size="14" font-weight="700" fill="#111">Actions</text>
+  <text x="350" y="255" text-anchor="middle" font-size="10" fill="#666">Tools, MCP servers, CLI utilities, coding-model functions</text>
+
+  <!-- Arrows: World <-> Actions -->
+  <line x1="300" y1="170" x2="300" y2="205" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="282" y="192" font-size="9" fill="#666">observe</text>
+  <line x1="400" y1="205" x2="400" y2="170" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="410" y="192" font-size="9" fill="#666">affect</text>
+
+  <!-- STATE (bottom left) -->
+  <rect x="40" y="320" width="280" height="120" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="180" y="352" text-anchor="middle" font-size="14" font-weight="700" fill="#111">State</text>
+  <text x="180" y="370" text-anchor="middle" font-size="10" fill="#666">Structured internal representation</text>
+  <!-- State internals (mini boxes) -->
+  <rect x="60" y="385" width="65" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="92" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Schema</text>
+  <rect x="135" y="385" width="55" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="162" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">KG</text>
+  <rect x="200" y="385" width="55" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="227" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Config</text>
+  <rect x="265" y="385" width="40" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="285" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">DB</text>
+
+  <!-- AGENT (bottom right) -->
+  <rect x="380" y="320" width="280" height="120" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="520" y="352" text-anchor="middle" font-size="14" font-weight="700" fill="#111">Agent</text>
+  <text x="520" y="370" text-anchor="middle" font-size="10" fill="#666">LLM / reasoning core</text>
+  <!-- Agent internals -->
+  <rect x="395" y="385" width="105" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="447" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Context Window</text>
+  <rect x="510" y="385" width="70" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="545" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Directives</text>
+  <rect x="590" y="385" width="55" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="617" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Tools</text>
+
+  <!-- Arrows: Actions <-> State -->
+  <line x1="250" y1="270" x2="180" y2="315" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="188" y="292" font-size="9" fill="#666">read / write</text>
+
+  <!-- Arrows: Actions <-> Agent -->
+  <line x1="450" y1="270" x2="520" y2="315" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="510" y="292" font-size="9" fill="#666">invoke / return</text>
+
+  <!-- Arrow: Agent -> State (observes state) -->
+  <line x1="380" y1="380" x2="325" y2="380" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#am)"/>
+  <text x="352" y="373" font-size="9" fill="#999">perceive</text>
+
+  <!-- Loop annotation (curved path from Agent back up to Actions) -->
+  <path d="M 640 380 Q 680 280 560 270" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#am)"/>
+  <text x="670" y="330" font-size="9" fill="#999" font-style="italic">agentic</text>
+  <text x="676" y="342" font-size="9" fill="#999" font-style="italic">loop</text>
+</svg>

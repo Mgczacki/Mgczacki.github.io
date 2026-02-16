@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV | Mario Garrido</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --bg-alt: #f7f7f7;
+            --text: #111;
+            --text-secondary: #333;
+            --text-muted: #666;
+            --text-faint: #999;
+            --border: #111;
+            --border-light: #e5e5e5;
+            --border-faint: #f0f0f0;
+            --accent: #000;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d0d0d;
+            --bg-alt: #1a1a1a;
+            --text: #f0f0f0;
+            --text-secondary: #d0d0d0;
+            --text-muted: #a0a0a0;
+            --text-faint: #606060;
+            --border: #404040;
+            --border-light: #2a2a2a;
+            --border-faint: #1f1f1f;
+            --accent: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .masthead {
+            padding: 48px 0 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .masthead-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .masthead-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+
+        .theme-toggle svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        [data-theme="dark"] .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .moon-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .sun-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .moon-icon {
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 60px 120px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 120px;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 2px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        .sidebar h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-faint);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 2px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 6px 0;
+            transition: color 0.2s;
+            line-height: 1.4;
+        }
+
+        .sidebar a:hover {
+            color: var(--text);
+        }
+
+        .sidebar a.active {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .content-wrapper {
+            min-width: 0;
+            max-width: 720px;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-faint);
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .page-header .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 5px 14px;
+            border: 1px solid var(--border-light);
+            border-radius: 5px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .contact-links a:hover {
+            color: var(--text);
+            border-color: var(--text);
+        }
+
+        /* CV Sections */
+        .cv-section {
+            margin-bottom: 56px;
+        }
+
+        .cv-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .cv-section h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-faint);
+        }
+
+        /* Timeline entries for education/experience */
+        .timeline-entry {
+            margin-bottom: 32px;
+            padding-left: 0;
+        }
+
+        .timeline-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            color: var(--text-faint);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .timeline-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .timeline-meta {
+            font-size: 13px;
+            color: var(--text-faint);
+            margin-bottom: 8px;
+        }
+
+        .timeline-body {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .timeline-body ul {
+            padding-left: 20px;
+            margin-top: 8px;
+        }
+
+        .timeline-body li {
+            margin-bottom: 6px;
+        }
+
+        /* Sub-degrees within education */
+        .degree-list {
+            margin-top: 8px;
+        }
+
+        .degree-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            padding: 4px 0;
+            flex-wrap: wrap;
+        }
+
+        .degree-name {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .degree-detail {
+            font-size: 13px;
+            color: var(--text-faint);
+            white-space: nowrap;
+        }
+
+        /* Skills tags */
+        .skill-category {
+            margin-bottom: 16px;
+        }
+
+        .skill-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-faint);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-tag {
+            background: var(--bg-alt);
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            border: 1px solid var(--border-light);
+            font-weight: 500;
+        }
+
+        /* Publication entry */
+        .publication-entry {
+            margin-bottom: 24px;
+            padding-left: 0;
+        }
+
+        .publication-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .publication-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .publication-authors {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .publication-venue {
+            font-size: 13px;
+            color: var(--text-faint);
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        .publication-note {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Award entry */
+        .award-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-faint);
+            flex-wrap: wrap;
+        }
+
+        .award-entry:last-child {
+            border-bottom: none;
+        }
+
+        .award-name {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .award-year {
+            font-size: 13px;
+            color: var(--text-faint);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Certification list */
+        .cert-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cert-list li {
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-faint);
+        }
+
+        .cert-list li:last-child {
+            border-bottom: none;
+        }
+
+        .cert-issuer {
+            color: var(--text-faint);
+            font-size: 13px;
+        }
+
+        /* Project cards in CV */
+        .cv-project {
+            margin-bottom: 0;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .cv-project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
+
+        .cv-project h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .cv-project .project-type {
+            font-size: 12px;
+            color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            font-weight: 600;
+        }
+
+        .cv-project p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-top: 8px;
+        }
+
+        .cv-project a {
+            color: var(--text);
+            text-decoration: underline;
+            text-decoration-color: var(--border-light);
+            font-weight: 500;
+        }
+
+        .cv-project a:hover {
+            text-decoration-color: var(--text);
+        }
+
+        /* Language bars */
+        .language-entry {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .language-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .language-name {
+            font-size: 15px;
+            color: var(--text);
+            font-weight: 500;
+            min-width: 80px;
+        }
+
+        .language-level {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                display: flex;
+                gap: 8px;
+                flex-wrap: wrap;
+                align-items: center;
+                padding-bottom: 20px;
+                border-bottom: 1px solid var(--border-faint);
+            }
+
+            .sidebar h3 {
+                margin-bottom: 0;
+                margin-right: 8px;
+            }
+
+            .sidebar ul {
+                display: flex;
+                gap: 4px;
+                flex-wrap: wrap;
+            }
+
+            .sidebar li {
+                margin-bottom: 0;
+            }
+
+            .sidebar a {
+                padding: 4px 12px;
+                background: var(--bg-alt);
+                border: 1px solid var(--border-light);
+                border-radius: 4px;
+                font-size: 12px;
+            }
+
+            .sidebar a.active {
+                border-color: var(--text);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masthead-inner {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .container {
+                padding: 40px 24px 80px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .cv-section h2 {
+                font-size: 20px;
+            }
+
+            .timeline-header {
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .degree-item {
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .award-entry {
+                flex-direction: column;
+                gap: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-inner">
+            <a href="index.html" class="logo">Mario Garrido</a>
+            <div class="masthead-right">
+                <div class="nav-links">
+                    <a href="index.html#writings">Writings</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="cv.html">CV</a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Sections</h3>
+            <nav>
+                <ul>
+                    <li><a href="#summary">Summary</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#skills">Skills & Technologies</a></li>
+                    <li><a href="#products">Products & Systems</a></li>
+                    <li><a href="#projects">Academic Projects</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#awards">Awards & Honors</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#languages">Languages</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1>Mario H. Garrido Czacki</h1>
+                <p class="subtitle">
+                    Principal Research Scientist building foundation models for market data, agentic AI systems, and large-scale ML infrastructure. Fulbright-García Robles Scholar. NYU M.S. Data Science, UNAM B.Eng. + B.Sc.
+                </p>
+                <div class="contact-links">
+                    <a href="mailto:mgczacki@gmail.com">Email</a>
+                    <a href="https://linkedin.com/in/mgczacki" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/Mgczacki" target="_blank">GitHub</a>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <section id="summary" class="cv-section">
+                <h2>Summary</h2>
+                <div class="timeline-body">
+                    <p>Research scientist and engineer specializing in energy-based models, multi-agent systems, and production ML infrastructure. Currently leading the design of a foundation model for market panel data at Kuona, and previously built four production AI systems in under a year &mdash; a multi-agent analytical platform (ExpertAI), a knowledge graph engine (Grafa), a NL-to-SQL engine (KQuery), and Kubernetes infrastructure &mdash; each deployed at enterprise scale.</p>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section id="education" class="cv-section">
+                <h2>Education</h2>
+
+                <div class="timeline-entry">
+                    <div class="timeline-header">
+                        <span class="timeline-title">New York University</span>
+                        <span class="timeline-date">August 2023 &ndash; May 2025</span>
+                    </div>
+                    <div class="timeline-subtitle">M.S. Data Science, Center for Data Science</div>
+                    <div class="timeline-meta">GPA: 3.88 / 4.0</div>
+                    <div class="timeline-body">
+                        <p>Fulbright&ndash;García Robles Scholar (2022).</p>
+                    </div>
+                </div>
+
+                <div class="timeline-entry">
+                    <div class="timeline-header">
+                        <span class="timeline-title">National Autonomous University of Mexico (UNAM)</span>
+                        <span class="timeline-date">August 2016 &ndash; June 2022</span>
+                    </div>
+                    <div class="degree-list">
+                        <div class="degree-item">
+                            <span class="degree-name">B.Eng. Computer Engineering &mdash; School of Engineering</span>
+                            <span class="degree-detail">GPA: 9.18 / 10</span>
+                        </div>
+                        <div class="degree-item">
+                            <span class="degree-name">B.Sc. Data Science &mdash; Institute of Research in Applied Math & Systems (IIMAS)</span>
+                            <span class="degree-detail">GPA: 9.44 / 10</span>
+                        </div>
+                        <div class="degree-item">
+                            <span class="degree-name">Specialization Certificate in Finance &mdash; School of Accounting & Administration</span>
+                            <span class="degree-detail">GPA: 9.57 / 10</span>
+                        </div>
+                    </div>
+                    <div class="timeline-meta" style="margin-top: 8px;">Honors: UNAM PAPIIT Research Scholarship Grantee &mdash; IN100719 (2020), IA104720 (2020&ndash;2021)</div>
+                </div>
+            </section>
+
+            <!-- Experience -->
+            <section id="experience" class="cv-section">
+                <h2>Experience</h2>
+
+                <div class="timeline-entry">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Kuona &mdash; Principal Research Scientist</span>
+                        <span class="timeline-date">2025 &ndash; Present</span>
+                    </div>
+                    <div class="timeline-subtitle">Foundation Models for Panel Data (USA)</div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Leading the design of a JEPA-style energy-based foundation model for market panel data with structural inductive biases, supporting multi-horizon forecasting, intervention simulation, and probing of unobservable market drivers via synthetic supervision.</li>
+                            <li>Developed mechanisms to model latent, unobservable market drivers (e.g., price elasticity, cannibalization) via partial supervision from synthetic markets, allowing causal probing without direct observation in real data.</li>
+                            <li>Designed training objectives emphasizing structural inductive biases and compact representations, embedding key economic effects directly into the model and reducing reliance on brittle downstream estimation pipelines.</li>
+                            <li>Energy-based latent-variable architecture with JEPA-style training objective, trained on real market data, synthetic markets with known unobservable drivers, and distilled predictions from 4+ years of Kuona's production forecasting models. Modular adapters per client without full retraining &mdash; eliminating the 1&ndash;12 hour per-client cycle of prior approaches.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-entry">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Kuona &mdash; Product Owner & AI Lead</span>
+                        <span class="timeline-date">2024 &ndash; Present</span>
+                    </div>
+                    <div class="timeline-subtitle">ExpertAI (USA)</div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Conceived and shipped ExpertAI end-to-end as sole architect &mdash; multi-agent backend (Django, Python), React frontend with WebSocket real-time communication, RabbitMQ/Kombu messaging system, cloud deployment (AWS EKS) &mdash; from concept to production in under a year.</li>
+                            <li>Multi-agent orchestration with compartmentalized context per subagent/tool, two-layer plan validation (formal PDDL gates + soft LLM-as-a-judge evaluators with scoped rule sets), and checkpoint-based resilience. Deployed and in use by global retailers and manufacturers.</li>
+                            <li>Designed a formal tool-planning framework where agents generate and execute multi-step plans verified via PDDL-style preconditions and effects, ensuring logical validity and dependency satisfaction before execution.</li>
+                            <li>Implemented deterministic plan reuse and semantic grounding mechanisms, enabling consistent execution, controlled plan adaptation, and resolution of ambiguous user inputs into unambiguous, executable specifications.</li>
+                            <li>Built Grafa: knowledge graph engine giving LLMs structured, relationship-aware memory over heterogeneous documents. Multi-tenant isolation with federated retrieval and hook-based extensibility at every pipeline stage.</li>
+                            <li>Built KQuery: NL-to-SQL engine across three database backends. Plans and verifies the full query hierarchy upfront &mdash; deciding intermediate schemas and SQL implementation details before execution &mdash; then runs all queries in parallel as soon as their dependencies are satisfied. Generation rules stored as data in the knowledge graph, scoped by platform, company, or user and updatable without code changes.</li>
+                            <li>Built KNER (Kuona Named Entity Recognition): multi-agent entity resolution pipeline that resolves free-text query segments against company-specific structured databases &mdash; products, geographies, promotions, brands, and business concepts &mdash; within a conversational, human-in-the-loop framework. Implemented as nested LangGraph state machines with four specialized LLM agents selected for cost/latency/capability tradeoffs.</li>
+                            <li>Designed UserAI, an autonomous evaluation harness that drives multi-turn agent sessions end-to-end &mdash; enabling CI-integrated regression detection of failure modes invisible in single-turn testing.</li>
+                            <li>Built an evaluation system that represents the agent as a directed graph of components, attributes failures to specific nodes via automated triage, ranks components by downstream harm for prioritized improvement, and provides deterministic replay for counterfactual experiments.</li>
+                            <li>Designed bypass auditing for agentic systems: when agents override validation gates, decisions are explicitly recorded &mdash; what was bypassed, why, and downstream consequences &mdash; making safety exceptions analyzable rather than invisible.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-entry">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Sketchpro.ai &mdash; Research Scientist Intern</span>
+                        <span class="timeline-date">June &ndash; August 2024</span>
+                    </div>
+                    <div class="timeline-subtitle">USA</div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Built vision-LLM quality monitoring systems and automated data acquisition pipelines over CommonCrawl, producing a ~700 GB high-quality dataset and training a custom SDXL ControlNet for conditional generation.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-entry">
+                    <div class="timeline-header">
+                        <span class="timeline-title">Kuona &mdash; Data Scientist / Machine Learning Engineer</span>
+                        <span class="timeline-date">February 2022 &ndash; 2024</span>
+                    </div>
+                    <div class="timeline-subtitle">Mexico</div>
+                    <div class="timeline-body">
+                        <ul>
+                            <li>Designed and deployed large-scale forecasting systems across thousands of market-correlated time series.</li>
+                            <li>Design, implementation, testing and deployment of a Machine Learning Pipeline that generates weekly demand forecasts for all of Heineken Mexico's product catalog in each of its distribution centers. Rewrote the entire system from scratch to improve results and performance for this process spanning 500+ servers, training approximately 3,500 recurrent neural networks weekly.</li>
+                            <li>Redesign and standardization of one of Kuona's main products, the Perfect Order demand forecasting system.</li>
+                            <li>Design and implementation of a new time series forecasting library featuring transparent multi-horizon predictions, automatic hyperparameter search, and native support for ensemble models.</li>
+                            <li>Design and implementation of a custom task orchestration system for Kuona's Machine Learning Pipelines with native support for heterogeneous distributed computing, arbitrary horizontal scalability, and easy management for remote tasks by abstracting the compute resources behind a UNIX-like process control interface.</li>
+                            <li>Regular meetings with clients to identify data requirements in order to guarantee consistent and precise forecasting. Evaluation of alternative datasources originating within clients' organizations.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills & Technologies -->
+            <section id="skills" class="cv-section">
+                <h2>Skills & Technologies</h2>
+
+                <div class="skill-category">
+                    <div class="skill-label">Programming Languages</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Julia</span>
+                        <span class="skill-tag">C/C++</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">R</span>
+                        <span class="skill-tag">CUDA</span>
+                        <span class="skill-tag">Elixir</span>
+                        <span class="skill-tag">VHDL</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-label">ML & Data</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">Flux.jl</span>
+                        <span class="skill-tag">Spark</span>
+                        <span class="skill-tag">LangGraph</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-label">Databases</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Neo4j</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-label">Systems & Infrastructure</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Multi-Agent Systems</span>
+                        <span class="skill-tag">Knowledge Graphs</span>
+                        <span class="skill-tag">Kubernetes</span>
+                        <span class="skill-tag">EKS</span>
+                        <span class="skill-tag">AWS (Advanced)</span>
+                        <span class="skill-tag">Azure</span>
+                        <span class="skill-tag">Databricks</span>
+                        <span class="skill-tag">Prometheus</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <div class="skill-label">Frontend</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products & Systems -->
+            <section id="products" class="cv-section">
+                <h2>Products & Systems</h2>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>ExpertAI</h4>
+                        <span class="project-type">Agentic Platform &bull; 2024&ndash;Present</span>
+                    </div>
+                    <p>Multi-agent analytical platform for autonomous analysis and ML model development over tabular data. PDDL-validated planning, hierarchical rule system (platform/company/user scopes), checkpoint-based resilience, LangGraph orchestration. Full-stack: Django backend, React frontend with WebSocket real-time communication, RabbitMQ/Kombu messaging, AWS EKS deployment. Used by global retailers and manufacturers.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>Grafa</h4>
+                        <span class="project-type">Knowledge Graph Engine &bull; 2024</span>
+                    </div>
+                    <p>Knowledge graph engine providing LLMs with structured, relationship-aware memory over heterogeneous documents. Multi-tenant isolation with federated retrieval and hook-based extensibility at every pipeline stage.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>KQuery</h4>
+                        <span class="project-type">NL-to-SQL Engine &bull; 2024</span>
+                    </div>
+                    <p>Natural-language-to-SQL engine across three database backends. Plans and verifies the full query hierarchy upfront &mdash; intermediate schemas and SQL implementation decided before execution &mdash; then runs all queries in parallel as dependencies resolve. Generation rules stored as data in the knowledge graph, scoped by platform, company, or user. Entity resolution cleanly separated from SQL generation.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>KNER</h4>
+                        <span class="project-type">Entity Resolution Pipeline &bull; 2024</span>
+                    </div>
+                    <p>Multi-agent, LLM-orchestrated named entity resolution pipeline for natural language business analytics queries. Resolves free-text segments against company-specific structured databases &mdash; products, geographies, promotions, brands, and business concepts &mdash; within a conversational, human-in-the-loop framework. Implemented as nested LangGraph state machines with four specialized LLM agents, deployed as a sub-graph within ExpertAI. <a href="kner.html">Read more</a></p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>UserAI</h4>
+                        <span class="project-type">Evaluation Harness &bull; 2025</span>
+                    </div>
+                    <p>Autonomous evaluation harness that drives multi-turn agent sessions end-to-end &mdash; sending queries, selecting disambiguation options, assessing goal satisfaction, and deciding when to continue or stop. CI-integrated regression detection for failure modes invisible in single-turn testing.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>Foundation Model for Market Panel Data</h4>
+                        <span class="project-type">Research &bull; 2025&ndash;Present</span>
+                    </div>
+                    <p>Energy-based latent-variable model with JEPA-style training objective. Learns compact representations of unobservable market dynamics via synthetic supervision and structured probing. Modular per-client adapters eliminate hours-long retraining cycles.</p>
+                </div>
+            </section>
+
+            <!-- Academic Projects -->
+            <section id="projects" class="cv-section">
+                <h2>Academic Projects</h2>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>AIMPAC Refactoring</h4>
+                        <span class="project-type">Research &bull; 2021&ndash;2022</span>
+                    </div>
+                    <p>Led a multidisciplinary group that built a Julia language replacement for the AIMPAC software suite for describing the quantum structure of molecules. Parallel, GPU-ready replacement for the original Fortran code. Collaboration between UNAM's IIMAS and School of Chemistry. <a href="projects/julia-language-aimpac-suite-replacement.html">View project</a></p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>PSO Supply Chain Optimization</h4>
+                        <span class="project-type">Research &bull; 2021</span>
+                    </div>
+                    <p>Parallel implementation for supply chain optimization on Nvidia GPUs using CUDA and Julia. Binary particle swarm optimization algorithm with conservation-of-flow constraints and LP-based cost evaluation. <a href="projects/supply-chain-optimization.html">View project</a></p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>Academic Collaboration Prediction</h4>
+                        <span class="project-type">Research &bull; 2020&ndash;2021</span>
+                    </div>
+                    <p>Improved upon previous results in predicting future academic collaborations using topological data. Created a reduced feature vector via SVD on the collaboration network's adjacency matrix, improving on Hasan et al. (2006). <a href="projects/predicting-academic-collaborations.html">View project</a></p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>Detection of Toxic Language</h4>
+                        <span class="project-type">Class Project &bull; 2020</span>
+                    </div>
+                    <p>GRU-based recurrent model to detect spans of toxic text in social network posts for the 2021 SEMEVAL International Workshop on Semantic Evaluation. Outperformed baseline results, placing above 50 other participating teams.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>COVID-19 Lung CT Segmentation ConvNet</h4>
+                        <span class="project-type">Class Project &bull; 2020</span>
+                    </div>
+                    <p>U-Net Convolutional Neural Network for identifying pneumonia indicators from COVID-19 in radiology images. Transfer learning and domain-specific augmentation achieved strong results from only ~60 annotated images. <a href="projects/covid-19-lung-scan-segmentation.html">View project</a></p>
+                </div>
+
+            </section>
+
+            <!-- Publications -->
+            <section id="publications" class="cv-section">
+                <h2>Publications & Preprints</h2>
+
+                <div class="publication-entry">
+                    <div class="publication-title"><a href="https://openreview.net/forum?id=FIVCQO2qeL" target="_blank" style="color: var(--text); text-decoration: underline; text-decoration-color: var(--border-light);">Representational Alignment of Glomeruli Activation in Murine Olfactory Bulb</a></div>
+                    <div class="publication-authors">Agarwal, V., Manasson, J., <strong>Garrido Czacki, M.</strong>, & Sucholutsky, I. (2025)</div>
+                    <div class="publication-venue">ICLR 2025 Re-Align Workshop (Poster)</div>
+                    <div class="publication-note">Proposed and built a pipeline for extracting hierarchical latent representations from olfactory bulb imagery; repurposed medically finetuned SAM2 for generalization, selected encoder-level features, and applied optimal transport to align and compare latent geometry across subjects.</div>
+                </div>
+            </section>
+
+            <!-- Awards & Honors -->
+            <section id="awards" class="cv-section">
+                <h2>Awards & Honors</h2>
+
+                <div class="award-entry">
+                    <span class="award-name">1st Place &mdash; Energy-Based Modeling Competition (NYU, Yann LeCun; 1st of 53). Compact ~20K-parameter physics-informed model outperformed ~3M-parameter ViT approaches via structural inductive biases.</span>
+                    <span class="award-year">2025</span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">Fulbright&ndash;García Robles Scholar</span>
+                    <span class="award-year">2022</span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">UNAM PAPIIT Research Scholarship &mdash; Project IA104720 (MCMC Methods for Large-Scale Linear Systems)</span>
+                    <span class="award-year">2020&ndash;2021</span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">1st Place &mdash; UNAM School of Engineering VLSI Design Competition</span>
+                    <span class="award-year">2020</span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">UNAM PAPIIT Research Scholarship &mdash; Project IN100719 (Predictive Models Applied to Graphs and Text)</span>
+                    <span class="award-year">2020</span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">2nd Place &mdash; First UNAM Impulse to Innovation Contest</span>
+                    <span class="award-year">2018</span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">Telmex Foundation Scholarship for Academic Excellence</span>
+                    <span class="award-year">2017</span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">UNAM Data Science B.Sc. Alumni Association &mdash; Founding Member</span>
+                    <span class="award-year"></span>
+                </div>
+                <div class="award-entry">
+                    <span class="award-name">UNAM Data Science B.Sc. Academic Council &mdash; First Class Student Representative</span>
+                    <span class="award-year"></span>
+                </div>
+            </section>
+
+            <!-- Certifications -->
+            <section id="certifications" class="cv-section">
+                <h2>Certifications</h2>
+                <ul class="cert-list">
+                    <li>Neural Networks and Deep Learning <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
+                    <li>Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
+                    <li>Structuring Machine Learning Projects <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
+                    <li>Sequence Models <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
+                    <li>Natural Language Processing with Classification and Vector Spaces <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
+                    <li>Natural Language Processing with Probabilistic Models <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
+                    <li>Build Basic Generative Adversarial Networks (GANs) <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
+                </ul>
+            </section>
+
+            <!-- Languages -->
+            <section id="languages" class="cv-section">
+                <h2>Languages</h2>
+                <div class="language-entry">
+                    <span class="language-name">Spanish</span>
+                    <span class="language-level">Native</span>
+                </div>
+                <div class="language-entry">
+                    <span class="language-name">English</span>
+                    <span class="language-level">Fluent</span>
+                </div>
+                <div class="language-entry">
+                    <span class="language-name">Japanese</span>
+                    <span class="language-level">Intermediate</span>
+                </div>
+                <div class="language-entry">
+                    <span class="language-name">Chinese</span>
+                    <span class="language-level">Beginner</span>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        }
+
+        // Highlight active section in sidebar
+        const updateActiveSection = () => {
+            const sections = document.querySelectorAll('.cv-section');
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+            let currentSection = '';
+            const scrollPos = window.scrollY + 140;
+
+            sections.forEach(section => {
+                if (scrollPos >= section.offsetTop) {
+                    currentSection = section.id;
+                }
+            });
+
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        };
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        setTheme(getPreferredTheme());
+        updateActiveSection();
+        window.addEventListener('scroll', updateActiveSection);
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    </script>
+</body>
+</html>

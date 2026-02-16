@@ -1,1 +1,384 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Garrido</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --bg-alt: #f7f7f7;
+            --text: #111;
+            --text-secondary: #333;
+            --text-muted: #666;
+            --text-faint: #999;
+            --border: #111;
+            --border-light: #e5e5e5;
+            --border-faint: #f0f0f0;
+            --accent: #000;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d0d0d;
+            --bg-alt: #1a1a1a;
+            --text: #f0f0f0;
+            --text-secondary: #d0d0d0;
+            --text-muted: #a0a0a0;
+            --text-faint: #606060;
+            --border: #404040;
+            --border-light: #2a2a2a;
+            --border-faint: #1f1f1f;
+            --accent: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .masthead {
+            padding: 48px 0 40px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .masthead-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .masthead-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            padding: 6px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+
+        .theme-toggle svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        [data-theme="dark"] .sun-icon {
+            display: block;
+        }
+
+        [data-theme="dark"] .moon-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .sun-icon {
+            display: none;
+        }
+
+        [data-theme="light"] .moon-icon {
+            display: block;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 60px 120px;
+        }
+
+        .hero {
+            margin-bottom: 100px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.25em;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+            line-height: 1.6;
+            max-width: 680px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .social-links a:hover {
+            color: var(--text);
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            padding: 28px 0;
+            border-top: 1px solid var(--border-light);
+            transition: border-color 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            border-color: var(--text);
+        }
+
+        .card h3 {
+            font-size: 1.35em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .card .meta {
+            color: var(--text-faint);
+            font-size: 12px;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .card .description {
+            color: var(--text-secondary);
+            line-height: 1.65;
+            font-size: 15px;
+        }
+
+        footer {
+            margin-top: 100px;
+            padding-top: 36px;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-faint);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .masthead-inner {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .container {
+                padding: 50px 24px 80px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            h2 {
+                font-size: 1.75em;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-inner">
+            <a href="index.html" class="logo">Mario Garrido</a>
+            <div class="masthead-right">
+                <div class="nav-links">
+                    <a href="#writings">Writings</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="cv.html">CV</a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Building the future of AI agents</h1>
+            <p class="subtitle">Exploring artificial intelligence, machine learning, and the future of human-computer interaction.</p>
+            <div class="social-links">
+                <a href="https://linkedin.com/in/mgczacki" target="_blank">LinkedIn</a>
+                <a href="https://github.com/Mgczacki" target="_blank">GitHub</a>
+                <a href="mailto:mgczacki@gmail.com">Email</a>
+            </div>
+        </div>
+
+        <section id="writings">
+            <h2>Writings</h2>
+            <div class="grid">
+                <a href="structured-agency.html" class="card">
+                    <h3>Structured Agency: On Building Reliable Agents</h3>
+                    <div class="meta">February 2026</div>
+                    <div class="description">
+                        A framework for building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling.
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Academic Projects</h2>
+            <p style="color: var(--text-secondary); font-size: 1.1em; margin-bottom: 40px; max-width: 800px;">
+                Research and engineering projects spanning machine learning, NLP, computer vision, and distributed systems.
+            </p>
+            <div class="grid">
+                <a href="projects.html?filter=ml" class="card">
+                    <h3>Machine Learning & AI</h3>
+                    <div class="meta">7 Projects</div>
+                    <div class="description">
+                        Deep learning, generative models, NLP, and computer vision projects including GANs,
+                        SemEval competitions, and medical imaging.
+                    </div>
+                </a>
+                <a href="projects.html?filter=systems" class="card">
+                    <h3>Systems & Optimization</h3>
+                    <div class="meta">5 Projects</div>
+                    <div class="description">
+                        High-performance computing, supply chain optimization, traffic simulation,
+                        and FPGA architecture design.
+                    </div>
+                </a>
+            </div>
+            <div style="margin-top: 32px; text-align: center;">
+                <a href="projects.html" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 1.1em;">
+                    View all projects →
+                </a>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 Mario Garrido. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Theme toggle
+        function getPreferredTheme() {
+            const stored = localStorage.getItem('theme');
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        }
+
+        // Initialize
+        setTheme(getPreferredTheme());
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    </script>
+</body>
+</html>

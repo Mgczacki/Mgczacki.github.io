@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 400">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+    <!-- Reusable left-pointing triangle -->
+    <symbol id="tri" viewBox="0 0 8 10">
+      <path d="M8 0 L0 5 L8 10 Z"/>
+    </symbol>
+    <filter id="nebula" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+
+  <!-- Axes -->
+  <line x1="100" y1="320" x2="600" y2="320" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="100" y1="320" x2="100" y2="50" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- Axis labels -->
+  <text x="350" y="355" text-anchor="middle" font-size="12" font-weight="600" fill="#111">Flexibility</text>
+  <text x="44" y="190" text-anchor="middle" font-size="12" font-weight="600" fill="#111" transform="rotate(-90,44,190)">Reliability</text>
+
+  <!-- Traditional SaaS — nebulous blue -->
+  <g filter="url(#nebula)" opacity="0.3">
+    <circle cx="150" cy="88" r="18" fill="#4A90D9"/>
+    <circle cx="160" cy="80" r="12" fill="#4A90D9"/>
+    <circle cx="140" cy="95" r="10" fill="#4A90D9"/>
+  </g>
+  <text x="172" y="84" font-size="11" font-weight="600" fill="#4A90D9">Traditional SaaS</text>
+  <use href="#tri" x="172" y="91" width="7" height="9" fill="#4A90D9"/>
+  <use href="#tri" x="181" y="91" width="7" height="9" fill="#4A90D9"/>
+  <use href="#tri" x="190" y="91" width="7" height="9" fill="#4A90D9"/>
+
+  <!-- Harnessed Agents — nebulous green -->
+  <g filter="url(#nebula)" opacity="0.3">
+    <circle cx="360" cy="88" r="22" fill="#2D8A4E"/>
+    <circle cx="380" cy="78" r="16" fill="#2D8A4E"/>
+    <circle cx="345" cy="95" r="14" fill="#2D8A4E"/>
+  </g>
+  <text x="395" y="80" font-size="11" font-weight="700" fill="#2D8A4E">Harnessed Agents</text>
+  <use href="#tri" x="395" y="85" width="7" height="9" fill="#2D8A4E"/>
+  <use href="#tri" x="404" y="85" width="7" height="9" fill="#2D8A4E"/>
+  <use href="#tri" x="413" y="85" width="7" height="9" fill="#2D8A4E"/>
+
+  <!-- Unconstrained Agents — nebulous red -->
+  <g filter="url(#nebula)" opacity="0.3">
+    <circle cx="540" cy="298" r="18" fill="#C9463E"/>
+    <circle cx="550" cy="290" r="12" fill="#C9463E"/>
+    <circle cx="530" cy="305" r="10" fill="#C9463E"/>
+  </g>
+  <text x="505" y="286" font-size="11" font-weight="600" fill="#C9463E">Unconstrained Agents</text>
+  <use href="#tri" x="505" y="291" width="7" height="9" fill="#C9463E"/>
+  <use href="#tri" x="514" y="291" width="7" height="9" fill="#C9463E"/>
+
+  <!-- Human Analysts — nebulous gray -->
+  <g filter="url(#nebula)" opacity="0.25">
+    <circle cx="460" cy="185" r="16" fill="#999"/>
+    <circle cx="470" cy="178" r="11" fill="#999"/>
+    <circle cx="452" cy="192" r="9" fill="#999"/>
+  </g>
+  <text x="485" y="182" font-size="11" fill="#999">Human Analysts</text>
+  <use href="#tri" x="485" y="188" width="7" height="9" fill="#999"/>
+
+  <!-- "add harness" arrow from unconstrained toward harnessed -->
+  <line x1="510" y1="286" x2="380" y2="110" stroke="#111" stroke-width="1" stroke-dasharray="5 3" marker-end="url(#a)"/>
+  <text x="400" y="210" font-size="10" font-style="italic" fill="#666">add harness</text>
+
+  <!-- Speed legend -->
+  <use href="#tri" x="115" y="375" width="7" height="9" fill="#666"/>
+  <text x="128" y="384" font-size="9" fill="#666">= relative speed (more = faster)</text>
+
+  <!-- Subtle annotation -->
+  <text x="350" y="398" text-anchor="middle" font-size="10" font-style="italic" fill="#999">Harnesses move agents up the frontier</text>
+</svg>

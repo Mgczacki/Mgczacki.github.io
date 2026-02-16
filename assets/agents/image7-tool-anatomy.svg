@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 380">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+  </defs>
+
+  <!-- Central tool box -->
+  <rect x="200" y="70" width="260" height="180" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
+
+  <!-- Tool name -->
+  <text x="330" y="105" text-anchor="middle" font-size="16" font-weight="700" fill="#111" font-family="'SF Mono',Monaco,monospace">read_document</text>
+  <line x1="220" y1="118" x2="440" y2="118" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- Short description inside -->
+  <text x="330" y="142" text-anchor="middle" font-size="11" fill="#666">Reads a document by name from</text>
+  <text x="330" y="158" text-anchor="middle" font-size="11" fill="#666">the knowledge base and returns</text>
+  <text x="330" y="174" text-anchor="middle" font-size="11" fill="#666">its full contents as text.</text>
+
+  <!-- Parameters hint -->
+  <text x="230" y="200" font-size="10" fill="#999" font-family="'SF Mono',Monaco,monospace">name: string (required)</text>
+  <text x="230" y="216" font-size="10" fill="#999" font-family="'SF Mono',Monaco,monospace">format: "raw" | "summary"</text>
+  <text x="230" y="232" font-size="10" fill="#999" font-family="'SF Mono',Monaco,monospace">returns: DocumentContent</text>
+
+  <!-- LEFT: Validators (input side) -->
+  <rect x="15" y="110" width="130" height="80" rx="5" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
+  <text x="80" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Validators</text>
+  <text x="80" y="152" text-anchor="middle" font-size="9" fill="#666">Document exists?</text>
+  <text x="80" y="166" text-anchor="middle" font-size="9" fill="#666">Valid format?</text>
+  <text x="80" y="180" text-anchor="middle" font-size="9" fill="#666">Permissions OK?</text>
+
+  <!-- Arrow from validators to tool -->
+  <line x1="145" y1="150" x2="195" y2="150" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- RIGHT: Introspective errors (output side) -->
+  <rect x="515" y="110" width="135" height="80" rx="5" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
+  <text x="582" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Error Messages</text>
+  <text x="582" y="152" text-anchor="middle" font-size="9" fill="#666">"Doc 'X' not found.</text>
+  <text x="582" y="166" text-anchor="middle" font-size="9" fill="#666">Available docs:</text>
+  <text x="582" y="180" text-anchor="middle" font-size="9" fill="#666">[report, summary, ...]"</text>
+
+  <!-- Arrow from tool to errors -->
+  <line x1="465" y1="150" x2="510" y2="150" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- BOTTOM: Arrow to State -->
+  <rect x="265" y="315" width="130" height="40" rx="5" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="330" y="340" text-anchor="middle" font-size="12" font-weight="600" fill="#111">State</text>
+
+  <!-- Arrow from tool to state -->
+  <line x1="330" y1="250" x2="330" y2="310" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="348" y="285" font-size="10" fill="#666">reads / writes</text>
+
+  <!-- TOP: Annotation labels -->
+  <text x="330" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#999">TOOL ANATOMY</text>
+</svg>
