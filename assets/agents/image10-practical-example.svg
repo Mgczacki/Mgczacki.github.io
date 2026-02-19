@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730 490">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+    <marker id="b" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <!-- ===== LEGEND (top-right) ===== -->
+  <rect x="440" y="6" width="26" height="15" rx="4" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="446" cy="13" r="2.5" fill="#111"/>
+  <text x="472" y="17" font-size="10" font-weight="600" fill="#111">Agent</text>
+
+  <rect x="520" y="6" width="26" height="15" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <path d="M526 13 l3 -4 3 4 -3 4z" fill="#111"/>
+  <text x="552" y="17" font-size="10" font-weight="600" fill="#111">LLM</text>
+
+  <rect x="600" y="6" width="26" height="15" rx="2" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="632" y="17" font-size="10" font-weight="600" fill="#111">Tool</text>
+
+  <!-- ===== LEVEL LABELS (left gutter) ===== -->
+  <text x="20" y="68" font-size="11" font-weight="700" fill="#111">L4</text>
+  <text x="20" y="81" font-size="8" fill="#999">Delegation</text>
+
+  <text x="20" y="166" font-size="11" font-weight="700" fill="#111">L3</text>
+  <text x="20" y="179" font-size="8" fill="#999">Routing</text>
+
+  <text x="20" y="288" font-size="11" font-weight="700" fill="#111">L2</text>
+  <text x="20" y="301" font-size="8" fill="#999">Workflow</text>
+
+  <text x="20" y="392" font-size="11" font-weight="700" fill="#111">L1</text>
+  <text x="20" y="405" font-size="8" fill="#999">Bespoke</text>
+
+  <!-- Vertical gutter separator -->
+  <line x1="56" y1="40" x2="56" y2="450" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- ===== LEVEL 4: General Agent ===== -->
+  <rect x="70" y="48" width="580" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="82" cy="60" r="3.5" fill="#111"/>
+  <text x="360" y="69" text-anchor="middle" font-size="13" font-weight="700" fill="#111">General Agent</text>
+  <text x="360" y="86" text-anchor="middle" font-size="10" fill="#666">"Clean up product catalog"</text>
+
+  <!-- ReAct loop indicator (L4) -->
+  <path d="M655 59 C673 59 673 85 658 87" fill="none" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="680" y="77" font-size="8" font-weight="500" fill="#666">ReAct</text>
+
+  <!-- Arrow: delegates -->
+  <line x1="360" y1="96" x2="360" y2="138" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="375" y="122" font-size="9" font-style="italic" fill="#666">delegates</text>
+
+  <!-- ===== LEVEL 3: Data Transformation Subagent ===== -->
+  <rect x="85" y="144" width="550" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="97" cy="156" r="3.5" fill="#111"/>
+  <text x="360" y="165" text-anchor="middle" font-size="12" font-weight="600" fill="#111">Data Transformation Subagent</text>
+  <text x="360" y="182" text-anchor="middle" font-size="10" fill="#666">"Extract brand from product names"</text>
+
+  <!-- ReAct loop indicator -->
+  <path d="M640 155 C658 155 658 181 643 183" fill="none" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="665" y="173" font-size="8" font-weight="500" fill="#666">ReAct</text>
+
+  <!-- Arrow: calls tool -->
+  <line x1="360" y1="192" x2="360" y2="232" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="375" y="217" font-size="9" font-style="italic" fill="#666">calls tool</text>
+
+  <!-- ===== TOOL BOUNDARY: dashed rect enclosing L2 + L1 ===== -->
+  <rect x="70" y="238" width="580" height="200" rx="8" fill="none" stroke="#111" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+  <!-- Tool label badge -->
+  <rect x="440" y="228" width="200" height="20" rx="3" fill="#fff" stroke="none"/>
+  <rect x="448" y="231" width="10" height="13" rx="1.5" fill="#e8e8e8" stroke="#111" stroke-width="1" stroke-dasharray="2 1.5"/>
+  <text x="464" y="243" font-size="10" font-weight="600" fill="#111">Column Extraction Tool</text>
+
+  <!-- ===== LEVEL 2: Workflow (inside tool boundary) ===== -->
+  <rect x="86" y="254" width="548" height="82" rx="6" fill="#e8e8e8" stroke="#111" stroke-width="1.2"/>
+  <text x="360" y="273" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Column Transform Workflow</text>
+
+  <!-- Step 1: Get Column -->
+  <rect x="102" y="284" width="110" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <text x="157" y="307" text-anchor="middle" font-size="10" font-weight="500" fill="#111">Get Column</text>
+
+  <line x1="212" y1="302" x2="236" y2="302" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 2: Deduplicate -->
+  <rect x="241" y="284" width="110" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <text x="296" y="307" text-anchor="middle" font-size="10" font-weight="500" fill="#111">Deduplicate</text>
+
+  <line x1="351" y1="302" x2="375" y2="302" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 3: Map (LLM) — LLM symbology -->
+  <rect x="380" y="284" width="100" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <path d="M389 296 l3.5 -5 3.5 5 -3.5 5z" fill="#111"/>
+  <text x="430" y="307" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Map (LLM)</text>
+
+  <line x1="480" y1="302" x2="504" y2="302" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 4: Apply Mapping -->
+  <rect x="509" y="284" width="110" height="36" rx="4" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <text x="564" y="307" text-anchor="middle" font-size="10" font-weight="500" fill="#111">Apply Mapping</text>
+
+  <!-- Arrow: Map step down to bespoke prompt -->
+  <line x1="430" y1="320" x2="430" y2="370" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="445" y="352" font-size="9" font-style="italic" fill="#666">per value</text>
+
+  <!-- ===== LEVEL 1: Bespoke LLM call (inside tool boundary) ===== -->
+  <rect x="330" y="375" width="200" height="48" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <path d="M340 389 l3.5 -5 3.5 5 -3.5 5z" fill="#111"/>
+  <text x="430" y="396" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Brand Extraction</text>
+  <text x="430" y="413" text-anchor="middle" font-size="9" fill="#666">input → output  (no tools)</text>
+
+  <!-- ===== RETURN PATH (right gutter, dashed) ===== -->
+  <line x1="664" y1="432" x2="664" y2="184" stroke="#999" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#b)"/>
+  <text x="677" y="316" font-size="8" fill="#999" font-style="italic">result</text>
+
+  <line x1="680" y1="180" x2="680" y2="90" stroke="#999" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#b)"/>
+  <text x="693" y="140" font-size="8" fill="#999" font-style="italic">done</text>
+
+  <!-- ===== BOTTOM ANNOTATION ===== -->
+  <text x="360" y="470" text-anchor="middle" font-size="10" fill="#999">Each level operates within its constraints — complexity contained at each boundary</text>
+</svg>
