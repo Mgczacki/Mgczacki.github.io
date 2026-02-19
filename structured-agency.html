@@ -443,6 +443,37 @@
             font-size: 15px;
         }
 
+        #content .definition {
+            margin: 24px 0;
+            padding: 16px 20px;
+            border-left: 3px solid #5b8a9a;
+            background: var(--bg-alt);
+            border-radius: 0 4px 4px 0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        #content .definition p {
+            margin: 0 0 10px 0;
+        }
+
+        #content .definition p:last-child {
+            margin-bottom: 0;
+        }
+
+        #content .definition strong {
+            font-weight: 700;
+        }
+
+        #content .definition ul {
+            margin: 8px 0 0 0;
+            padding-left: 20px;
+        }
+
+        #content .definition li {
+            margin-bottom: 6px;
+        }
+
         #content .principle {
             margin: 20px 0;
             padding: 12px 18px;
@@ -820,6 +851,19 @@ This progression reveals three fundamental questions that any agentic system mus
 ---
 
 ## 2. Core Principles
+
+<div class="definition">
+
+**Structure**, in this framework, is any pre-computed, human-designed organization that reduces the space an agent must navigate. It is the opposite of "let the model figure it out from scratch." Structure takes many forms:
+
+- **Domain structure** — Encoding the problem domain: schemas, entity relationships, business rules, valid states. The domain has inherent structure; the harness captures it rather than asking the model to rediscover it.
+- **Cognitive structure** — Human-aligned reasoning patterns: decomposition, planning, step-by-step processes, hierarchical thinking. Structure that mirrors how humans organize complex work.
+- **State structure** — Typed, addressable representations rather than raw text. Tasks, contexts, plans, action history as first-class objects with lifecycle—not strings in a conversation. This is central to the framework: unified state is the substrate on which all other structure operates.
+- **Constraint structure** — Boundaries that reduce the action space: output schemas, tool interfaces, validation rules, privilege boundaries. The walls that keep the agent on track.
+- **Compositional structure** — How work is partitioned across agents, delegation boundaries, hierarchy. The organizational chart of the system.
+- **Information structure** — How context is organized, layered, and disclosed. What the agent knows, when it knows it, and in what format.
+
+</div>
 
 The following principles are not independent—they form a dependency chain rooted in the idea that **structure is the fundamental enabler** of reliable agents. Together, they constitute the core of structured agency: a framework for building harnesses that make agents reliably capable.
 
