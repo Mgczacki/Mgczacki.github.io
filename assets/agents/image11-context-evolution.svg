@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 430">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#111"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#4a9"/>
+    </marker>
+    <marker id="r" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#c44"/>
+    </marker>
+  </defs>
+
+  <!-- ===== STAGE 1: Context Stuffing ===== -->
+  <text x="120" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Stage 1</text>
+  <text x="120" y="40" text-anchor="middle" font-size="10" fill="#666">Context Stuffing</text>
+
+  <!-- Monolithic knowledgebase block -->
+  <rect x="30" y="60" width="180" height="110" rx="5" fill="#f0f0f0" stroke="#111" stroke-width="1.5"/>
+  <text x="120" y="82" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Monolithic Knowledgebase</text>
+  <text x="120" y="98" text-anchor="middle" font-size="9" fill="#666">~50k tokens</text>
+  <!-- Mixed content lines -->
+  <line x1="48" y1="112" x2="150" y2="112" stroke="#bbb" stroke-width="0.8"/>
+  <line x1="48" y1="120" x2="170" y2="120" stroke="#bbb" stroke-width="0.8"/>
+  <line x1="48" y1="128" x2="142" y2="128" stroke="#bbb" stroke-width="0.8"/>
+  <line x1="48" y1="136" x2="160" y2="136" stroke="#bbb" stroke-width="0.8"/>
+  <line x1="48" y1="144" x2="148" y2="144" stroke="#bbb" stroke-width="0.8"/>
+  <line x1="48" y1="152" x2="175" y2="152" stroke="#bbb" stroke-width="0.8"/>
+  <!-- Labels: schema, rules, patterns all mixed -->
+  <text x="178" y="117" font-size="7" fill="#999">schema</text>
+  <text x="178" y="133" font-size="7" fill="#999">rules</text>
+  <text x="178" y="149" font-size="7" fill="#999">patterns</text>
+
+  <!-- Arrow down: everything loaded -->
+  <line x1="120" y1="170" x2="120" y2="212" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="148" y="196" font-size="8" fill="#666" font-style="italic">all loaded</text>
+
+  <!-- Context window -->
+  <rect x="40" y="218" width="160" height="66" rx="5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="120" y="238" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Context Window</text>
+  <!-- Filled bar -->
+  <rect x="52" y="248" width="136" height="11" rx="3" fill="#bbb" stroke="#999" stroke-width="0.8"/>
+  <text x="120" y="275" text-anchor="middle" font-size="8" fill="#666">Full but relevant</text>
+
+  <!-- Agent box -->
+  <rect x="56" y="312" width="128" height="36" rx="5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="70" cy="330" r="3" fill="#111"/>
+  <text x="126" y="334" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Agent</text>
+
+  <line x1="120" y1="284" x2="120" y2="308" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Result -->
+  <text x="120" y="370" text-anchor="middle" font-size="11" font-weight="700" fill="#4a9">✓ Works</text>
+  <text x="120" y="386" text-anchor="middle" font-size="9" fill="#999">Narrow domain, everything fits</text>
+
+  <!-- ===== Divider 1 ===== -->
+  <line x1="248" y1="20" x2="248" y2="400" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- ===== STAGE 2: RAG ===== -->
+  <text x="380" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Stage 2</text>
+  <text x="380" y="40" text-anchor="middle" font-size="10" fill="#666">RAG</text>
+
+  <!-- Chunk cluster at top -->
+  <rect x="282" y="60" width="48" height="30" rx="3" fill="#f0f0f0" stroke="#111" stroke-width="1.2"/>
+  <text x="306" y="79" text-anchor="middle" font-size="8" fill="#666">chunk</text>
+  <rect x="338" y="60" width="48" height="30" rx="3" fill="#f0f0f0" stroke="#111" stroke-width="1.2"/>
+  <text x="362" y="79" text-anchor="middle" font-size="8" fill="#666">chunk</text>
+  <rect x="394" y="60" width="48" height="30" rx="3" fill="#f0f0f0" stroke="#111" stroke-width="1.2"/>
+  <text x="418" y="79" text-anchor="middle" font-size="8" fill="#666">chunk</text>
+  <rect x="282" y="98" width="48" height="30" rx="3" fill="#f0f0f0" stroke="#111" stroke-width="1.2"/>
+  <text x="306" y="117" text-anchor="middle" font-size="8" fill="#666">chunk</text>
+  <rect x="338" y="98" width="48" height="30" rx="3" fill="#f0f0f0" stroke="#111" stroke-width="1.2"/>
+  <text x="362" y="117" text-anchor="middle" font-size="8" fill="#666">chunk</text>
+  <rect x="394" y="98" width="48" height="30" rx="3" fill="#f0f0f0" stroke="#111" stroke-width="1.2"/>
+  <text x="418" y="117" text-anchor="middle" font-size="8" fill="#666">chunk</text>
+
+  <!-- Retrieval layer -->
+  <rect x="287" y="146" width="186" height="30" rx="4" fill="#fff" stroke="#111" stroke-width="1.2" stroke-dasharray="4 3"/>
+  <text x="380" y="165" text-anchor="middle" font-size="10" font-weight="500" fill="#111">Retrieval (similarity)</text>
+
+  <!-- Arrows from retrieval to context -->
+  <!-- Hit -->
+  <line x1="325" y1="176" x2="325" y2="214" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <!-- Noise (red dashed) -->
+  <line x1="380" y1="176" x2="380" y2="214" stroke="#c44" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#r)"/>
+  <!-- Hit -->
+  <line x1="435" y1="176" x2="435" y2="214" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Miss & noise annotations -->
+  <text x="345" y="200" font-size="7" font-weight="600" fill="#c44">noise</text>
+  <text x="461" y="196" font-size="7" font-weight="600" fill="#c44">✗ missed</text>
+  <text x="461" y="207" font-size="7" fill="#999">relevant table</text>
+
+  <!-- Context window -->
+  <rect x="300" y="218" width="160" height="66" rx="5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="380" y="238" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Context Window</text>
+  <!-- Partial fill with gaps -->
+  <rect x="312" y="248" width="38" height="11" rx="3" fill="#bbb" stroke="#999" stroke-width="0.8"/>
+  <rect x="356" y="248" width="32" height="11" rx="3" fill="#e8a0a0" stroke="#c44" stroke-width="0.8"/>
+  <rect x="394" y="248" width="38" height="11" rx="3" fill="#bbb" stroke="#999" stroke-width="0.8"/>
+  <text x="380" y="275" text-anchor="middle" font-size="8" fill="#666">Gaps + noise</text>
+
+  <!-- Agent box -->
+  <rect x="316" y="312" width="128" height="36" rx="5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="330" cy="330" r="3" fill="#111"/>
+  <text x="386" y="334" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Agent</text>
+
+  <line x1="380" y1="284" x2="380" y2="308" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Result -->
+  <text x="380" y="370" text-anchor="middle" font-size="11" font-weight="700" fill="#c44">✗ Degraded</text>
+  <text x="380" y="386" text-anchor="middle" font-size="9" fill="#999">Semantic ≠ structural relevance</text>
+
+  <!-- ===== Divider 2 ===== -->
+  <line x1="510" y1="20" x2="510" y2="400" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- ===== STAGE 3: Structured Contexts ===== -->
+  <text x="665" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#111">Stage 3</text>
+  <text x="665" y="40" text-anchor="middle" font-size="10" fill="#666">Structured Contexts</text>
+
+  <!-- Tier 1: Always-loaded (green) -->
+  <rect x="540" y="60" width="250" height="32" rx="4" fill="#e8f5ee" stroke="#4a9" stroke-width="1.5"/>
+  <text x="665" y="80" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Always-loaded</text>
+  <text x="665" y="56" text-anchor="middle" font-size="7" font-weight="600" fill="#4a9">CORE — query patterns, conventions</text>
+
+  <!-- Tier 2: Domain contexts -->
+  <rect x="540" y="108" width="120" height="32" rx="4" fill="#f7f7f7" stroke="#111" stroke-width="1.2"/>
+  <text x="600" y="128" text-anchor="middle" font-size="9" font-weight="600" fill="#333">Promo</text>
+  <rect x="670" y="108" width="120" height="32" rx="4" fill="#f7f7f7" stroke="#111" stroke-width="1.2"/>
+  <text x="730" y="128" text-anchor="middle" font-size="9" font-weight="600" fill="#333">Inventory</text>
+  <text x="665" y="104" text-anchor="middle" font-size="7" font-weight="600" fill="#666">DOMAIN — per use-case</text>
+
+  <!-- Tier 3: Queryable schemas -->
+  <rect x="540" y="160" width="72" height="26" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="576" y="177" text-anchor="middle" font-size="8" fill="#666">schema A</text>
+  <rect x="620" y="160" width="72" height="26" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="656" y="177" text-anchor="middle" font-size="8" fill="#666">schema B</text>
+  <rect x="700" y="160" width="72" height="26" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1" stroke-dasharray="3 2"/>
+  <text x="736" y="177" text-anchor="middle" font-size="8" fill="#666">schema C</text>
+  <text x="665" y="156" text-anchor="middle" font-size="7" font-weight="600" fill="#666">QUERYABLE — on demand</text>
+
+  <!-- Right-side loading policy labels -->
+  <text x="798" y="80" font-size="8" fill="#4a9" font-weight="600">← always</text>
+  <text x="798" y="128" font-size="8" fill="#666" font-style="italic">← routed</text>
+  <text x="798" y="177" font-size="8" fill="#666" font-style="italic">← on demand</text>
+
+  <!-- Arrows ON TOP of boxes: each tier fans to its zone in the Context Window -->
+  <!-- Green arrow: Always-loaded → CW left zone (crosses through lower tiers) -->
+  <line x1="570" y1="92" x2="590" y2="238" stroke="#4a9" stroke-width="1.8" marker-end="url(#g)"/>
+  <!-- Black arrow: Promo (routed) → CW center zone -->
+  <line x1="620" y1="140" x2="655" y2="238" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <!-- Dashed arrow: schema B (on demand) → CW right zone -->
+  <line x1="692" y1="186" x2="720" y2="238" stroke="#111" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#a)"/>
+
+  <!-- Context window -->
+  <rect x="560" y="238" width="210" height="66" rx="5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <text x="665" y="258" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Context Window</text>
+  <!-- Organized fill: three color-coded segments -->
+  <rect x="574" y="268" width="60" height="11" rx="3" fill="#c2e6d2" stroke="#4a9" stroke-width="0.8"/>
+  <rect x="640" y="268" width="50" height="11" rx="3" fill="#ddd" stroke="#999" stroke-width="0.8"/>
+  <rect x="696" y="268" width="42" height="11" rx="3" fill="#eee" stroke="#bbb" stroke-width="0.8" stroke-dasharray="2 1"/>
+  <text x="665" y="295" text-anchor="middle" font-size="8" fill="#666">Right context, right time</text>
+
+  <!-- Agent box -->
+  <rect x="601" y="326" width="128" height="36" rx="5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="615" cy="344" r="3" fill="#111"/>
+  <text x="671" y="348" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Agent</text>
+
+  <line x1="665" y1="304" x2="665" y2="322" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Result -->
+  <text x="665" y="382" text-anchor="middle" font-size="11" font-weight="700" fill="#4a9">✓ Scales</text>
+  <text x="665" y="396" text-anchor="middle" font-size="9" fill="#999">Composable across domains</text>
+
+  <!-- ===== Bottom evolution arrow ===== -->
+  <line x1="80" y1="412" x2="730" y2="412" stroke="#ccc" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="410" y="428" text-anchor="middle" font-size="10" font-style="italic" fill="#999">Context strategy evolves with compositional demands, not window limits</text>
+</svg>

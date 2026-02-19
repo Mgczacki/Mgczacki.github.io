@@ -664,6 +664,7 @@
                             <li><a href="#tradeoff">2.4 Flexibility-Reliability</a>
                                 <ul class="subsection">
                                     <li><a href="#harness-obsolescence">2.4.1 Harness Obsolescence</a></li>
+                                    <li><a href="#commoditizing-intelligence">2.4.2 Commoditizing Intelligence</a></li>
                                 </ul>
                             </li>
                             <li><a href="#corollaries">2.5 Corollaries</a></li>
@@ -931,6 +932,33 @@ This prevents context overload while maintaining access to necessary information
 
 Progressive disclosure is not the same as minimizing context. Sometimes the right context engineering decision is to load *more*—context stuffing remains highly effective when the corpus fits and is relevant. Progressive disclosure is the general pattern; context stuffing is the trivial special case where everything fits and everything is relevant.
 
+<details class="practical-example">
+<summary>Practical Example — From Context Stuffing to Progressive Disclosure</summary>
+<div class="practical-example-body">
+
+<p>The same kuona.ai system from Section 1.2 illustrates how context strategies evolve—not because of context window limits, but because of compositional demands. The system is an NLP-to-SQL agent that performs promotional postmortem analysis: a user asks a business question, and the agent translates it into SQL queries against the company's data warehouse.</p>
+
+![Context Strategy Evolution: From Stuffing to Structure](assets/agents/image11-context-evolution.svg)
+
+<p><strong>Stage 1: Context stuffing (worked well).</strong> The initial version used a single ~50k token knowledgebase file that mixed domain knowledge (schema definitions, business rules, metric calculations) with task knowledge (query patterns, SQL dialect conventions, common joins). Context stuffing worked because the domain was narrow and bounded—promotional analysis only. The corpus fit, everything was relevant. This is the trivial special case.</p>
+
+<p><strong>Stage 2: RAG (degraded performance).</strong> When exploring optimization, RAG was tried. It introduced latency, sometimes missed relevant tables or columns (low recall), and sometimes injected semi-relevant but confusing context (noise). Maximizing recall recovered performance and achieved some savings over stuffing everything, but the fundamental issue remained: the retrieval mechanism couldn't distinguish what was <em>structurally</em> relevant from what was <em>semantically</em> similar. A table's schema definition might not be semantically close to the user's question, but it's structurally essential for writing a correct query.</p>
+
+<p><strong>Stage 3: Structured contexts (enabled scaling).</strong> Scaling from promotional analysis to general business use cases forced the real solution. The monolithic knowledgebase got split into structured contexts with different treatment:</p>
+
+<ul>
+<li><strong>Always-loaded context</strong>: Core DB query patterns and system conventions—how queries must be built, SQL dialect rules, output formatting. Loaded on every invocation.</li>
+<li><strong>Domain contexts</strong>: Per-domain knowledge (promotional metrics vs. inventory vs. finance)—loaded based on task routing, so the agent gets the right business framing for its current task.</li>
+<li><strong>Queryable context</strong>: Domain-specific schema details—retrieved on demand when the agent needs to inspect a table's structure or understand a column's semantics.</li>
+</ul>
+
+<p>This is progressive disclosure in practice: the agent always has the foundation, gets the domain framing for its current task, and can reach for details as needed.</p>
+
+<p>The evolution from stuffing to structure wasn't driven by context window limits. The 50k tokens still fit. It was driven by the need for <em>composability</em>—the same agent serving multiple domains required the context to be <em>engineered</em>, not just <em>loaded</em>.</p>
+
+</div>
+</details>
+
 <details class="counterpoints">
 <summary>Counterpoints & Discussion</summary>
 <div class="counterpoints-body">
@@ -1037,6 +1065,41 @@ Current harnesses address current model limitations. State management compensate
 As models improve, some harnesses will naturally weaken. A model with perfect self-verification needs fewer external validation signals. A model with reliable structured output needs less schema enforcement. A model with effectively infinite context and perfect attention needs less aggressive progressive disclosure. New architectures may overcome the need for external memory entirely, collapsing the state management harness into the model itself. The Bitter Lesson predicts exactly this trajectory: capabilities that were once impossible without external scaffolding get absorbed into the model itself.
 
 But even as harnesses weaken, **domain-specific structured state remains economical**. The latency cost of having a model re-derive a customer's order history from raw conversation logs—every invocation—will always exceed the cost of maintaining that information in a structured state object, regardless of how capable the model becomes. The cognitive cost (in tokens) of navigating an unstructured environment will always exceed the cost of navigating one where the structure is pre-computed. This is the same argument that applies to software engineering generally: we don't rewrite parsers from first principles every time we need to parse JSON, even though we *could*. Structured agency's harnesses occupy this same economic niche—they are amortized investments in structure that pay dividends across invocations. The right design principle, then, is not "build permanent harnesses" but "build harnesses with a clear understanding of which limitations they address and how those limitations are evolving." This is the temporal dimension of the flexibility-reliability tradeoff: the optimal point on the curve shifts over time as model capabilities advance, and well-designed structured agents shift with it.
+
+#### 2.4.2 Commoditizing Intelligence
+
+Section 2.4.1 argues that the harness should survive model *improvement*—the temporal axis. There is a second axis: the harness should survive model *substitution*.
+
+<div class="principle">
+
+**Principle**: Treat the model as a replaceable commodity. The harness is the stable layer; the intelligence provider is a variable.
+
+</div>
+
+The economic realities of model serving make this more than an architectural nicety. Providers compete on price, latency, and capability across different task profiles. A model that is cost-optimal for structured extraction may not be the best choice for open-ended reasoning. A harness that abstracts over the intelligence provider can route tasks to the appropriate model—or simply to the cheapest one that meets the reliability threshold. This is the same economic logic that drives cloud infrastructure: you don't build your application around a specific EC2 instance.
+
+The robustness argument is equally compelling. Provider outages, rate limits, and deprecations are operational realities. A harness designed around model interchangeability treats these as transient conditions rather than architectural crises—if one provider fails, the system falls back without adaptation.
+
+This principle extends down to the implementation level. Frameworks like PydanticAI, LangChain, and similar orchestration layers earn their value not primarily through abstraction but through the operational niceties that make model commoditization practical:
+
+- **Retry loops with exponential backoff** for transient provider errors (rate limits, timeouts, 5xx responses)
+- **Structured output validation with automatic retries** — when the model produces malformed JSON given a schema constraint, the framework re-prompts rather than failing. This is a harness that compensates for a model limitation (unreliable structured output), exactly as Section 2.4.1 describes.
+- **Provider-agnostic interfaces** that allow swapping the underlying model without changing application code
+- **Streaming, token counting, and cost tracking** as cross-cutting concerns independent of which model is being called
+
+Importantly, benefiting from these niceties does not require buying into any framework's full ecosystem or opinionated agent architecture. The retry loops, structured output validation, and provider abstraction are composable building blocks—you can use them to construct your own harnesses without adopting the framework's opinions about how agents should be structured. The value is in the operational primitives, not the orchestration philosophy.
+
+The key insight is that these primitives are themselves harnesses in the structured agency sense. They sit between your application logic and the intelligence provider, adding structure (retries, validation, provider abstraction) that makes the system more reliable. The model produces the intelligence; the harness ensures that intelligence is delivered reliably, affordably, and in the right format.
+
+<details class="counterpoints">
+<summary>Counterpoints & Discussion</summary>
+<div class="counterpoints-body">
+<p>Model-agnostic design can paper over meaningful capability differences. Not all models handle tool calling, structured output, or multi-turn reasoning equally—abstracting over these differences can lead to lowest-common-denominator designs that fail to exploit what a specific model does well. Some architectures (like Claude's extended thinking or OpenAI's o-series reasoning) offer unique capabilities that a generic interface cannot expose.</p>
+<div class="author-response">
+<p>This is a real tension, and I don't advocate for pure abstraction at the cost of capability. The principle is about the <em>default posture</em>: design the harness so that the model is replaceable <em>unless</em> a specific capability justifies the coupling. Provider-specific features should be opt-in, not baked into the architecture. In practice, I've found that 80–90% of agent interactions are standard enough to be provider-agnostic, while a small number of critical steps (complex reasoning, long-context synthesis) may warrant model-specific routing. The harness should support both: commodity intelligence for the common case, specialized intelligence where it matters.</p>
+</div>
+</div>
+</details>
 
 ### 2.5 Practical Corollaries
 
@@ -1900,6 +1963,7 @@ The field is evolving rapidly. Models will continue to improve, context windows 
                 'When Structure Doesn\'t Pay': 'when-structure-doesnt-pay',
                 '2.4 The Flexibility-Reliability Tradeoff': 'tradeoff',
                 '2.4.1 Designing for Harness Obsolescence': 'harness-obsolescence',
+                '2.4.2 Commoditizing Intelligence': 'commoditizing-intelligence',
                 '2.5 Practical Corollaries': 'corollaries',
                 '2.5.1 Redundancy is a Feature': 'redundancy',
                 '3. Taxonomy of Structured Agents': 'taxonomy',
