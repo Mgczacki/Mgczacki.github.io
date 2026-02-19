@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects | Mario Garrido</title>
+
     <style>
         :root {
             --bg: #fff;
@@ -302,7 +303,7 @@
             <a href="index.html" class="logo">Mario Garrido</a>
             <div class="masthead-right">
                 <div class="nav-links">
-                    <a href="index.html#writings">Writings</a>
+                    <a href="writings.html">Writings</a>
                     <a href="projects.html">Projects</a>
                     <a href="cv.html">CV</a>
                 </div>
@@ -321,27 +322,45 @@
 
     <div class="container">
         <div class="page-header">
-            <h1>Academic Projects</h1>
+            <h1>Projects</h1>
             <p class="intro">
-                A collection of research and engineering projects in machine learning, deep learning,
+                Personal and academic projects in machine learning, deep learning,
                 natural language processing, computer vision, and distributed systems.
             </p>
-            <div class="topics">
-                <span class="topic-tag">Deep Learning</span>
-                <span class="topic-tag">Generative Models</span>
-                <span class="topic-tag">NLP</span>
-                <span class="topic-tag">Computer Vision</span>
-                <span class="topic-tag">Optimization</span>
-                <span class="topic-tag">Parallel Computing</span>
-                <span class="topic-tag">Real-time Systems</span>
+        </div>
+
+        <div class="year-section">
+            <h2>Personal Projects</h2>
+            <div class="grid">
+                <a href="https://github.com/Mgczacki/bakepy" target="_blank" class="project-card" data-category="systems">
+                    <h3>BakePy</h3>
+                    <div class="meta">Open Source • Python Library • 2022</div>
+                    <div class="description">
+                        Python library for creating good-looking reports programmatically without templates or complex layout systems.
+                        Automatically transforms Matplotlib figures and Pandas DataFrames into HTML using Bootstrap 5's grid for layout.
+                    </div>
+                </a>
+
+                <a href="https://github.com/Mgczacki/claude-code-chrome-docker-bridge" target="_blank" class="project-card" data-category="systems">
+                    <h3>Claude Code Chrome Docker Bridge</h3>
+                    <div class="meta">Open Source • Docker Tool • 2026</div>
+                    <div class="description">
+                        Docker-to-Host Chrome Bridge for Claude Code. Enables browser automation from within Docker containers by bridging Chrome on the host machine.
+                    </div>
+                </a>
             </div>
-            <div class="filter-bar">
+        </div>
+
+        <div class="year-section" style="margin-bottom: 32px;">
+            <h2>Academic Projects</h2>
+            <div class="filter-bar" style="margin-top: 0;">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="ml">Machine Learning & AI</button>
                 <button class="filter-btn" data-filter="systems">Systems & Optimization</button>
             </div>
         </div>
 
+        <div id="academic-grid">
         <div class="year-section">
             <h2>2021</h2>
             <div class="grid">
@@ -441,6 +460,7 @@
                 </a>
             </div>
         </div>
+        </div>
     </div>
 
     <script>
@@ -469,13 +489,15 @@
             }
         });
 
-        // Project filtering
+        // Project filtering (scoped to academic section only)
+        const academicGrid = document.getElementById('academic-grid');
+
         function applyFilter(filter) {
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.filter === filter);
             });
 
-            document.querySelectorAll('.project-card').forEach(card => {
+            academicGrid.querySelectorAll('.project-card').forEach(card => {
                 if (filter === 'all' || card.dataset.category.split(' ').includes(filter)) {
                     card.classList.remove('hidden');
                 } else {
@@ -483,7 +505,7 @@
                 }
             });
 
-            document.querySelectorAll('.year-section').forEach(section => {
+            academicGrid.querySelectorAll('.year-section').forEach(section => {
                 const visible = section.querySelectorAll('.project-card:not(.hidden)');
                 section.classList.toggle('hidden', visible.length === 0);
             });

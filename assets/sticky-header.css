@@ -1,0 +1,16 @@
+.masthead {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    transition: transform 0.3s ease;
+    will-change: transform;
+}
+
+.masthead--hidden {
+    transform: translateY(-100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .masthead { transition: none; }
+}

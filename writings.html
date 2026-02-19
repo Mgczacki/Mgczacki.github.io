@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Predicting Academic Collaborations | Mario Garrido</title>
+    <title>Writings | Mario Garrido</title>
+
     <style>
         :root {
             --bg: #fff;
@@ -134,99 +135,71 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 70px 60px 120px;
         }
 
         .page-header {
-            margin-bottom: 50px;
-            padding-bottom: 40px;
-            border-bottom: 1px solid var(--border-faint);
+            margin-bottom: 70px;
         }
 
         h1 {
-            font-size: 2.75em;
+            font-size: 3em;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 20px;
             letter-spacing: -0.5px;
             color: var(--text);
             line-height: 1.2;
         }
 
-        .meta {
+        .intro {
+            color: var(--text-secondary);
+            font-size: 1.15em;
+            line-height: 1.65;
+            max-width: 720px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 28px;
+        }
+
+        .project-card {
+            padding: 28px 0;
+            border-top: 1px solid var(--border-light);
+            transition: border-color 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .project-card:hover {
+            border-color: var(--text);
+        }
+
+        .project-card h3 {
+            font-size: 1.35em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .project-card .meta {
             color: var(--text-faint);
             font-size: 12px;
+            margin-bottom: 14px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 600;
         }
 
-        .content {
-            background: transparent;
-        }
-
-        .content p {
-            margin-bottom: 1.5em;
+        .project-card .description {
             color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.7;
-        }
-
-        .content h2 {
-            font-size: 1.6em;
-            font-weight: 700;
-            margin: 48px 0 18px 0;
-            color: var(--text);
-            letter-spacing: -0.3px;
-        }
-
-        .content h2:first-child {
-            margin-top: 0;
-        }
-
-        .content ul {
-            margin-bottom: 1.5em;
-            padding-left: 24px;
-        }
-
-        .content li {
-            margin-bottom: 0.65em;
-            line-height: 1.7;
-            color: var(--text-secondary);
-        }
-
-        .content a {
-            color: var(--text);
-            font-weight: 500;
-            text-decoration: underline;
-            text-decoration-color: var(--border-light);
-            transition: text-decoration-color 0.2s;
-        }
-
-        .content a:hover {
-            text-decoration-color: var(--text);
-        }
-
-        .content img, .content video {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 2em 0;
-            border: 1px solid var(--border-light);
-        }
-
-        .figure {
-            margin: 2.5em 0;
-        }
-
-        .figure-caption {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-top: 12px;
-            text-align: center;
-            font-style: italic;
-            line-height: 1.5;
+            line-height: 1.65;
+            font-size: 15px;
         }
 
         @media (max-width: 768px) {
@@ -243,28 +216,26 @@
             }
 
             h1 {
-                font-size: 2.2em;
+                font-size: 2.5em;
             }
 
-            .content h2 {
-                font-size: 1.4em;
-            }
-
-            .content {
-                font-size: 15px;
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+    <link rel="stylesheet" href="assets/sticky-header.css">
+    <script src="assets/sticky-header.js"></script>
 </head>
 <body>
     <header class="masthead">
         <div class="masthead-inner">
-            <a href="../index.html" class="logo">Mario Garrido</a>
+            <a href="index.html" class="logo">Mario Garrido</a>
             <div class="masthead-right">
                 <div class="nav-links">
-                    <a href="../writings.html">Writings</a>
-                    <a href="../projects.html">Projects</a>
-                    <a href="../cv.html">CV</a>
+                    <a href="writings.html">Writings</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="cv.html">CV</a>
                 </div>
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
                     <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -281,33 +252,20 @@
 
     <div class="container">
         <div class="page-header">
-            <h1>Predicting Academic Collaborations</h1>
-            <div class="meta">2021 • Network Analysis • ML</div>
+            <h1>Writings</h1>
+            <p class="intro">
+                Essays and frameworks on artificial intelligence, agent design, and the future of human-computer interaction.
+            </p>
         </div>
 
-        <div class="content">
-<div class="figure">
-                <img src="assets/predicting-collaborations/image1.png" alt="Link prediction illustrative image">
-                <p class="figure-caption">Link prediction in academic collaboration networks.</p>
-            </div>
-
-            <p>I worked under the IIMAS's Department of Systems Engineering and Automatization to recreate and afterwards improve upon previous results in predicting future academic collaborations between authors using only associated topological data.</p>
-
-            <p>This problem was analyzed in Link Prediction using Supervised Learning (Hasan et al., 2006), in which the authors presented results with the following models:</p>
-
-            <ul>
-                <li>Decision Trees</li>
-                <li>SVM with Linear and RBF Kernels</li>
-                <li>K-Neighbors</li>
-                <li>Gaussian Naive Bayes</li>
-                <li>Multi-Layer Perceptron</li>
-                <li>RBF Network</li>
-                <li>Bagging on the previous models</li>
-            </ul>
-
-            <p>After assuring the replicability of the original work, I improved upon its results by creating a reduced feature vector for a given author using SVD on the collaboration network's adjacency matrix.</p>
-
-            <p>The repository for this project can be found <a href="https://github.com/Mgczacki" target="_blank">here</a>.</p>
+        <div class="grid">
+            <a href="structured-agency.html" class="project-card">
+                <h3>Structured Agency: On Building Reliable Agents</h3>
+                <div class="meta">February 2026</div>
+                <div class="description">
+                    A framework for building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling.
+                </div>
+            </a>
         </div>
     </div>
 
@@ -328,6 +286,9 @@
             const current = document.documentElement.getAttribute('data-theme');
             setTheme(current === 'dark' ? 'light' : 'dark');
         }
+
+        // Sticky header (shared component)
+        initStickyHeader();
 
         // Initialize
         setTheme(getPreferredTheme());
