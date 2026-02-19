@@ -144,81 +144,7 @@
             align-items: start;
         }
 
-        .sidebar {
-            position: sticky;
-            top: 120px;
-            max-height: calc(100vh - 140px);
-            overflow-y: auto;
-        }
-
-        .sidebar::-webkit-scrollbar {
-            width: 3px;
-        }
-
-        .sidebar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--border-light);
-            border-radius: 2px;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
-
-        .sidebar h3 {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-faint);
-            margin-bottom: 16px;
-            font-weight: 600;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar li {
-            margin-bottom: 2px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            padding: 6px 0;
-            transition: color 0.2s;
-            line-height: 1.4;
-        }
-
-        .sidebar a:hover {
-            color: var(--text);
-        }
-
-        .sidebar a.active {
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .sidebar .subsection {
-            padding-left: 12px;
-            margin-top: 2px;
-        }
-
-        .sidebar .subsection a {
-            font-size: 12px;
-            color: var(--text-faint);
-        }
-
-        .sidebar .subsection a:hover {
-            color: var(--text-muted);
-        }
+        /* Sidebar TOC: base styles loaded from assets/sidebar-toc.css */
 
         .content-wrapper {
             min-width: 0;
@@ -493,6 +419,74 @@
             border-bottom: none;
         }
 
+        /* Version filtering UI — commented out for now, showing full article only
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: none;
+            color: var(--text-muted);
+            padding: 0 0 2px;
+            font-size: 13px;
+            border: none;
+            border-bottom: 1.5px solid transparent;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover {
+            color: var(--text);
+        }
+
+        .filter-btn.active {
+            color: var(--text);
+            border-bottom-color: var(--text);
+        }
+
+        .version-hidden {
+            display: none;
+        }
+
+        .variant-toggle {
+            display: inline-flex;
+            gap: 0;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .variant-toggle-btn {
+            background: none;
+            border: none;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .variant-toggle-btn:not(:last-child) {
+            border-right: 1px solid var(--border-light);
+        }
+
+        .variant-toggle-btn:hover {
+            color: var(--text);
+        }
+
+        .variant-toggle-btn.active {
+            background: var(--bg-alt);
+            color: var(--text);
+        }
+        */
+
         @media (max-width: 1024px) {
             .container {
                 grid-template-columns: 1fr;
@@ -532,6 +526,10 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="assets/sidebar-toc.css">
+    <script src="assets/sidebar-toc.js"></script>
+    <link rel="stylesheet" href="assets/sticky-header.css">
+    <script src="assets/sticky-header.js"></script>
 </head>
 <body>
     <header class="masthead">
@@ -539,7 +537,7 @@
             <a href="index.html" class="logo">Mario Garrido</a>
             <div class="masthead-right">
                 <div class="nav-links">
-                    <a href="index.html#writings">Writings</a>
+                    <a href="writings.html">Writings</a>
                     <a href="projects.html">Projects</a>
                     <a href="cv.html">CV</a>
                 </div>
@@ -572,7 +570,11 @@
                             <li><a href="#structure">2.1 Structure</a></li>
                             <li><a href="#minimize-context">2.2 Context Engineering</a></li>
                             <li><a href="#unconstrained">2.3 Unconstrained Cost</a></li>
-                            <li><a href="#tradeoff">2.4 Flexibility-Reliability</a></li>
+                            <li><a href="#tradeoff">2.4 Flexibility-Reliability</a>
+                                <ul class="subsection">
+                                    <li><a href="#harness-obsolescence">2.4.1 Harness Obsolescence</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#corollaries">2.5 Corollaries</a></li>
                         </ul>
                     </li>
@@ -581,7 +583,11 @@
                             <li><a href="#agent-model">3.1 Agent Model</a></li>
                             <li><a href="#actions">3.2 Actions</a></li>
                             <li><a href="#information">3.3 Information Mgmt</a></li>
-                            <li><a href="#composition">3.4 Composition</a></li>
+                            <li><a href="#composition">3.4 Composition</a>
+                                <ul class="subsection">
+                                    <li><a href="#delegation-challenges">3.4.1 Delegation Challenges</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#planning">3.5 Planning</a></li>
                             <li><a href="#error-handling">3.6 Error Handling</a></li>
                             <li><a href="#evaluation">3.7 Evaluation</a></li>
@@ -602,6 +608,14 @@
                 <div class="meta">Mario Garrido • February 2026</div>
             </div>
 
+            <!-- Version filter bar — commented out for now, showing full article only
+            <div class="filter-bar" style="margin-bottom: 32px;">
+                <button class="filter-btn active" data-filter="full">Full</button>
+                <button class="filter-btn" data-filter="formal">Formal</button>
+                <button class="filter-btn" data-filter="builder">Builder</button>
+            </div>
+            -->
+
             <div id="content"></div>
         </div>
     </div>
@@ -617,7 +631,7 @@
 
 The principles behind reliable agents are not new. Constraint satisfaction, hierarchical decomposition, external validation, and progressive disclosure are well-understood across mathematics, cognitive science, optimization, and software engineering. What has been missing is a unified framework that connects these ideas into a coherent practice for building LLM-powered agents—one that explains not just *what* to do, but *why* each principle follows from the others, and *when* the tradeoffs justify the investment.
 
-This paper proposes **Structured Agency**: a framework for building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling. The agents that result are **structured agents**—systems that trade unconstrained flexibility for reliability, observability, and predictable behavior. The framework is grounded in three years of production experience building agents at [kuona.ai](https://kuona.ai), informed by industry analysis, and organized as a dependency chain of principles where each builds on the last. The naming and formalism are my own and evolve over time.
+This paper proposes **Structured Agency**: a framework for building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling. The agents that result are **structured agents**—systems that trade unconstrained flexibility for reliability, observability, and predictable behavior. The framework is grounded in three years of experience building agents across production systems at [kuona.ai](https://kuona.ai), academic research, and personal projects, informed by industry analysis, and organized as a dependency chain of principles where each builds on the last. The naming and formalism are my own and evolve over time.
 
 ---
 
@@ -625,15 +639,27 @@ This paper proposes **Structured Agency**: a framework for building harnesses ar
 
 ### 1.1 The Current State of Agents
 
-Recent developments in agentic systems (from papers like Recursive Language Models [6] to products like Claude Code [7]) have converged on a key insight:
+Recent developments in agentic systems (from papers like Recursive Language Models [6] to products like Claude Code [7]) have converged on several insights that, taken together, motivate the framework proposed in this paper.
 
-**Agents thrive with reliable, small-scoped tools which are composable** [1][2][3][4].
+**1. Agents thrive with reliable, small-scoped tools which are composable** [1][2][3][4].
 
 The UNIX design philosophy aligns remarkably well with this principle [5]. Tools like \`grep\`, \`cat\`, and \`sed\` have become commonplace in the most capable agents—not by accident, but because they embody:
 - Single responsibility
 - Composability
 - Predictable behavior
 - Simple interfaces
+
+**2. The most effective agents exploit the underlying structure of their problem domain.**
+
+Composable tools are the mechanism, but the deeper pattern is that capable agents don't treat the world as unstructured text to reason over—they navigate the domain's own organization. A coding agent that greps a file tree, follows import graphs, and reads type signatures is exploiting the inherent structure of code [81][82]. A database agent that queries schemas before writing SQL exploits the structure of relational data. In each case, effectiveness comes not from raw reasoning over tokens but from leveraging domain structure that already exists—or, where it doesn't exist, creating it (Section 3.3).
+
+**3. External systems validate better and cheaper than models self-assess** [17][18].
+
+The field has converged on outsourcing verification to purpose-built external mechanisms—compilers, linters, test suites, schema validators, rule engines—not because models *cannot* self-correct, but because external validation is orders of magnitude cheaper and deterministic. This is an economic observation, not a capability claim: when validation is cheap and inference is expensive, it pays to delegate the checking (Section 2.1.1, Section 2.3).
+
+**4. The context window is scarce working memory, not a knowledge store** [25][26][27].
+
+The most capable production agents deliberately manage what enters the context window, when, and in what form. The discipline of **context engineering** [30]—selecting, ordering, representing, and timing the information an agent operates on—has emerged as a named practice precisely because context quality matters more than context quantity, and irrelevant context actively degrades performance (Section 2.2).
 
 ### 1.2 Evolution of Agentic Workflows
 
@@ -645,6 +671,8 @@ The evolution of agentic capabilities has progressed alongside model improvement
 2. **Workflows with state machines** → Deterministic transitions between states
 3. **Agentic routing** → Dynamic decision-making with tools
 4. **Subagent delegation** → Hierarchical task decomposition
+
+Crucially, these levels are not a strict progression where each supersedes the last—**they coexist**. A production system will typically contain all four: bespoke prompts for well-understood subtasks, state-machine workflows where determinism is needed, agentic routing for flexible decision-making, and subagent delegation for complex decomposition. In my own work, all of these coexist to form reliable, cost-effective, and flexible systems. The right level depends on the task and domain, not on the system's overall sophistication. A useful heuristic: the lower on this curve a task sits, the more that context stuffing and simple tool design dominate; the higher, the more that deliberate context engineering and structural harnesses become necessary.
 
 This progression reveals three fundamental questions that any agentic system must answer:
 
@@ -731,10 +759,16 @@ With constraint comes the ability to delegate effectively:
 <div class="counterpoints-body">
 <p>Tam et al. [15] show that strict format constraints can degrade LLM reasoning performance—models forced into rigid output schemas sometimes sacrifice accuracy. Park et al. [16] demonstrate that grammar-constrained decoding distorts probability distributions. Banerjee et al. [71] propose alternating constrained and unconstrained generation as a middle path. More broadly, the Bitter Lesson argument [72] suggests that hand-crafted structure will eventually be superseded by scaling compute and data.</p>
 <div class="author-response">
-<p>I have empirically verified that strict format constraints degrade reasoning in standard LLMs. However, reasoning models and inference-time scaling have in my view largely solved this issue—the performance penalty from structured output has shrunk significantly with recent model generations. As for the Bitter Lesson: I concede that hand-crafted structure may eventually be superseded by pure scaling, but interfacing with existing systems (APIs, databases, file systems) and real-world verifiability constraints makes structure a practical necessity for purpose-built production agents today.</p>
+<p>I have empirically verified that strict format constraints degrade reasoning in standard LLMs. However, reasoning models and inference-time scaling have in my view largely solved this issue—the performance penalty from structured output has shrunk significantly with recent model generations. As for the Bitter Lesson: I concede that hand-crafted structure may eventually be superseded by pure scaling, but interfacing with existing systems (APIs, databases, file systems) and real-world verifiability constraints makes structure a practical necessity for purpose-built production agents today. More importantly, structured agency doesn't compete with scaling on *capability*—it competes on *economy*. Latency, cost, and predictability are orthogonal to what a model can theoretically derive from scratch. Premade elements that are general enough for a use case maintain their advantages even when the model could derive everything on its own, because the question is not "can the model do this?" but "should it spend tokens doing this every time?"</p>
 </div>
 </div>
 </details>
+
+#### 2.1.4 Structure as Alignment
+
+Beyond reliability, structure provides a low-bar alignment mechanism that is easy to overlook. When a human designer defines a tool's interface, a state schema's fields, or a validation rule's conditions, they embed **implicit task alignment** into the system. The schema of a customer-support agent's state (ticket ID, customer sentiment, escalation threshold, resolution status) carries domain knowledge about what matters, what operations are valid, and where boundaries lie. This alignment information would be difficult—and token-expensive—to convey through prompt context alone.
+
+This is not a substitute for deeper alignment research, but it is a practical complement. Structure encodes a form of human intent that operates at the architectural level: the agent doesn't need to *understand* why certain state transitions are invalid if the harness prevents them. The boundaries themselves carry the alignment signal. In this sense, every well-designed tool, every carefully scoped permission set, and every validation rule is a small alignment intervention—cheap, composable, and immediately effective. This makes structured agency not just an engineering methodology but a lightweight alignment strategy for production systems operating today.
 
 ### 2.2 Context Engineering
 
@@ -769,7 +803,7 @@ Progressive disclosure is not the same as minimizing context. Sometimes the righ
 <div class="counterpoints-body">
 <p>Long-context models consistently outperform RAG in average performance when sufficient compute is available [29]. Databricks (2024) shows that corpora under 2M tokens can be fed directly without retrieval. This suggests that aggressive context minimization is often counterproductive—more context, properly structured, yields better results than aggressive filtering. The real skill is knowing what to include, not how little you can get away with.</p>
 <div class="author-response">
-<p>I agree, and in practice I usually favor maximizing recall over token efficiency. But this is exactly why I frame the principle as context *engineering* rather than context *minimization*. The goal is deliberate structure, not minimal tokens. When everything fits, load everything. When it doesn't—which is the common case for agents operating over large codebases, document corpora, or multi-session histories—progressive disclosure provides the mechanism for deciding what to load and when. The principle is about intentionality, not austerity.</p>
+<p>I agree, and maximizing recall remains incredibly useful in some domains—particularly narrow, well-scoped tasks where the relevant corpus fits in context and the agent's job is bounded. But for general-purpose and flexible agents, defaulting to maximum recall is a lower-quality design. It works until it doesn't: the moment the corpus exceeds the context window, or the task requires navigating across domains, the agent has no mechanism for deciding what matters. This is exactly why I frame the principle as context *engineering* rather than context *minimization*. The goal is deliberate structure, not minimal tokens. When everything fits, load everything. When it doesn't—which is the common case for agents operating over large codebases, document corpora, or multi-session histories—progressive disclosure provides the mechanism for deciding what to load and when. The principle is about intentionality, not austerity. The connection to agentic maturity (Section 1.2) is worth noting: the lower on the evolution curve a task sits (bespoke prompts, simple workflows), the more context stuffing dominates. As agents take on more flexible, multi-step tasks, deliberate context management becomes essential.</p>
 </div>
 </div>
 </details>
@@ -858,6 +892,16 @@ Any process an agent works on exists on a maturity curve [3][36][37]:
 While some agents work well as completely flexible, **reliability and low latency come from structure**. Agents built with these structural harnesses—structured agents—occupy the upper-right of this space: high flexibility through LLM reasoning, high reliability through external constraints.
 
 **Key insight**: Even with increased agentic capabilities, reducing the problem space and "degrees of freedom" leads to reduced latencies and improved reliability. The structured agency approach is fundamentally about moving agents upward on this chart by adding harnesses rather than restricting what they can do.
+
+#### 2.4.1 Designing for Harness Obsolescence
+
+The flexibility-reliability tradeoff has a temporal dimension that is central to how structured agency should be practiced: **build harnesses expecting them to weaken over time.**
+
+Current harnesses address current model limitations. State management compensates for the fact that models lack persistent memory across invocations. Context-window-as-working-memory harnesses (progressive disclosure, forced contexts, retrieval mechanisms) exist because attention doesn't scale perfectly and context is expensive. Structured output schemas exist because models don't always produce well-formed output. Validation signals exist because models can't yet reliably self-verify. Each of these is a response to a specific limitation—and each limitation is on a trajectory of improvement.
+
+As models improve, some harnesses will naturally weaken. A model with perfect self-verification needs fewer external validation signals. A model with reliable structured output needs less schema enforcement. A model with effectively infinite context and perfect attention needs less aggressive progressive disclosure. New architectures may overcome the need for external memory entirely, collapsing the state management harness into the model itself. The Bitter Lesson predicts exactly this trajectory: capabilities that were once impossible without external scaffolding get absorbed into the model itself.
+
+But even as harnesses weaken, **domain-specific structured state remains economical**. The latency cost of having a model re-derive a customer's order history from raw conversation logs—every invocation—will always exceed the cost of maintaining that information in a structured state object, regardless of how capable the model becomes. The cognitive cost (in tokens) of navigating an unstructured environment will always exceed the cost of navigating one where the structure is pre-computed. This is the same argument that applies to software engineering generally: we don't rewrite parsers from first principles every time we need to parse JSON, even though we *could*. Structured agency's harnesses occupy this same economic niche—they are amortized investments in structure that pay dividends across invocations. The right design principle, then, is not "build permanent harnesses" but "build harnesses with a clear understanding of which limitations they address and how those limitations are evolving." This is the temporal dimension of the flexibility-reliability tradeoff: the optimal point on the curve shifts over time as model capabilities advance, and well-designed structured agents shift with it.
 
 ### 2.5 Practical Corollaries
 
@@ -1080,7 +1124,13 @@ This is a specific case combining:
 
 RAG [48] pioneered the pattern of augmenting generation with retrieved documents. GraphRAG [49] extends this by constructing knowledge graphs over corpora for more structured retrieval.
 
-[**TODO**: Complete this section explaining how different retrieval mechanisms (RAG, semantic search, grep, GraphRAG) are different strategies for accessing contexts, each with tradeoffs in precision, recall, latency, and setup cost.]
+However, recent production systems have revealed a significant shift in how retrieval actually works in structured domains. Claude Code, Aider, and similar coding agents have largely moved away from semantic search (embedding similarity over chunked documents) toward what can be called **agentic search**—retrieval driven by the domain's own structure rather than by vector proximity [81][82][83].
+
+Aider's repo-map approach [82] illustrates this well: rather than embedding and retrieving code chunks, it builds condensed tree-sitter outlines of the repository—a structural summary that lets the model navigate the codebase by understanding its organization (modules, classes, function signatures, dependency graphs). Claude Code [7] takes a complementary approach: grep-over-filesystem, file tree exploration, and symbol-level navigation. In both cases, retrieval exploits the **inherent structure of the domain** to guide the model to relevant information, rather than relying on semantic similarity between a query embedding and document embeddings.
+
+This distinction maps cleanly onto domain type. For **structured domains** (codebases, databases, APIs, configuration systems), agentic search works because the domain provides navigable structure—file hierarchies, type systems, dependency graphs, schema definitions. The retrieval mechanism can follow the domain's own organization. For **unstructured domains** (document corpora, knowledge bases, conversation histories), that navigable structure doesn't exist natively. We must **create** it—via indexing, knowledge graphs (GraphRAG [49]), or other enrichment—before agentic search becomes viable. This is why GraphRAG exists: it manufactures the structural scaffolding that code and databases get for free.
+
+This is a special case of the contexts taxonomy above: different retrieval mechanisms are different strategies for accessing contexts, each with tradeoffs in precision, recall, latency, and setup cost. Traditional RAG trades setup cost (embedding, chunking, indexing) for broad recall across unstructured corpora. Agentic search trades generality for high precision in structured domains—it's fast and accurate when the domain has navigable structure, but inapplicable when it doesn't. GraphRAG occupies a middle ground: it invests heavily in creating structure (knowledge graph construction) to enable structured retrieval over originally unstructured data. The choice between these mechanisms is itself a context engineering decision—matching the retrieval strategy to the structure (or lack thereof) of the domain.
 
 ### 3.4 Composition
 
@@ -1106,6 +1156,16 @@ RAG [48] pioneered the pattern of augmenting generation with retrieved documents
 - Need to isolate context/tools for subtask
 - Want to reuse subagent across multiple invocations
 - State sharing is important
+
+#### Delegation Challenges
+
+Delegation—whether to subagents or across multi-agent systems—introduces costs that are easy to underestimate. Two failure patterns dominate production systems:
+
+**Scope rediscovery.** Each delegated agent starts with a fresh or partial context window. The parent agent has built up a rich working memory over the course of the task—observations, intermediate results, implicit assumptions, domain context. When it delegates to a subagent, much of this working memory must be *re-established* in the subagent's context. This creates a **working-memory discontinuity** (see Section 2.2): the subagent must spend tokens and reasoning cycles recontextualizing before it can do useful work. The more complex the parent's accumulated context, the more expensive this rediscovery becomes. This is why delegation works best for tasks that are relatively self-contained—where the required context can be transmitted cheaply and the subagent doesn't need to reconstruct the full reasoning history of the parent.
+
+**Tool segmentation failures.** In systems with a router or orchestrator that dispatches tasks to specialized agents, a common failure mode is routing to an agent that lacks the right tools or context for the task. The agent attempts the task, fails, and the error bubbles back up to the router, which must retry—potentially multiple times—before either finding the right agent or escalating. This retry cycle compounds latency and cost, and is especially pernicious because it's often silent: the system *eventually* succeeds, masking the inefficiency. Structured composition (clear tool boundaries, explicit capability declarations, well-defined routing rules) mitigates this, but doesn't eliminate it. This pattern connects directly to the error handling concerns in Section 3.6.
+
+The upshot: delegation is not free. It works best for **cheaper, more reliable subtasks** where the cost of recontextualization is justified by the benefits of isolation, parallelism, or specialization. When a subtask requires deep access to the parent's accumulated context, the cost of transmitting that context may exceed the cost of simply having the parent do the work itself.
 
 #### Skills
 
@@ -1216,7 +1276,7 @@ Planning interacts closely with composition (Section 3.4):
 <div class="counterpoints-body">
 <p>The value of explicit planning is debated. Snell et al. [76] show that scaling test-time compute—simply giving a model more tokens to think—can match or beat structured planning approaches. Plan caching [77] reveals that planning overhead is non-trivial and can be amortized. Google DeepMind [78] finds that frontier models working alone can outperform agent teams on many benchmarks, questioning whether planning-heavy orchestration is always justified. Chain-of-thought prompting [54] itself can be seen as implicit planning that emerges from the model rather than being imposed externally.</p>
 <div class="author-response">
-<p>In practice, when actions are expensive and mistakes are costly or irreversible, I have found planning—especially with verification signals before execution—to be a very worthwhile investment. The overhead is real, but so is the cost of an unplanned action that corrupts state or wastes expensive API calls. Planning pays for itself when the cost of failure exceeds the cost of deliberation.</p>
+<p>In practice, when actions are expensive and mistakes are costly or irreversible, I have found planning—especially with verification signals before execution—to be a very worthwhile investment. The overhead is real, but so is the cost of an unplanned action that corrupts state or wastes expensive API calls. Planning pays for itself when the cost of failure exceeds the cost of deliberation. Moreover, structured agency is itself a human-explainable, low-complexity form of test-time compute. The harness *is* compute—it's just compute that happens to be legible, auditable, and cheap. As models improve, explicit harness compute gets amortized into the model itself (the model learns to do what the harness enforced). But this is structured agency's *graduation path*, not its contradiction: structure scaffolds capability until the model internalizes it, at which point the harness gracefully weakens (see Section 2.4.1). This is not incompatible with the Bitter Lesson—it is the mechanism by which the Bitter Lesson operates in production systems.</p>
 </div>
 </div>
 </details>
@@ -1333,6 +1393,10 @@ Even without adversarial intent, agents can misuse tools in ways that cause harm
 
 **Connection to the cost model**: From Section 2.3, the irreversibility cost component of C_f is what makes safety harnesses economically justified. The cost of a leaked API key or a deleted production database dwarfs the cost of adding a confirmation step.
 
+#### Structure as Implicit Alignment
+
+Safety harnesses don't just defend against bad outcomes—they promote good ones. By defining the boundaries within which an agent operates (which tools are available, what state transitions are valid, what actions require confirmation), structure keeps agents within **human-intended operating boundaries**. This is alignment through architecture rather than through instruction: the agent doesn't need to understand *why* certain actions are dangerous if the harness prevents those actions from being taken without oversight. In this sense, the safety and alignment properties of structured agency are two faces of the same coin—structure constrains the action space, and the shape of that constraint embeds human judgment about what the agent should and should not do (see Section 2.1.4).
+
 <details class="counterpoints">
 <summary>Counterpoints & Discussion</summary>
 <div class="counterpoints-body">
@@ -1349,7 +1413,6 @@ Even without adversarial intent, agents can misuse tools in ways that cause harm
 
 ### Incomplete Sections
 
-[**TODO**: Complete the RAG/retrieval section]
 [**TODO**: Add the flexibility-reliability-latency graph]
 [**TODO**: Provide concrete examples of state schemas]
 
@@ -1382,7 +1445,7 @@ The central claim of this paper is that reliability in agentic systems is not pr
 
 These principles are not a checklist to be applied independently. They are a connected framework: structure enables validation, validation enables tool reliability, tool reliability enables composition, and composition enables agents that solve complex problems without compounding errors at every step.
 
-The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But as long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: **it is almost always cheaper to prevent failure through structure than to recover from it through flexibility**.
+The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. **Harnesses are designed to weaken**: the framework explicitly anticipates that today's structural scaffolding becomes tomorrow's unnecessary overhead as models internalize the patterns (Section 2.4.1). **Structure provides alignment, not just reliability**: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 2.1.4). **Economy is orthogonal to capability**: even when a model *can* derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: **it is almost always cheaper to prevent failure through structure than to recover from it through flexibility**.
 
 ---
 
@@ -1573,11 +1636,17 @@ The field is evolving rapidly. Models will continue to improve, context windows 
 
 [80] OWASP, "OWASP Top 10 for Large Language Model Applications," 2025. [owasp.org/www-project-top-10-for-large-language-model-applications/](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
+[81] SmartScope, "RAG Debate: Agentic Search & Code Exploration," 2025. [smartscope.blog/en/ai-development/practices/rag-debate-agentic-search-code-exploration/](https://smartscope.blog/en/ai-development/practices/rag-debate-agentic-search-code-exploration/)
+
+[82] Aider, "Repository Map." [aider.chat/docs/repomap.html](https://aider.chat/docs/repomap.html)
+
+[83] LlamaIndex, "RAG is Dead, Long Live Agentic Retrieval," 2025. [llamaindex.ai/blog/rag-is-dead-long-live-agentic-retrieval](https://www.llamaindex.ai/blog/rag-is-dead-long-live-agentic-retrieval)
+
 ---
 
 **Document Status**: Work in Progress
 **Version**: Null
-**Last Updated**: 2026-02-16
+**Last Updated**: 2026-02-18
 **Author**: Mario Garrido
         `;
 
@@ -1598,6 +1667,7 @@ The field is evolving rapidly. Models will continue to improve, context windows 
                 '2.1.1 External Validation Signals': 'validation',
                 '2.1.2 Tools Enable Hierarchical Reasoning': 'tools-principle',
                 '2.1.3 Delegation Through Constraint': 'delegation',
+                '2.1.4 Structure as Alignment': 'structure-alignment',
                 '2.2 Context Engineering': 'minimize-context',
                 '2.2.1 Progressive Disclosure': 'progressive',
                 '2.3 The Cost of Unconstrained Systems': 'unconstrained',
@@ -1606,6 +1676,7 @@ The field is evolving rapidly. Models will continue to improve, context windows 
                 'The Validation Cost Asymmetry': 'validation-asymmetry',
                 'When Structure Doesn\'t Pay': 'when-structure-doesnt-pay',
                 '2.4 The Flexibility-Reliability Tradeoff': 'tradeoff',
+                '2.4.1 Designing for Harness Obsolescence': 'harness-obsolescence',
                 '2.5 Practical Corollaries': 'corollaries',
                 '2.5.1 Redundancy is a Feature': 'redundancy',
                 '2.5.2 Testing Becomes Integration Testing': 'testing',
@@ -1626,6 +1697,7 @@ The field is evolving rapidly. Models will continue to improve, context windows 
                 'Retrieval Mechanisms (RAG, GraphRAG, grep, etc.)': 'retrieval',
                 '3.4 Composition': 'composition',
                 'Subagents': 'subagents',
+                'Delegation Challenges': 'delegation-challenges',
                 'Skills': 'skills',
                 '3.5 Planning': 'planning',
                 'Why Planning Matters': 'planning-why',
@@ -1644,6 +1716,7 @@ The field is evolving rapidly. Models will continue to improve, context windows 
                 'Prompt Injection': 'prompt-injection',
                 'Adversarial Resilience': 'adversarial-resilience',
                 'Tool Misuse': 'tool-misuse',
+                'Structure as Implicit Alignment': 'implicit-alignment',
                 '4. Open Questions & Future Directions': 'future',
                 '5. Conclusion': 'conclusion',
                 'Appendix: Terminology Reference': 'appendix',
@@ -1681,41 +1754,146 @@ The field is evolving rapidly. Models will continue to improve, context windows 
             content.innerHTML = beforeRefs + refsAndAfter;
         };
 
-        // Highlight active section in sidebar
-        const updateActiveSection = () => {
-            const sections = document.querySelectorAll('#content h2, #content h3');
-            const sidebarLinks = document.querySelectorAll('.sidebar a');
-
-            let currentSection = '';
-            const scrollPos = window.scrollY + 120;
-
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollPos >= sectionTop) {
-                    currentSection = section.id;
+        /* Version filtering — commented out for now, showing full article only
+        function tagVersionContent() {
+            const content = document.getElementById('content');
+            content.querySelectorAll('details.counterpoints').forEach(el => {
+                el.setAttribute('data-version', 'formal');
+            });
+            content.querySelectorAll('p').forEach(p => {
+                if (p.textContent.match(/^\s*\[TODO/)) {
+                    p.setAttribute('data-version', 'formal');
                 }
             });
-
-            sidebarLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + currentSection) {
-                    link.classList.add('active');
+            const refsHeading = document.getElementById('references');
+            if (refsHeading) {
+                const prevEl = refsHeading.previousElementSibling;
+                if (prevEl && prevEl.tagName === 'HR') {
+                    prevEl.setAttribute('data-version', 'formal');
                 }
-            });
-        };
+                refsHeading.setAttribute('data-version', 'formal');
+                let el = refsHeading.nextElementSibling;
+                while (el) {
+                    if (el.tagName === 'HR') break;
+                    el.setAttribute('data-version', 'formal');
+                    el = el.nextElementSibling;
+                }
+            }
+        }
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 100,
-                        behavior: 'smooth'
+        function applyVersionFilter(filter) {
+            const content = document.getElementById('content');
+            document.querySelectorAll('.filter-bar .filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
+            const versioned = content.querySelectorAll('[data-version]');
+            const variantGroups = content.querySelectorAll('[data-variant-group]');
+
+            if (filter === 'full') {
+                versioned.forEach(el => {
+                    if (!el.closest('[data-variant-group]')) {
+                        el.classList.remove('version-hidden');
+                    }
+                });
+                variantGroups.forEach(group => {
+                    group.classList.remove('version-hidden');
+                    const variants = group.querySelectorAll(':scope > [data-version]');
+                    let toggle = group.querySelector('.variant-toggle');
+                    if (!toggle && variants.length > 1) {
+                        toggle = createVariantToggle(group);
+                    }
+                    if (toggle) toggle.style.display = '';
+                    variants.forEach((v, i) => {
+                        if (v.classList.contains('variant-active')) {
+                            v.classList.remove('version-hidden');
+                        } else if (!group.querySelector('.variant-active')) {
+                            v.classList.toggle('version-hidden', i !== 0);
+                            if (i === 0) v.classList.add('variant-active');
+                        } else {
+                            v.classList.add('version-hidden');
+                        }
                     });
-                }
+                });
+            } else {
+                versioned.forEach(el => {
+                    if (el.closest('[data-variant-group]')) return;
+                    el.classList.toggle('version-hidden', el.getAttribute('data-version') !== filter);
+                });
+                variantGroups.forEach(group => {
+                    const matching = group.querySelector('[data-version="' + filter + '"]');
+                    if (matching) {
+                        group.classList.remove('version-hidden');
+                        group.querySelectorAll(':scope > [data-version]').forEach(v => {
+                            v.classList.toggle('version-hidden', v !== matching);
+                        });
+                    } else {
+                        group.classList.add('version-hidden');
+                    }
+                    const toggle = group.querySelector('.variant-toggle');
+                    if (toggle) toggle.style.display = 'none';
+                });
+            }
+
+            // Update sidebar TOC visibility for hidden headings
+            const sidebar = document.querySelector('.sidebar nav');
+            if (sidebar) {
+                sidebar.querySelectorAll('a[href]').forEach(link => {
+                    const targetId = link.getAttribute('href').substring(1);
+                    const target = document.getElementById(targetId);
+                    const li = link.closest('li');
+                    if (target && li) {
+                        li.style.display = target.classList.contains('version-hidden') ? 'none' : '';
+                    }
+                });
+            }
+
+            const url = new URL(window.location);
+            if (filter === 'full') {
+                url.searchParams.delete('view');
+            } else {
+                url.searchParams.set('view', filter);
+            }
+            history.replaceState(null, '', url);
+        }
+
+        function createVariantToggle(group) {
+            const variants = group.querySelectorAll(':scope > [data-version]');
+            if (variants.length < 2) return null;
+            const toggle = document.createElement('div');
+            toggle.className = 'variant-toggle';
+            variants.forEach((v, i) => {
+                const btn = document.createElement('button');
+                const label = v.getAttribute('data-version');
+                btn.className = 'variant-toggle-btn' + (i === 0 ? ' active' : '');
+                btn.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+                btn.addEventListener('click', () => {
+                    toggle.querySelectorAll('.variant-toggle-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    variants.forEach(vv => {
+                        vv.classList.toggle('version-hidden', vv !== v);
+                        vv.classList.toggle('variant-active', vv === v);
+                    });
+                });
+                toggle.appendChild(btn);
             });
+            variants[0].classList.add('variant-active');
+            variants.forEach((v, i) => { if (i > 0) v.classList.add('version-hidden'); });
+            group.insertBefore(toggle, group.firstChild);
+            return toggle;
+        }
+
+        document.querySelectorAll('.filter-bar .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => applyVersionFilter(btn.dataset.filter));
+        });
+        */
+
+        // Sticky header (shared component)
+        initStickyHeader();
+
+        // Sidebar TOC (shared component)
+        initSidebarTOC({
+            sectionSelector: '#content h2, #content h3',
+            scrollOffset: 120
         });
 
         // Theme toggle
@@ -1740,8 +1918,11 @@ The field is evolving rapidly. Models will continue to improve, context windows 
         setTheme(getPreferredTheme());
         addHeadingIds();
         linkCitations();
-        updateActiveSection();
-        window.addEventListener('scroll', updateActiveSection);
+        // tagVersionContent();
+        // const viewParam = new URLSearchParams(window.location.search).get('view');
+        // if (viewParam && ['formal', 'builder'].includes(viewParam)) {
+        //     applyVersionFilter(viewParam);
+        // }
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
             if (!localStorage.getItem('theme')) {
                 setTheme(e.matches ? 'dark' : 'light');
