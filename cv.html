@@ -134,13 +134,9 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 820px;
             margin: 0 auto;
             padding: 60px 60px 120px;
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 80px;
-            align-items: start;
         }
 
         /* Sidebar TOC: base styles loaded from assets/sidebar-toc.css */
@@ -492,51 +488,6 @@
             color: var(--text-muted);
         }
 
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .sidebar {
-                position: static;
-                max-height: none;
-                display: flex;
-                gap: 8px;
-                flex-wrap: wrap;
-                align-items: center;
-                padding-bottom: 20px;
-                border-bottom: 1px solid var(--border-faint);
-            }
-
-            .sidebar h3 {
-                margin-bottom: 0;
-                margin-right: 8px;
-            }
-
-            .sidebar ul {
-                display: flex;
-                gap: 4px;
-                flex-wrap: wrap;
-            }
-
-            .sidebar li {
-                margin-bottom: 0;
-            }
-
-            .sidebar a {
-                padding: 4px 12px;
-                background: var(--bg-alt);
-                border: 1px solid var(--border-light);
-                border-radius: 4px;
-                font-size: 12px;
-            }
-
-            .sidebar a.active {
-                border-color: var(--text);
-            }
-        }
-
         @media (max-width: 768px) {
             .masthead-inner {
                 padding: 0 24px;
@@ -603,30 +554,11 @@
     </header>
 
     <div class="container">
-        <aside class="sidebar">
-            <h3>Sections</h3>
-            <nav>
-                <ul>
-                    <li><a href="#summary">Summary</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#skills">Skills & Technologies</a></li>
-                    <li><a href="#products">Products & Systems</a></li>
-                    <li><a href="#personal-projects">Personal Projects</a></li>
-                    <li><a href="#projects">Academic Projects</a></li>
-                    <li><a href="#publications">Publications</a></li>
-                    <li><a href="#awards">Awards & Honors</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#languages">Languages</a></li>
-                </ul>
-            </nav>
-        </aside>
-
         <div class="content-wrapper">
             <div class="page-header">
                 <h1>Mario H. Garrido Czacki</h1>
                 <p class="subtitle">
-                    Principal Research Scientist building foundation models for market data, agentic AI systems, and large-scale ML infrastructure. Fulbright-García Robles Scholar. NYU M.S. Data Science, UNAM B.Eng. + B.Sc.
+                    Principal Research Scientist. Energy-based world models, multi-agent systems, structured evaluation. Fulbright-García Robles Scholar. NYU M.S. Data Science, UNAM B.Eng. + B.Sc.
                 </p>
                 <div class="contact-links">
                     <a href="mailto:mgczacki@gmail.com">Email</a>
@@ -639,7 +571,9 @@
             <section id="summary" class="cv-section">
                 <h2>Summary</h2>
                 <div class="timeline-body">
-                    <p>Research scientist and engineer specializing in energy-based models, multi-agent systems, and production ML infrastructure. Currently leading the design of a foundation model for market panel data at Kuona, and previously built four production AI systems in under a year &mdash; a multi-agent analytical platform (ExpertAI), a knowledge graph engine (Grafa), a NL-to-SQL engine (KQuery), and Kubernetes infrastructure &mdash; each deployed at enterprise scale.</p>
+                    <p>I design novel architectures &mdash; energy-based world models, multi-agent orchestration, structured evaluation &mdash; and build the full production stack around them: backend, frontend, infrastructure, deployment.</p>
+                    <p style="margin-top: 12px;">Started with two simultaneous degrees at UNAM, then shipped large-scale forecasting systems at Kuona before earning a Fulbright for a Masters at NYU. Returned to Kuona as Principal Research Scientist and product lead.</p>
+                    <p style="margin-top: 12px;">Current research: energy-based latent-variable models with JEPA-style training for learning compact representations of unobservable dynamics. Simultaneously leading the ExpertAI multi-agent platform &mdash; six production systems shipped in under a year.</p>
                 </div>
             </section>
 
@@ -682,6 +616,67 @@
                 </div>
             </section>
 
+            <!-- Products & Systems -->
+            <section id="products" class="cv-section">
+                <h2>Products & Systems</h2>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>ExpertAI</h4>
+                        <span class="project-type">Agentic Platform &bull; 2024&ndash;Present</span>
+                    </div>
+                    <p>Multi-agent analytical platform for autonomous analysis over tabular data. 90% task success rate; reduces cross-silo analytical queries from hours to minutes. Used by global retailers and manufacturers across 5 database backends.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>Grafa</h4>
+                        <span class="project-type">Knowledge Graph Engine &bull; 2024</span>
+                    </div>
+                    <p>Knowledge graph engine giving LLMs structured memory over heterogeneous documents. Sub-second federated retrieval, ~95% recall, significant token consumption reduction.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>KQuery</h4>
+                        <span class="project-type">NL-to-SQL Engine &bull; 2024</span>
+                    </div>
+                    <p>Natural-language-to-SQL engine across five database backends. ~95% SQL generation accuracy, sub-minute cross-source query generation.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>KNER</h4>
+                        <span class="project-type">Entity Resolution Pipeline &bull; 2024</span>
+                    </div>
+                    <p>Multi-agent entity resolution across all company entity systems &mdash; products, geographies, promotions, brands, ontological concepts. 10&ndash;20 seconds including disambiguation. <a href="kner.html">Read more</a></p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>ExpertAI Visualization System</h4>
+                        <span class="project-type">AI Visualization Pipeline &bull; 2024&ndash;Present</span>
+                    </div>
+                    <p>Agent-driven data visualization that autonomously selects chart types, maps visual encodings, and renders interactive charts. Eliminates manual BI configuration for non-technical users.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>UserAI</h4>
+                        <span class="project-type">Evaluation Harness &bull; 2025</span>
+                    </div>
+                    <p>Autonomous evaluation harness driving multi-turn agent sessions end-to-end. CI-integrated regression detection for failure modes invisible in single-turn testing.</p>
+                </div>
+
+                <div class="cv-project">
+                    <div class="cv-project-header">
+                        <h4>Foundation Model for Market Panel Data</h4>
+                        <span class="project-type">Research &bull; 2025&ndash;Present</span>
+                    </div>
+                    <p>World model for market panel data with JEPA-style training objective. Modular per-client adapters eliminate hours-long retraining cycles.</p>
+                </div>
+            </section>
+
             <!-- Experience -->
             <section id="experience" class="cv-section">
                 <h2>Experience</h2>
@@ -694,7 +689,7 @@
                     <div class="timeline-subtitle">Foundation Models for Panel Data (USA)</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Leading the design of a JEPA-style energy-based foundation model for market panel data with structural inductive biases, supporting multi-horizon forecasting, intervention simulation, and probing of unobservable market drivers via synthetic supervision.</li>
+                            <li>Leading the design of a JEPA-style energy-based foundation model with structural inductive biases &mdash; learning compact representations of unobservable dynamics via synthetic supervision, supporting multi-horizon forecasting, intervention simulation, and causal probing without direct observation.</li>
                             <li>Developed mechanisms to model latent, unobservable market drivers (e.g., price elasticity, cannibalization) via partial supervision from synthetic markets, allowing causal probing without direct observation in real data.</li>
                             <li>Designed training objectives emphasizing structural inductive biases and compact representations, embedding key economic effects directly into the model and reducing reliance on brittle downstream estimation pipelines.</li>
                             <li>Energy-based latent-variable architecture with JEPA-style training objective, trained on real market data, synthetic markets with known unobservable drivers, and distilled predictions from 4+ years of Kuona's production forecasting models. Modular adapters per client without full retraining &mdash; eliminating the 1&ndash;12 hour per-client cycle of prior approaches.</li>
@@ -710,16 +705,16 @@
                     <div class="timeline-subtitle">ExpertAI (USA)</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Conceived and shipped ExpertAI end-to-end as sole architect &mdash; multi-agent backend (Django, Python), React frontend with WebSocket real-time communication, RabbitMQ/Kombu messaging system, cloud deployment (AWS EKS) &mdash; from concept to production in under a year.</li>
-                            <li>Multi-agent orchestration with compartmentalized context per subagent/tool, two-layer plan validation (formal PDDL gates + soft LLM-as-a-judge evaluators with scoped rule sets), and checkpoint-based resilience. Deployed and in use by global retailers and manufacturers.</li>
-                            <li>Designed a formal tool-planning framework where agents generate and execute multi-step plans verified via PDDL-style preconditions and effects, ensuring logical validity and dependency satisfaction before execution.</li>
-                            <li>Implemented deterministic plan reuse and semantic grounding mechanisms, enabling consistent execution, controlled plan adaptation, and resolution of ambiguous user inputs into unambiguous, executable specifications.</li>
-                            <li>Built Grafa: knowledge graph engine giving LLMs structured, relationship-aware memory over heterogeneous documents. Multi-tenant isolation with federated retrieval and hook-based extensibility at every pipeline stage.</li>
-                            <li>Built KQuery: NL-to-SQL engine across three database backends. Plans and verifies the full query hierarchy upfront &mdash; deciding intermediate schemas and SQL implementation details before execution &mdash; then runs all queries in parallel as soon as their dependencies are satisfied. Generation rules stored as data in the knowledge graph, scoped by platform, company, or user and updatable without code changes.</li>
-                            <li>Built KNER (Kuona Named Entity Recognition): multi-agent entity resolution pipeline that resolves free-text query segments against company-specific structured databases &mdash; products, geographies, promotions, brands, and business concepts &mdash; within a conversational, human-in-the-loop framework. Implemented as nested LangGraph state machines with four specialized LLM agents selected for cost/latency/capability tradeoffs.</li>
-                            <li>Designed UserAI, an autonomous evaluation harness that drives multi-turn agent sessions end-to-end &mdash; enabling CI-integrated regression detection of failure modes invisible in single-turn testing.</li>
+                            <li>Concept to production in under a year, leading a 4-person team. Full-stack: multi-agent backend (Django, Python), React frontend with WebSocket real-time communication, RabbitMQ/Kombu messaging, cloud deployment (AWS EKS).</li>
+                            <li>Reduced cross-silo analytical queries from hours to minutes. Multi-agent orchestration with compartmentalized context, two-layer plan validation (formal PDDL gates + LLM-as-a-judge evaluators), and checkpoint-based resilience. Deployed across 5 database backends.</li>
                             <li>Built an evaluation system that represents the agent as a directed graph of components, attributes failures to specific nodes via automated triage, ranks components by downstream harm for prioritized improvement, and provides deterministic replay for counterfactual experiments.</li>
                             <li>Designed bypass auditing for agentic systems: when agents override validation gates, decisions are explicitly recorded &mdash; what was bypassed, why, and downstream consequences &mdash; making safety exceptions analyzable rather than invisible.</li>
+                            <li>Designed a formal tool-planning framework where agents generate and execute multi-step plans verified via PDDL-style preconditions and effects, ensuring logical validity and dependency satisfaction before execution.</li>
+                            <li>Implemented deterministic plan reuse and semantic grounding mechanisms, enabling consistent execution, controlled plan adaptation, and resolution of ambiguous user inputs into unambiguous, executable specifications.</li>
+                            <li>Built Grafa: sub-second federated retrieval, ~95% recall, significant token consumption reduction. Knowledge graph engine giving LLMs structured, relationship-aware memory over heterogeneous documents. Multi-tenant isolation with hook-based extensibility at every pipeline stage.</li>
+                            <li>Built KQuery: sub-minute cross-source query generation, ~95% SQL accuracy across five database backends. Plans and verifies the full query hierarchy upfront &mdash; deciding intermediate schemas and SQL implementation details before execution &mdash; then runs all queries in parallel as dependencies resolve. Generation rules stored as data in the knowledge graph, scoped by platform, company, or user and tunable without code changes.</li>
+                            <li>Built KNER (Kuona Named Entity Recognition): multi-agent entity resolution pipeline that resolves free-text query segments against all company entity systems &mdash; catalog products, geographic hierarchies, promotions, brands, and ontological business concepts &mdash; in 10&ndash;20 seconds including interactive disambiguation. Implemented as nested LangGraph state machines with four specialized LLM agents selected for cost/latency/capability tradeoffs.</li>
+                            <li>Designed UserAI, an autonomous evaluation harness that drives multi-turn agent sessions end-to-end &mdash; enabling CI-integrated regression detection of failure modes invisible in single-turn testing.</li>
                         </ul>
                     </div>
                 </div>
@@ -732,7 +727,7 @@
                     <div class="timeline-subtitle">USA</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Built vision-LLM quality monitoring systems and automated data acquisition pipelines over CommonCrawl, producing a ~700 GB high-quality dataset and training a custom SDXL ControlNet for conditional generation.</li>
+                            <li>Built vision-LLM quality monitoring systems and automated data acquisition pipelines over CommonCrawl, producing a ~700 GB high-quality dataset. Designed the full training pipeline for a custom SDXL ControlNet for conditional generation.</li>
                         </ul>
                     </div>
                 </div>
@@ -746,8 +741,8 @@
                     <div class="timeline-body">
                         <ul>
                             <li>Designed and deployed large-scale forecasting systems across thousands of market-correlated time series.</li>
-                            <li>Design, implementation, testing and deployment of a Machine Learning Pipeline that generates weekly demand forecasts for all of Heineken Mexico's product catalog in each of its distribution centers. Rewrote the entire system from scratch to improve results and performance for this process spanning 500+ servers, training approximately 3,500 recurrent neural networks weekly.</li>
-                            <li>Redesign and standardization of one of Kuona's main products, the Perfect Order demand forecasting system.</li>
+                            <li>Design, implementation, testing and deployment of a Machine Learning Pipeline that generates weekly demand forecasts for a major CPG company across hundreds of SKUs and geographies. Rewrote the entire system from scratch, raising forecast accuracy from the high 60s/low 70s to 80%, spanning 500+ servers and training approximately 3,500 recurrent neural networks weekly.</li>
+                            <li>Redesign and standardization of one of Kuona's main products, the Perfect Order demand forecasting system. Introduced pre-modeling data governance checks that caught data errors upstream, saving hundreds of GPU hours in wasted training.</li>
                             <li>Design and implementation of a new time series forecasting library featuring transparent multi-horizon predictions, automatic hyperparameter search, and native support for ensemble models.</li>
                             <li>Design and implementation of a custom task orchestration system for Kuona's Machine Learning Pipelines with native support for heterogeneous distributed computing, arbitrary horizontal scalability, and easy management for remote tasks by abstracting the compute resources behind a UNIX-like process control interface.</li>
                             <li>Regular meetings with clients to identify data requirements in order to guarantee consistent and precise forecasting. Evaluation of alternative datasources originating within clients' organizations.</li>
@@ -766,12 +761,8 @@
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">Julia</span>
                         <span class="skill-tag">C/C++</span>
-                        <span class="skill-tag">C#</span>
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">R</span>
                         <span class="skill-tag">CUDA</span>
                         <span class="skill-tag">Elixir</span>
-                        <span class="skill-tag">VHDL</span>
                     </div>
                 </div>
 
@@ -783,6 +774,7 @@
                         <span class="skill-tag">Flux.jl</span>
                         <span class="skill-tag">Spark</span>
                         <span class="skill-tag">LangGraph</span>
+                        <span class="skill-tag">LLMs/Prompting</span>
                     </div>
                 </div>
 
@@ -808,66 +800,6 @@
                         <span class="skill-tag">Databricks</span>
                         <span class="skill-tag">Prometheus</span>
                     </div>
-                </div>
-
-                <div class="skill-category">
-                    <div class="skill-label">Frontend</div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">React</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Products & Systems -->
-            <section id="products" class="cv-section">
-                <h2>Products & Systems</h2>
-
-                <div class="cv-project">
-                    <div class="cv-project-header">
-                        <h4>ExpertAI</h4>
-                        <span class="project-type">Agentic Platform &bull; 2024&ndash;Present</span>
-                    </div>
-                    <p>Multi-agent analytical platform for autonomous analysis and ML model development over tabular data. PDDL-validated planning, hierarchical rule system (platform/company/user scopes), checkpoint-based resilience, LangGraph orchestration. Full-stack: Django backend, React frontend with WebSocket real-time communication, RabbitMQ/Kombu messaging, AWS EKS deployment. Used by global retailers and manufacturers.</p>
-                </div>
-
-                <div class="cv-project">
-                    <div class="cv-project-header">
-                        <h4>Grafa</h4>
-                        <span class="project-type">Knowledge Graph Engine &bull; 2024</span>
-                    </div>
-                    <p>Knowledge graph engine providing LLMs with structured, relationship-aware memory over heterogeneous documents. Multi-tenant isolation with federated retrieval and hook-based extensibility at every pipeline stage.</p>
-                </div>
-
-                <div class="cv-project">
-                    <div class="cv-project-header">
-                        <h4>KQuery</h4>
-                        <span class="project-type">NL-to-SQL Engine &bull; 2024</span>
-                    </div>
-                    <p>Natural-language-to-SQL engine across three database backends. Plans and verifies the full query hierarchy upfront &mdash; intermediate schemas and SQL implementation decided before execution &mdash; then runs all queries in parallel as dependencies resolve. Generation rules stored as data in the knowledge graph, scoped by platform, company, or user. Entity resolution cleanly separated from SQL generation.</p>
-                </div>
-
-                <div class="cv-project">
-                    <div class="cv-project-header">
-                        <h4>KNER</h4>
-                        <span class="project-type">Entity Resolution Pipeline &bull; 2024</span>
-                    </div>
-                    <p>Multi-agent, LLM-orchestrated named entity resolution pipeline for natural language business analytics queries. Resolves free-text segments against company-specific structured databases &mdash; products, geographies, promotions, brands, and business concepts &mdash; within a conversational, human-in-the-loop framework. Implemented as nested LangGraph state machines with four specialized LLM agents, deployed as a sub-graph within ExpertAI. <a href="kner.html">Read more</a></p>
-                </div>
-
-                <div class="cv-project">
-                    <div class="cv-project-header">
-                        <h4>UserAI</h4>
-                        <span class="project-type">Evaluation Harness &bull; 2025</span>
-                    </div>
-                    <p>Autonomous evaluation harness that drives multi-turn agent sessions end-to-end &mdash; sending queries, selecting disambiguation options, assessing goal satisfaction, and deciding when to continue or stop. CI-integrated regression detection for failure modes invisible in single-turn testing.</p>
-                </div>
-
-                <div class="cv-project">
-                    <div class="cv-project-header">
-                        <h4>Foundation Model for Market Panel Data</h4>
-                        <span class="project-type">Research &bull; 2025&ndash;Present</span>
-                    </div>
-                    <p>Energy-based latent-variable model with JEPA-style training objective. Learns compact representations of unobservable market dynamics via synthetic supervision and structured probing. Modular per-client adapters eliminate hours-long retraining cycles.</p>
                 </div>
             </section>
 
@@ -912,6 +844,7 @@
                     <p>Improved upon previous results in predicting future academic collaborations using topological data. Created a reduced feature vector via SVD on the collaboration network's adjacency matrix, improving on Hasan et al. (2006). <a href="projects/predicting-academic-collaborations.html">View project</a></p>
                 </div>
 
+                <!--
                 <div class="cv-project">
                     <div class="cv-project-header">
                         <h4>Detection of Toxic Language</h4>
@@ -927,6 +860,7 @@
                     </div>
                     <p>U-Net Convolutional Neural Network for identifying pneumonia indicators from COVID-19 in radiology images. Transfer learning and domain-specific augmentation achieved strong results from only ~60 annotated images. <a href="projects/covid-19-lung-scan-segmentation.html">View project</a></p>
                 </div>
+                -->
 
             </section>
 
@@ -984,7 +918,7 @@
                 </div>
             </section>
 
-            <!-- Certifications -->
+            <!-- Certifications (hidden)
             <section id="certifications" class="cv-section">
                 <h2>Certifications</h2>
                 <ul class="cert-list">
@@ -997,10 +931,12 @@
                     <li>Build Basic Generative Adversarial Networks (GANs) <span class="cert-issuer">&mdash; Deeplearning.ai</span></li>
                 </ul>
             </section>
+            -->
 
             <!-- Languages -->
             <section id="languages" class="cv-section">
                 <h2>Languages</h2>
+                <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">Fulbright Scholar from Mexico to the USA. Multicultural background reflected in daily working fluency across languages and professional contexts.</p>
                 <div class="language-entry">
                     <span class="language-name">Spanish</span>
                     <span class="language-level">Native</span>
@@ -1041,12 +977,6 @@
 
         // Sticky header (shared component)
         initStickyHeader();
-
-        // Sidebar TOC (shared component)
-        initSidebarTOC({
-            sectionSelector: '.cv-section',
-            scrollOffset: 140
-        });
 
         // Initialize
         setTheme(getPreferredTheme());

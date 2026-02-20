@@ -760,7 +760,9 @@
 <strong>Work in Progress.</strong> This document contains many placeholders, unverified citations, and slop illustrations. Do not treat it as a finished or authoritative reference.
 </div>
 
-The principles behind reliable agents are not new. Constraint satisfaction, hierarchical decomposition, external validation, and progressive disclosure are well-understood across mathematics, cognitive science, optimization, and software engineering. What has been missing is a unified framework that connects these ideas into a coherent practice for building LLM-powered agents—one that explains not just *what* to do, but *why* each principle follows from the others, and *when* the tradeoffs justify the investment.
+The individual principles behind reliable agents are not new—and the field knows it. Anthropic's "Building Effective Agents" [3] established that workflows and constraints outperform unconstrained autonomy. Their subsequent work on context engineering [90] and agent harnesses [91] codified progressive disclosure and structured state management. OpenAI's practical guide [9] converges on the same patterns. DSPy [92] formalized the shift from prompting to programming. The Bitter Lesson discourse [93][95] has been applied specifically to agent scaffolding. Context engineering as a discipline has its own rapidly growing literature [30][94]. The building blocks are well-understood.
+
+What has been missing is a *theory* that connects these ideas into a dependency chain—one that explains not just *what* to do, but *why* each principle follows from the others, and *when* the tradeoffs justify the investment. The existing literature offers cookbooks of patterns (Anthropic), toolkits of abstractions (LangChain, DSPy), and collections of best practices (OpenAI). This paper attempts something different: a unified framework with a formal cost model for deciding when structure is justified, an explicit dependency graph showing how principles build on each other, and a taxonomy of architectural surfaces where constraints can be applied.
 
 This paper proposes **Structured Agency**: a framework for building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling. The agents that result are **structured agents**—systems that trade unconstrained flexibility for reliability, observability, and predictable behavior. The framework is grounded in three years of experience building agents across production systems at [kuona.ai](https://kuona.ai), academic research, and personal projects, informed by industry analysis, and organized as a dependency chain of principles where each builds on the last. The naming and formalism are my own and evolve over time.
 
@@ -865,7 +867,7 @@ This progression reveals three fundamental questions that any agentic system mus
 
 </div>
 
-The following principles are not independent—they form a dependency chain rooted in the idea that **structure is the fundamental enabler** of reliable agents. Together, they constitute the core of structured agency: a framework for building harnesses that make agents reliably capable.
+Most of these principles are individually well-established—constraint satisfaction, external validation, progressive disclosure, and hierarchical decomposition appear across the existing literature on agent design [3][9][90]. The contribution of this section is not the individual principles but their organization into a **dependency chain**: each principle follows logically from the previous, and the chain as a whole provides a framework for reasoning about *when* and *why* to invest in structure, not just *what* structure to apply.
 
 ![Principle Dependency Graph](assets/agents/image1-principle-graph.svg)
 
@@ -944,7 +946,7 @@ Structure also carries implicit alignment—a point developed fully in Section 3
 
 Structure tells you what's relevant and what isn't—which leads to the operational principle of deliberately managing what enters the context window.
 
-The field has converged on the term **context engineering** [30] to describe this practice: the discipline of designing the full informational environment an agent operates within—not just what's in the prompt, but what's retrieved, when it's loaded, how it's structured, and what's excluded. Context engineering subsumes prompt engineering the same way software architecture subsumes writing functions.
+The field has converged on the term **context engineering** [30] to describe this practice, with substantial recent treatment by Anthropic [90], Martin [94], and others. The discipline encompasses designing the full informational environment an agent operates within—not just what's in the prompt, but what's retrieved, when it's loaded, how it's structured, and what's excluded. Context engineering subsumes prompt engineering the same way software architecture subsumes writing functions. The principles below are well-established in this literature; our contribution is connecting them to the dependency chain—showing how context engineering follows from structure (Section 2.1) and feeds into the cost model (Section 2.3).
 
 <div class="principle">
 
@@ -1014,6 +1016,8 @@ Progressive disclosure is not the same as minimizing context. Sometimes the righ
 </details>
 
 ### 2.3 The Cost of Unconstrained Systems
+
+The existing literature is clear on *what* structure to apply but largely silent on *when* the investment is justified. Anthropic advises "find the simplest solution possible" [3]; OpenAI recommends "an incremental approach" [9]. These are useful heuristics but not decision frameworks. This section proposes a formal cost model for reasoning about the structure investment—arguably the most distinctive contribution of this paper.
 
 What happens when you ignore structure? A fully unconstrained agent (no structure, no verification, no premade tools, no limitations) *might* solve a problem, but at what cost? To reason about this clearly, it helps to think in terms of two competing cost functions.
 
@@ -1103,6 +1107,8 @@ While some agents work well as completely flexible, **reliability and low latenc
 #### 2.4.1 Designing for Harness Obsolescence
 
 The flexibility-reliability tradeoff has a temporal dimension that is central to how structured agency should be practiced: **build harnesses expecting them to weaken over time.**
+
+The Bitter Lesson has been applied directly to agent scaffolding by Martin [93], Bowne-Anderson [95], and others, with the practical observation that agent harnesses must be "repeatedly simplified as models improve"—that teams at Anthropic and elsewhere rebuild their agent infrastructure on the order of months, not years. We agree with this framing and formalize it as a design principle: harness obsolescence is not a failure of design but a *feature* of well-designed systems.
 
 Current harnesses address current model limitations. State management compensates for the fact that models lack persistent memory across invocations. Context-window-as-working-memory harnesses (progressive disclosure, forced contexts, retrieval mechanisms) exist because attention doesn't scale perfectly and context is expensive. Structured output schemas exist because models don't always produce well-formed output. Validation signals exist because models can't yet reliably self-verify. Each of these is a response to a specific limitation—and each limitation is on a trajectory of improvement.
 
@@ -1747,7 +1753,7 @@ Concretely, safety harnesses don't just defend against bad outcomes—they promo
 
 ## 5. Conclusion
 
-The central claim of this paper is that reliability in agentic systems is not primarily a model capability problem—it is a *structural* problem. The principles of Structured Agency form a dependency chain:
+None of the individual principles in this paper are new. Constraints, validation, progressive disclosure, composition, and the Bitter Lesson are all well-understood in the existing literature [3][9][90][93]. What this paper contributes is the *synthesis*: a dependency chain that connects these principles into a coherent theory, a cost model (Section 2.3) for deciding *when* structure is justified, and a taxonomy (Section 3) of architectural surfaces where harnesses can be applied. The central claim is that reliability in agentic systems is not primarily a model capability problem—it is a *structural* problem. The principles of Structured Agency form a dependency chain:
 
 1. **Structure reduces problem space** → Constraints create checkable boundaries, which enable external validation, tool abstraction, and delegation
 2. **External validation is economically dominant** → Purpose-built validators are cheaper, faster, and more reliable than model self-assessment
@@ -1965,6 +1971,18 @@ The field is evolving rapidly. Models will continue to improve, context windows 
 [88] OpenAI, "Introducing Operator," 2025. [openai.com/index/introducing-operator/](https://openai.com/index/introducing-operator/)
 
 [89] Google DeepMind, "Project Mariner," 2025. [deepmind.google/models/project-mariner/](https://deepmind.google/models/project-mariner/)
+
+[90] Anthropic, "Effective Context Engineering for AI Agents," 2025. [anthropic.com/engineering/effective-context-engineering-for-ai-agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+
+[91] Anthropic, "Effective Harnesses for Long-Running Agents," 2025. [anthropic.com/engineering/effective-harnesses-for-long-running-agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+
+[92] O. Khattab et al., "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines," *ICLR*, 2024. [arxiv.org/abs/2310.03714](https://arxiv.org/abs/2310.03714)
+
+[93] L. Martin, "Learning the Bitter Lesson," 2025. [rlancemartin.github.io/2025/07/30/bitter_lesson/](https://rlancemartin.github.io/2025/07/30/bitter_lesson/)
+
+[94] L. Martin, "Context Engineering for Agents," 2025. [rlancemartin.github.io/2025/06/23/context_engineering/](https://rlancemartin.github.io/2025/06/23/context_engineering/)
+
+[95] H. Bowne-Anderson, "AI Agent Harness, 3 Principles for Context Engineering, and the Bitter Lesson Revisited," 2025. [hugobowne.substack.com/p/ai-agent-harness-3-principles-for](https://hugobowne.substack.com/p/ai-agent-harness-3-principles-for)
 
 [90] Google, "A2A: A new era of agent interoperability," 2025. [developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/)
 
