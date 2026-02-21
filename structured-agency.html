@@ -576,11 +576,16 @@
                             <li><a href="#unconstrained">2.3 Unconstrained Cost</a></li>
                             <li><a href="#tradeoff">2.4 Flexibility-Reliability</a>
                                 <ul class="subsection">
-                                    <li><a href="#harness-obsolescence">2.4.1 Harness Obsolescence</a></li>
-                                    <li><a href="#commoditizing-intelligence">2.4.2 Commoditizing Intelligence</a></li>
+                                    <li><a href="#harness-obsolescence">Harness Obsolescence</a></li>
+                                    <li><a href="#commoditizing-intelligence">Commoditizing Intelligence</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#corollaries">2.5 Corollaries</a></li>
+                            <li><a href="#corollaries">2.5 Corollaries</a>
+                                <ul class="subsection">
+                                    <li><a href="#redundancy">Redundancy is a Feature</a></li>
+                                    <li><a href="#stress-strengthens">Stress Strengthens a System</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li><a href="#taxonomy">3. Taxonomy of Structured Agents</a>
@@ -602,6 +607,7 @@
                             <li><a href="#tools-section">3.3 Tools</a>
                                 <ul class="subsection">
                                     <li><a href="#tool-categories">Tool Categories</a></li>
+                                    <li><a href="#bootstrapped-tools">Bootstrapped Tools</a></li>
                                     <li><a href="#tool-design">Tool Design</a></li>
                                     <li><a href="#forced-tools">Forced Tool Use</a></li>
                                     <li><a href="#communication">Communication</a></li>
@@ -676,7 +682,7 @@
 <p><strong>2. The most effective agents exploit the underlying structure of their problem domain.</strong></p>
 <p>Composable tools are the mechanism, but the deeper pattern is that capable agents don&#39;t treat the world as unstructured text to reason over—they navigate the domain&#39;s own organization. Every major coding agent—Claude Code <a class="citation" href="#ref-7">[7]</a>, Codex <a class="citation" href="#ref-84">[84]</a>, Copilot <a class="citation" href="#ref-85">[85]</a>, Jules <a class="citation" href="#ref-86">[86]</a>, Cursor, Amazon Q—exploits the inherent structure of code: grepping file trees, following import graphs, reading type signatures, querying language server protocols <a class="citation" href="#ref-81">[81]</a><a class="citation" href="#ref-82">[82]</a>. A database agent that queries schemas before writing SQL exploits the structure of relational data. In each case, effectiveness comes not from raw reasoning over tokens but from leveraging domain structure that already exists—or, where it doesn&#39;t exist, creating it (Section 3.4).</p>
 <p><strong>3. External systems validate better and cheaper than models self-assess</strong> <a class="citation" href="#ref-17">[17]</a><a class="citation" href="#ref-18">[18]</a>.</p>
-<p>The field has converged on outsourcing verification to purpose-built external mechanisms—compilers, linters, test suites, schema validators, rule engines—not because models <em>cannot</em> self-correct, but because external validation provides reliable, deterministic signals. This pattern now appears at every scale: OpenAI Codex <a class="citation" href="#ref-84">[84]</a> runs in sandboxed containers with internet disabled (constraint through isolation), Operator <a class="citation" href="#ref-88">[88]</a> hands control to users when uncertain (human-in-the-loop validation), Meta&#39;s LlamaFirewall <a class="citation" href="#ref-93">[93]</a> provides guardrails as a separate system independent of the agent&#39;s reasoning, and Anthropic&#39;s harness patterns <a class="citation" href="#ref-92">[92]</a> use progress files and git checkpoints as external recovery signals for long-running agents. Section 2.1.1 establishes the principle; Section 2.3 makes the economic case.</p>
+<p>The field has converged on outsourcing verification to purpose-built external mechanisms—compilers, linters, test suites, schema validators, rule engines—not because models <em>cannot</em> self-correct, but because external validation provides reliable, deterministic signals. This pattern now appears at every scale: OpenAI Codex <a class="citation" href="#ref-84">[84]</a> runs in sandboxed containers with internet disabled (constraint through isolation), Operator <a class="citation" href="#ref-88">[88]</a> hands control to users when uncertain (human-in-the-loop validation), Meta&#39;s LlamaFirewall <a class="citation" href="#ref-93">[93]</a> provides guardrails as a separate system independent of the agent&#39;s reasoning, and Anthropic&#39;s harness patterns <a class="citation" href="#ref-92">[92]</a> use progress files and git checkpoints as external recovery signals for long-running agents. Section 2.1, External Validation establishes the principle; Section 2.3 makes the economic case.</p>
 <p><strong>4. The context window is scarce working memory, not a knowledge store</strong> <a class="citation" href="#ref-25">[25]</a><a class="citation" href="#ref-26">[26]</a><a class="citation" href="#ref-27">[27]</a>.</p>
 <p>The most capable production agents deliberately manage what enters the context window, when, and in what form. The discipline of <strong>context engineering</strong> <a class="citation" href="#ref-30">[30]</a>—selecting, ordering, representing, and timing the information an agent operates on—has emerged as a named practice precisely because context quality matters more than context quantity, and irrelevant context actively degrades performance. By mid-2025, the term had been popularized by Shopify CEO Tobi Lutke and Andrej Karpathy, reflecting a shift in the field&#39;s understanding: reliability comes not from better prompts but from better-structured context (Section 2.2).</p>
 <h3 id="evolution">1.2 Evolution of Agentic Workflows</h3>
@@ -760,7 +766,7 @@
 <li>Prevent error propagation between tasks (isolation)</li>
 <li>Enable effective delegation (clear boundaries for splitting work across agents—see Section 3.5 for the full treatment)</li>
 </ol>
-<h4 id="validation">2.1.1 External Validation Signals</h4>
+<h4 id="validation">External Validation Signals</h4>
 <p>Once a system is structured, its boundaries become checkable—which is what enables external validation.</p>
 <div class="principle">
 
@@ -786,7 +792,7 @@
 </div>
 </details>
 
-<h4 id="tools-principle">2.1.2 Tools Enable Hierarchical Reasoning</h4>
+<h4 id="tools-principle">Tools Enable Hierarchical Reasoning</h4>
 <p>Structure, concretely applied, takes the form of tools—pre-built abstractions that encapsulate solved problems <a class="citation" href="#ref-22">[22]</a><a class="citation" href="#ref-23">[23]</a>.</p>
 <div class="principle">
 
@@ -804,8 +810,40 @@
 <div class="counterpoints-body">
 <p>Tam et al. <a class="citation" href="#ref-15">[15]</a> show that strict format constraints can degrade LLM reasoning performance—models forced into rigid output schemas sometimes sacrifice accuracy. Park et al. <a class="citation" href="#ref-16">[16]</a> demonstrate that grammar-constrained decoding distorts probability distributions. Banerjee et al. <a class="citation" href="#ref-71">[71]</a> propose alternating constrained and unconstrained generation as a middle path. More broadly, the Bitter Lesson argument <a class="citation" href="#ref-72">[72]</a> suggests that hand-crafted structure will eventually be superseded by scaling compute and data.</p>
 <div class="author-response">
-<p>I have empirically verified that strict format constraints degrade reasoning in standard LLMs. However, reasoning models and inference-time scaling have in my view largely solved this issue—the performance penalty from structured output has shrunk significantly with recent model generations. As for the Bitter Lesson—see Section 2.4.1 for the full argument, but the short version is: structure competes on *economy*, not *capability*. Latency, cost, and predictability are orthogonal to what a model can theoretically derive from scratch.</p>
+<p>I have empirically verified that strict format constraints degrade reasoning in standard LLMs. However, reasoning models and inference-time scaling have in my view largely solved this issue—the performance penalty from structured output has shrunk significantly with recent model generations. As for the Bitter Lesson—see Section 2.4, Harness Obsolescence for the full argument, but the short version is: structure competes on *economy*, not *capability*. Latency, cost, and predictability are orthogonal to what a model can theoretically derive from scratch.</p>
 </div>
+</div>
+</details>
+
+<details class="practical-example">
+<summary>Practical Example — Hierarchical Reasoning Done Right: Entity Semantics Search</summary>
+<div class="practical-example-body">
+
+<p>At <a href="https://kuona.ai">kuona.ai</a>, agents need to search across user catalogs, ontologies, and domain-specific entities — product hierarchies, promotional categories, store groupings — to answer business questions. A naive approach would have the agent reason over raw catalog data at query time, parsing thousands of entries to find semantically relevant entities. This is exactly the kind of solved problem that tools should encapsulate.</p>
+
+<p>Instead, we built a <strong>decoupled semantic indexing system</strong>: an asynchronous agent that pre-processes user catalogs and ontologies into task-specific semantic databases. This agent runs offline, building structured indexes that capture entity relationships, synonyms, hierarchical groupings, and domain semantics. The main agent never sees the raw catalog data — it calls a search tool that queries these pre-indexed structures.</p>
+
+<p>The search tool itself calls a workflow underneath — an agentic search over the semantic databases — but from the main agent's perspective, it is a single tool call: <em>"find entities matching this concept."</em> The hard reasoning (understanding what "premium beverages" means across a retailer's specific product taxonomy) has been solved offline and baked into the index. The main agent reasons at a higher level: which entities to search for, how to combine results, and how to use them in downstream queries.</p>
+
+<p><strong>Why this works as hierarchical reasoning</strong>: The semantic indexing agent solves entity understanding once. The search tool encapsulates that solution. The main agent delegates a narrow, well-defined task — semantic entity lookup — to a pre-built abstraction, and gets back structured, validated results. Without this tool, the agent would need to reason over raw data on every query, multiplying both latency and error surface. With it, the agent operates on pre-solved semantic understanding, focusing its reasoning capacity on the actual business question rather than on entity resolution.</p>
+
+</div>
+</details>
+
+<details class="practical-example">
+<summary>Practical Example — When Tools Are Missing: The LIDA Visualization Trap</summary>
+<div class="practical-example-body">
+
+<p>An earlier <a href="https://kuona.ai">kuona.ai</a> system attempted autonomous visualization generation inspired by Microsoft Research's LIDA <a class="citation" href="#ref-96">[96]</a>. The initial vision was full autonomy: a user asks a question, the system produces a correct visualization without human involvement, using LLM-driven code generation to produce arbitrary plots.</p>
+
+<p>The system worked end-to-end, but it was unreliable. Models generated syntactically valid plotting code that made poor visualization choices — mishandling outliers, selecting inappropriate chart types, producing unreadable scales. The initial assumption was that better prompts or larger models would fix these surface-level issues. That assumption was wrong. The problem was architectural: arbitrary code generation for visualizations required <em>visual reasoning</em> that language models fundamentally lacked. No amount of prompt engineering could bridge that gap.</p>
+
+<p><strong>The fix was to introduce tools</strong>. Instead of generating free-form plotting code (reasoning from scratch every time), the system was redesigned around a curated set of <strong>visualization templates with well-defined configurations</strong>. The agent's role shifted from "generate anything" to "route and parameterize the right visualization." These templates were the missing hierarchical abstraction — pre-built tools that encapsulated solved visualization problems (how to handle outliers, how to scale axes, how to label series).</p>
+
+<p><strong>What was lost</strong>: fine-grained control over custom plots, the ability to add arbitrary annotations, and any visualization outside the template library. <strong>What was gained</strong>: accuracy went from ~70% to ~95%, failures became predictable, and every visualization followed consistent design principles — a unified output language that emerged precisely <em>because</em> the scope was constrained. A second tradeoff followed: rather than adding retry loops to chase the last 5%, the interface was redesigned to give users direct control when a visualization was flagged as low quality. What felt like admitting defeat on the autonomous vision became the feature users valued most — predictable reliability with escape hatches.</p>
+
+<p><strong>The lesson for hierarchical reasoning</strong>: The original system asked the agent to reason from first principles about visual design on every invocation. The fix was to package that reasoning into tools — constrained, validated, battle-tested abstractions. The agent stopped solving visualization problems and started <em>selecting</em> pre-solved solutions. Reliability came not from improving the model's raw capabilities, but from redefining the task boundary so the agent reasoned at the right level of abstraction.</p>
+
 </div>
 </details>
 
@@ -827,7 +865,7 @@
 <li><strong>Timing</strong> → When information is loaded (upfront, on-demand, forced)</li>
 </ul>
 <p>Research consistently shows that context quality matters more than context quantity. Irrelevant context actively degrades performance <a class="citation" href="#ref-26">[26]</a>, length alone hurts even with perfect retrieval <a class="citation" href="#ref-27">[27]</a>, and models exhibit predictable attention patterns that structured context can exploit <a class="citation" href="#ref-25">[25]</a>.</p>
-<h4 id="progressive">2.2.1 Progressive Disclosure</h4>
+<h4 id="progressive">Progressive Disclosure</h4>
 <p>The primary mechanism for effective context engineering: don&#39;t load everything upfront—reveal information incrementally as needed <a class="citation" href="#ref-31">[31]</a><a class="citation" href="#ref-32">[32]</a>.</p>
 <div class="principle">
 
@@ -923,7 +961,7 @@
 </tr>
 </tbody></table>
 <p>A 5-percentage-point improvement in per-step reliability (90% → 95%) nearly doubles the success rate over 10 steps. This is why structure matters most for long-horizon tasks—even small reliability gains at each step have dramatic compound effects.</p>
-<p><strong>Corollary</strong>: The longer the task horizon, the more structure is justified, because the compounding penalty for per-step unreliability grows exponentially. This also connects to the redundancy principle (Section 2.5.1): having multiple paths to success at each step is one mechanism for increasing per-step reliability.</p>
+<p><strong>Corollary</strong>: The longer the task horizon, the more structure is justified, because the compounding penalty for per-step unreliability grows exponentially. This also connects to the redundancy principle (Section 2.5, Redundancy): having multiple paths to success at each step is one mechanism for increasing per-step reliability.</p>
 <h4 id="validation-asymmetry">The Validation Cost Asymmetry</h4>
 <p>A key economic property of agentic systems: <strong>validation is almost always cheaper than inference</strong>.</p>
 <table>
@@ -972,7 +1010,7 @@
 <td>Probabilistic</td>
 </tr>
 </tbody></table>
-<p>When external validation is available, it dominates self-assessment on every dimension: cheaper, faster, and more reliable. This asymmetry is what makes the external validation principle (Section 2.1.1) not just theoretically sound but economically compelling—delegating verification to purpose-built external mechanisms is almost always the right trade.</p>
+<p>When external validation is available, it dominates self-assessment on every dimension: cheaper, faster, and more reliable. This asymmetry is what makes the external validation principle (Section 2.1, External Validation) not just theoretically sound but economically compelling—delegating verification to purpose-built external mechanisms is almost always the right trade.</p>
 <h4>When Structure Doesn&#39;t Pay</h4>
 <p>Structure is not always justified. The cost model identifies conditions where flexibility wins:</p>
 <ol>
@@ -992,6 +1030,25 @@
 </div>
 </details>
 
+<details class="practical-example">
+<summary>Practical Example — What You Optimize For Changes Everything</summary>
+<div class="practical-example-body">
+
+<p>The cost model above is deliberately abstract — C_s and C_f are expressed in generic "cost" without specifying <em>what</em> that cost measures. This is intentional: the dominant cost dimension varies across systems, and the structural decisions that follow from the model change accordingly. The framework is a general heuristic; the instantiation is domain-specific.</p>
+
+<p><strong>When latency is the cost function.</strong> At <a href="https://kuona.ai">kuona.ai</a>, latency was the north-star metric. The system serves business analysts who ask questions and expect answers in seconds, not minutes. In this regime, C_f is measured primarily in <em>time</em>: a failed step triggers a retry loop, each retry adds seconds of model inference, and users abandon queries that take too long. Structure is justified when it eliminates retry cycles — a validation check that takes 5ms and prevents a 3-second retry loop is an obvious win. This shaped every architectural decision: pre-computed semantic indexes (Section 2.1, Tools) exist because entity resolution at query time added unacceptable latency, visualization templates replaced code generation because retrying failed plots was too slow, and context was structured by change rate (Section 3.1) because KV cache reuse cut per-turn inference time. The cost model didn't say "add structure everywhere" — it said "add structure wherever it eliminates a latency-visible failure mode."</p>
+
+<p><strong>When inference cost is the cost function.</strong> A different system — a batch processing pipeline that runs overnight, classifying and routing thousands of documents — operates under a completely different C. Latency is irrelevant; the pipeline has hours. But every token costs money, and at scale, wasted tokens dominate the budget. Here, C_f is measured in <em>dollars</em>: a failed classification triggers a re-inference on a document that might be 50k tokens, and propagation cost means a misclassification early in the pipeline causes expensive downstream reprocessing. Structure is justified when it prevents token waste — a lightweight classifier that routes documents to specialized prompts (cheaper, shorter) instead of feeding everything to a single expensive prompt, or a schema validator that catches malformed output before it propagates to the next stage. Retry loops are acceptable (time is cheap); token-burning retry loops are not.</p>
+
+<p><strong>When correctness is the cost function.</strong> At <a href="https://kuona.ai">kuona.ai</a>, after the query system retrieves data, a separate system answers user questions grounded on those results. In this regime, C_f is measured in <em>business risk</em>: a single hallucination or misread data point in an answer can drive decisions worth millions of dollars, and the error may take months to surface. A business analyst who trusts an AI-generated insight about promotional effectiveness, inventory allocation, or pricing strategy acts on it immediately — and by the time the mistake is discovered, the downstream damage is already done. This is why the system was built around a strict grounding architecture: every claim in a user-facing answer must trace back to retrieved data, every numerical assertion is cross-validated against the query results, and the system refuses to speculate beyond what the data supports. Correctness in the answer-crafting layer is the north-star metric — not latency, not token cost, but whether the answer faithfully represents the underlying data. The cost model says "C_s is almost always less than C_f" because C_f is catastrophic and delayed. The "When Structure Doesn't Pay" conditions rarely apply — even one-off analyses need grounding structure because cheap failure doesn't exist when the wrong number can redirect a client's strategy.</p>
+
+<p><strong>C can vary within the same system.</strong> At <a href="https://kuona.ai">kuona.ai</a>, the query system is multi-tenant across different database backends. When the agent queries cloud data warehouses and big data infrastructure, failures are expensive: queries take seconds to minutes, consume compute resources, and a malformed query against a production warehouse can time out, lock resources, or return misleading partial results. In this regime, strict query planning and validation paid for themselves immediately — a planning layer that validated query structure, checked schema compatibility, and verified join paths <em>before</em> execution prevented costly round-trips to remote infrastructure. But the same system also handles small datasets that fit in the agent's local environment via DuckDB. Here, the entire cost calculus flips: queries execute in milliseconds against an in-process database, failures are instantly visible and instantly retryable, and there are no remote resources to waste. Errors are cheap. For DuckDB queries, the planning layer was dropped entirely — the agent generates and executes queries directly, iterating on failures at negligible cost. The same system, the same agent, two completely different structural decisions — because C_f for a failed cloud warehouse query and C_f for a failed DuckDB query differ by orders of magnitude.</p>
+
+<p><strong>The general heuristic</strong>: Before applying the cost model, identify what your system's C actually measures. The same architectural decision — adding a validation checkpoint, pre-computing an index, constraining output format — can be clearly justified, clearly wasteful, or somewhere in between, depending entirely on which cost dimension dominates. The model is universal; the parameterization is not.</p>
+
+</div>
+</details>
+
 <p>The conditions above—when structure pays and when it doesn&#39;t—are not binary. They form a spectrum, which the following section formalizes.</p>
 <h3 id="tradeoff">2.4 The Flexibility-Reliability Tradeoff</h3>
 <p><img src="assets/agents/image3-flexibility-reliability.svg" alt="Flexibility-Reliability Tradeoff"></p>
@@ -1002,25 +1059,26 @@
 </ul>
 <p>While some agents work well as completely flexible, <strong>reliability and low latency come from structure</strong>. Agents built with these structural harnesses—structured agents—occupy the upper-right of this space: high flexibility through LLM reasoning, high reliability through external constraints.</p>
 <p><strong>Key insight</strong>: Even with increased agentic capabilities, reducing the problem space and &quot;degrees of freedom&quot; leads to reduced latencies and improved reliability. The structured agency approach is fundamentally about moving agents upward on this chart by adding harnesses rather than restricting what they can do.</p>
-<h4 id="harness-obsolescence">2.4.1 Designing for Harness Obsolescence</h4>
+<h4 id="harness-obsolescence">Designing for Harness Obsolescence</h4>
 <p>The flexibility-reliability tradeoff has a temporal dimension that is central to how structured agency should be practiced: <strong>build harnesses expecting them to weaken over time.</strong></p>
 <p>The Bitter Lesson has been applied directly to agent scaffolding by Martin <a class="citation" href="#ref-93">[93]</a>, Bowne-Anderson <a class="citation" href="#ref-95">[95]</a>, and others, with the practical observation that agent harnesses must be &quot;repeatedly simplified as models improve&quot;—that teams at Anthropic and elsewhere rebuild their agent infrastructure on the order of months, not years. We agree with this framing and formalize it as a design principle: harness obsolescence is not a failure of design but a <em>feature</em> of well-designed systems.</p>
 <p>Current harnesses address current model limitations. State management compensates for the fact that models lack persistent memory across invocations. Context-window-as-working-memory harnesses (progressive disclosure, forced contexts, retrieval mechanisms) exist because attention doesn&#39;t scale perfectly and context is expensive. Structured output schemas exist because models don&#39;t always produce well-formed output. Validation signals exist because models can&#39;t yet reliably self-verify. Each of these is a response to a specific limitation—and each limitation is on a trajectory of improvement.</p>
 <p>As models improve, some harnesses will naturally weaken. A model with perfect self-verification needs fewer external validation signals. A model with reliable structured output needs less schema enforcement. A model with effectively infinite context and perfect attention needs less aggressive progressive disclosure. New architectures may overcome the need for external memory entirely, collapsing the state management harness into the model itself. The Bitter Lesson predicts exactly this trajectory: capabilities that were once impossible without external scaffolding get absorbed into the model itself.</p>
 <p>But even as harnesses weaken, <strong>domain-specific structured state remains economical</strong>. The latency cost of having a model re-derive a customer&#39;s order history from raw conversation logs—every invocation—will always exceed the cost of maintaining that information in a structured state object, regardless of how capable the model becomes. The cognitive cost (in tokens) of navigating an unstructured environment will always exceed the cost of navigating one where the structure is pre-computed. This is the same argument that applies to software engineering generally: we don&#39;t rewrite parsers from first principles every time we need to parse JSON, even though we <em>could</em>. Structured agency&#39;s harnesses occupy this same economic niche—they are amortized investments in structure that pay dividends across invocations. The right design principle, then, is not &quot;build permanent harnesses&quot; but &quot;build harnesses with a clear understanding of which limitations they address and how those limitations are evolving.&quot; This is the temporal dimension of the flexibility-reliability tradeoff: the optimal point on the curve shifts over time as model capabilities advance, and well-designed structured agents shift with it.</p>
-<h4 id="commoditizing-intelligence">2.4.2 Commoditizing Intelligence</h4>
-<p>Section 2.4.1 argues that the harness should survive model <em>improvement</em>—the temporal axis. There is a second axis: the harness should survive model <em>substitution</em>.</p>
+<h4 id="commoditizing-intelligence">Commoditizing Intelligence</h4>
+<p>Section 2.4, Harness Obsolescence argues that the harness should survive model <em>improvement</em>—the temporal axis. There is a second axis: the harness should survive model <em>substitution</em>.</p>
 <div class="principle">
 
 <p><strong>Principle</strong>: Treat the model as a replaceable commodity. The harness is the stable layer; the intelligence provider is a variable.</p>
 </div>
 
 <p>The economic realities of model serving make this more than an architectural nicety. Providers compete on price, latency, and capability across different task profiles. A model that is cost-optimal for structured extraction may not be the best choice for open-ended reasoning. A harness that abstracts over the intelligence provider can route tasks to the appropriate model—or simply to the cheapest one that meets the reliability threshold. This is the same economic logic that drives cloud infrastructure: you don&#39;t build your application around a specific EC2 instance.</p>
+<p>This connects directly to the cost model (Section 2.3): different models align with different cost functions. A task where C_f is measured in <em>risk</em> — the grounded answer system from Section 2.3 — justifies routing to the most capable (and expensive) model, because the cost of a hallucination dwarfs the inference premium. A task where C_f is measured in <em>latency</em> — entity resolution at query time — favors the fastest model that meets the accuracy threshold, even if a more capable model would be marginally better. A task where C_f is measured in <em>dollars</em> — high-volume classification or routing — favors the cheapest model that clears the reliability bar. Model commoditization is not just about substitution resilience; it is about <strong>matching intelligence cost to task risk</strong>. The harness that treats models as interchangeable also enables the harness that routes each task to the model whose cost profile best fits its C.</p>
 <p>The robustness argument is equally compelling. Provider outages, rate limits, and deprecations are operational realities. A harness designed around model interchangeability treats these as transient conditions rather than architectural crises—if one provider fails, the system falls back without adaptation.</p>
 <p>This principle extends down to the implementation level. Frameworks like PydanticAI, LangChain, and similar orchestration layers earn their value not primarily through abstraction but through the operational niceties that make model commoditization practical:</p>
 <ul>
 <li><strong>Retry loops with exponential backoff</strong> for transient provider errors (rate limits, timeouts, 5xx responses)</li>
-<li><strong>Structured output validation with automatic retries</strong> — when the model produces malformed JSON given a schema constraint, the framework re-prompts rather than failing. This is a harness that compensates for a model limitation (unreliable structured output), exactly as Section 2.4.1 describes.</li>
+<li><strong>Structured output validation with automatic retries</strong> — when the model produces malformed JSON given a schema constraint, the framework re-prompts rather than failing. This is a harness that compensates for a model limitation (unreliable structured output), exactly as Section 2.4, Harness Obsolescence describes.</li>
 <li><strong>Provider-agnostic interfaces</strong> that allow swapping the underlying model without changing application code</li>
 <li><strong>Streaming, token counting, and cost tracking</strong> as cross-cutting concerns independent of which model is being called</li>
 </ul>
@@ -1037,7 +1095,7 @@
 </details>
 
 <h3 id="corollaries">2.5 Practical Corollaries</h3>
-<h4 id="redundancy">2.5.1 Redundancy is a Feature</h4>
+<h4 id="redundancy">Redundancy is a Feature</h4>
 <div class="principle">
 
 <p><strong>Principle</strong>: Have multiple ways to accomplish the same thing <a class="citation" href="#ref-38">[38]</a><a class="citation" href="#ref-39">[39]</a><a class="citation" href="#ref-40">[40]</a>.</p>
@@ -1050,6 +1108,28 @@
 <li>Multiple communication channels</li>
 <li>Fallback tools when primary tools fail</li>
 </ul>
+<h4 id="stress-strengthens">Stress Strengthens a System</h4>
+<div class="principle">
+
+<p><strong>Principle</strong>: Reuse agents and components across contexts. Shared stress surfaces harden them.</p>
+</div>
+
+<p><strong>Rationale</strong>: A component used in one context is fragile — its edge cases are discovered only within that context. A component reused across many contexts is stressed from multiple directions, forcing it to become more general, more robust, and more predictable. Stress — the pressure of diverse usage patterns — strengthens a system the same way load testing strengthens infrastructure.</p>
+<details class="practical-example">
+<summary>Practical Example — From Monolithic Agents to Reusable Cores</summary>
+<div class="practical-example-body">
+
+<p>At <a href="https://kuona.ai">kuona.ai</a>, an early discovery shaped the entire architecture: designing monolithic agents with all desired capabilities baked in led to brittle code. When agent B needed a capability that lived inside agent A, the result was either duplication (rewriting the capability) or tight coupling (calling into agent A's internals). Both paths created fragility — a change to agent A's prompts or tool configuration would silently break agent B's dependency.</p>
+
+<p>The solution was to structure from the beginning so that the same agents and the same prompts would be reused across as many contexts as possible. A single query agent, with the same core prompt and tool set, serves promotional analysis, inventory questions, and financial reporting. Each new domain that stresses the agent exposes edge cases that, once fixed, benefit every other domain. The agent got <em>stronger</em> as it was reused — more general, fewer blind spots, more predictable failure modes.</p>
+
+<p><strong>A subtlety in how this was achieved</strong>: the alternative to reuse is decomposition — splitting capabilities into separate specialized modules. For instance, SQL generation could live in a dedicated subagent that the main agent delegates to. But this creates a more brittle system with more dependencies: the main agent must know when to delegate, the subagent must understand the main agent's context, and the interface between them becomes a failure surface. Instead, the main agent was designed to be <em>reconfigurable</em> — its tool set and directives can be narrowed per invocation. When only SQL generation is needed, the agent is invoked with the SQL tool forced and a directive to return after generating the query. Same agent, same prompt, same battle-tested reasoning — just a narrower scope. This is reuse through reconfiguration, not decomposition through delegation.</p>
+
+<p>These lessons — that reuse hardens components, that monoliths are brittle, and that reconfiguration beats decomposition — heavily influence the formalisms in the taxonomy that follows. The distinction between invocation-level configuration (Section 3.1) and agent identity, the treatment of tools as state that can be added or removed per invocation (Section 3.2), and the composition patterns (Section 3.5) all trace back to this practical discovery.</p>
+
+</div>
+</details>
+
 <hr>
 <p>With the principles established, we now turn to how they manifest concretely in agent design. The taxonomy below maps each principle to the architectural surfaces where harnesses can be applied.</p>
 <h2 id="taxonomy">3. Taxonomy of Structured Agents</h2>
@@ -1105,6 +1185,7 @@
 <li>Successive invocations should preserve only relevant information (through pruning or compression)</li>
 <li>Supplement with forced tool use and external contexts</li>
 </ul>
+<p><strong>Caveat</strong>: The scratchpad metaphor has limits. LLMs are <strong>causal models</strong> — each token&#39;s representation depends only on the tokens before it, and inference engines exploit this through <strong>KV caches</strong> and <strong>prompt caching</strong>. When the prefix of the context window is unchanged across requests, its key-value representations can be reused, dramatically reducing cost and latency. Treating working memory as a freely mutable scratchpad — inserting, reordering, or modifying content near the top — invalidates these caches and forces full recomputation. This creates a practical design constraint: <strong>structure context by change rate</strong>. Place invariant content (system prompts, tool definitions, stable directives) at the beginning, semi-stable content (loaded contexts, retrieved documents) in the middle, and volatile content (recent conversation turns, tool results) at the end. This layering — invariant → semi-stable → volatile — maximizes cache reuse while preserving the scratchpad&#39;s flexibility where it matters most.</p>
 <p><strong>Critical distinction</strong>: The context window is NOT the agent&#39;s state — it is the agent&#39;s <em>view</em> of its state. Working memory is populated by tools that load, search, and surface relevant state into the context window. The quality of that population — what gets loaded, when, and in what form — is context engineering (Section 2.2).</p>
 <p>[<strong>TODO</strong>: Working memory management — strategies for vacating, pruning, and compacting working memory during long-running invocations. When and how should an agent decide to evict information from its context window? What are the tradeoffs between summarization, selective retention, and offloading to external state?]</p>
 <h4 id="directives">Directives</h4>
@@ -1160,7 +1241,7 @@
 <li><strong>World-facing tools</strong> (actions) — Reach <em>outside</em> state to observe or affect the external environment: `execute_sql`, `call_api`, `write_file`, `send_message`. These are the agent&#39;s hands.</li>
 <li><strong>State-facing tools</strong> (cognitive economy) — Reach <em>into</em> state to introspect or modify the agent&#39;s own structured representation: `list_tables`, `get_schema`, `read_context`, `search_state`. These are the agent&#39;s capacity for self-reflection.</li>
 </ol>
-<p>State-facing tools are what make progressive disclosure (Section 2.2.1) possible in practice. Rather than loading all state into working memory, the agent uses state-facing tools to discover what exists (`ls`), search for relevance (`grep`), and read the detail (`cat`). The progressive disclosure funnel is <em>implemented</em> through state-facing tools.</p>
+<p>State-facing tools are what make progressive disclosure (Section 2.2, Progressive Disclosure) possible in practice. Rather than loading all state into working memory, the agent uses state-facing tools to discover what exists (`ls`), search for relevance (`grep`), and read the detail (`cat`). The progressive disclosure funnel is <em>implemented</em> through state-facing tools.</p>
 <p><strong>Tools can be introspected and modified</strong>: In coding agents, the toolset itself is editable state — an agent can inspect its available tools, understand their capabilities, and write new tools or modify existing ones. Non-coding agents cannot modify their tools but can still introspect them: reading tool descriptions, understanding parameters, discovering capabilities through progressive disclosure.</p>
 <p><strong>Bootstrapping requires state introspection</strong>: For an agent to begin operating on structured state, it must have tools to discover what that state contains. Without `list_tables` or `get_schema` or equivalent, the agent cannot learn what it has to work with. State-facing tools are the minimal bootstrap — they must be available from the first invocation. Some tools must be automatically invoked or their descriptions automatically loaded into the agent&#39;s directives or working memory. This is forced tool use (Section 3.3) — a bootstrapping mechanism that ensures the agent starts with the minimum context needed to act effectively.</p>
 <p>Section 3.3 elaborates on tool design, categorization, and forced tool use patterns. The distinction here is conceptual: tools are not a separate concern from state but a structured interface <em>within</em> it.</p>
@@ -1194,6 +1275,17 @@
 <li><strong>CLI utilities</strong> → Unix tools like grep, cat, sed</li>
 </ol>
 <p><img src="assets/agents/image7-tool-anatomy.svg" alt="Tool Anatomy"></p>
+<h4 id="bootstrapped-tools">Bootstrapped Tools</h4>
+<p><strong>Bootstrapped tools</strong> are tools whose definitions are loaded into working memory at the start of every invocation — they are always available, always visible, and always occupying context. Unlike tools discovered or loaded dynamically during execution, bootstrapped tools are part of the agent&#39;s initial prompt and shape its reasoning from the first token.</p>
+<p><strong>Why this matters</strong>: Because LLMs are causal models with KV caches (see Working Memory above), bootstrapped tool definitions sit in the invariant prefix of the context window. Their key-value representations are computed once and reused across every subsequent turn. This makes them essentially free after the first request — adding a bootstrapped tool increases first-request latency but has near-zero marginal cost for all subsequent interactions within an invocation. This is a fundamental asymmetry that should inform tool placement decisions.</p>
+<p><strong>Design implications</strong>:</p>
+<ul>
+<li><strong>Stable definitions only</strong> — Bootstrapped tools should have fixed descriptions and schemas. If a tool&#39;s definition changes between turns, it invalidates the cache prefix and negates the performance benefit.</li>
+<li><strong>Core over convenience</strong> — Only tools that the agent needs across most turns belong in the bootstrap set. Rarely-used tools are better loaded dynamically to keep the invariant prefix lean.</li>
+<li><strong>Ordering matters</strong> — Place the most frequently used bootstrapped tools earlier in the definition list. Causal attention means earlier tokens have more influence on downstream reasoning, and earlier definitions are more reliably followed.</li>
+<li><strong>Budget awareness</strong> — Each bootstrapped tool consumes tokens in every request. A large bootstrap set can crowd out space for actual task content. Monitor the ratio of tool-definition tokens to task tokens.</li>
+</ul>
+<p><strong>Examples</strong>: In Claude Code, the file read/write/edit tools, bash execution, and search tools are bootstrapped — they are always present because the agent needs them on virtually every turn. Specialized tools like GitHub CLI wrappers or MCP-provided tools may be loaded conditionally based on project context.</p>
 <h4 id="tool-design">Tool Design</h4>
 <ol>
 <li><p><strong>Multi-level descriptions</strong></p>
@@ -1491,7 +1583,7 @@
 <p>[<strong>TODO</strong>: Document search-based approaches you&#39;ve experimented with]</p>
 <h5>Verification-Driven Planning</h5>
 <p>Using validation signals to guide plan construction—plans are iteratively refined until they pass verification checks.</p>
-<p><strong>Connection to Section 2.1.1</strong>: External validation signals are not just useful during execution—they can also constrain the planning phase itself.</p>
+<p><strong>Connection to Section 2.1, External Validation</strong>: External validation signals are not just useful during execution—they can also constrain the planning phase itself.</p>
 <p>[<strong>TODO</strong>: Document verification-driven planning patterns]</p>
 <h4 id="plan-execution">Plan Execution</h4>
 <p>A plan is only as good as its execution. Key concerns:</p>
@@ -1520,7 +1612,7 @@
 <div class="counterpoints-body">
 <p>The value of explicit planning is debated. Snell et al. <a class="citation" href="#ref-76">[76]</a> show that scaling test-time compute—simply giving a model more tokens to think—can match or beat structured planning approaches. Plan caching <a class="citation" href="#ref-77">[77]</a> reveals that planning overhead is non-trivial and can be amortized. Google DeepMind <a class="citation" href="#ref-78">[78]</a> finds that frontier models working alone can outperform agent teams on many benchmarks, questioning whether planning-heavy orchestration is always justified. Chain-of-thought prompting <a class="citation" href="#ref-54">[54]</a> itself can be seen as implicit planning that emerges from the model rather than being imposed externally.</p>
 <div class="author-response">
-<p>In practice, when actions are expensive and mistakes are costly or irreversible, I have found planning—especially with verification signals before execution—to be a very worthwhile investment. The overhead is real, but so is the cost of an unplanned action that corrupts state or wastes expensive API calls. Planning pays for itself when the cost of failure exceeds the cost of deliberation. Moreover, structured agency is itself a human-explainable, low-complexity form of test-time compute. The harness *is* compute—it's just compute that happens to be legible, auditable, and cheap. As models improve, explicit harness compute gets amortized into the model itself (the model learns to do what the harness enforced). But this is structured agency's *graduation path*, not its contradiction: structure scaffolds capability until the model internalizes it, at which point the harness gracefully weakens (see Section 2.4.1 for the full Bitter Lesson argument).</p>
+<p>In practice, when actions are expensive and mistakes are costly or irreversible, I have found planning—especially with verification signals before execution—to be a very worthwhile investment. The overhead is real, but so is the cost of an unplanned action that corrupts state or wastes expensive API calls. Planning pays for itself when the cost of failure exceeds the cost of deliberation. Moreover, structured agency is itself a human-explainable, low-complexity form of test-time compute. The harness *is* compute—it's just compute that happens to be legible, auditable, and cheap. As models improve, explicit harness compute gets amortized into the model itself (the model learns to do what the harness enforced). But this is structured agency's *graduation path*, not its contradiction: structure scaffolds capability until the model internalizes it, at which point the harness gracefully weakens (see Section 2.4, Harness Obsolescence for the full Bitter Lesson argument).</p>
 </div>
 </div>
 </details>
@@ -1565,7 +1657,7 @@
 <h4 id="recovery-strategies">Recovery Strategies</h4>
 <ul>
 <li><strong>Retry with backoff</strong> → Transient failures (network, rate limits)</li>
-<li><strong>Fallback tools</strong> → Alternative paths to accomplish the same action (see Section 2.5.1)</li>
+<li><strong>Fallback tools</strong> → Alternative paths to accomplish the same action (see Section 2.5, Redundancy)</li>
 <li><strong>Replanning</strong> <a class="citation" href="#ref-57">[57]</a> → Abandon current plan and construct a new one from current state</li>
 <li><strong>Escalation</strong> → Communicate the failure to a parent agent or user</li>
 <li><strong>Graceful degradation</strong> <a class="citation" href="#ref-40">[40]</a> → Accomplish a reduced version of the goal</li>
@@ -1637,7 +1729,7 @@
 <tbody><tr>
 <td><strong>Poisoned tool outputs</strong></td>
 <td>A compromised API returns misleading data</td>
-<td>Redundant verification (Section 2.5.1)—cross-check through independent sources</td>
+<td>Redundant verification (Section 2.5, Redundancy)—cross-check through independent sources</td>
 </tr>
 <tr>
 <td><strong>State manipulation</strong></td>
@@ -1728,7 +1820,7 @@
 <li><strong>Composition requires boundaries</strong> → Subagents, skills, and plans only work when responsibilities, contexts, and tools are clearly partitioned</li>
 </ol>
 <p>These principles are not a checklist to be applied independently. They are a connected framework: structure enables validation, validation enables tool reliability, tool reliability enables composition, and composition enables agents that solve complex problems without compounding errors at every step.</p>
-<p>The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. <strong>Harnesses are designed to weaken</strong>: the framework explicitly anticipates that today&#39;s structural scaffolding becomes tomorrow&#39;s unnecessary overhead as models internalize the patterns (Section 2.4.1). <strong>Structure provides alignment, not just reliability</strong>: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.9). <strong>Economy is orthogonal to capability</strong>: even when a model <em>can</em> derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: <strong>it is almost always cheaper to prevent failure through structure than to recover from it through flexibility</strong>.</p>
+<p>The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. <strong>Harnesses are designed to weaken</strong>: the framework explicitly anticipates that today&#39;s structural scaffolding becomes tomorrow&#39;s unnecessary overhead as models internalize the patterns (Section 2.4, Harness Obsolescence). <strong>Structure provides alignment, not just reliability</strong>: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.9). <strong>Economy is orthogonal to capability</strong>: even when a model <em>can</em> derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: <strong>it is almost always cheaper to prevent failure through structure than to recover from it through flexibility</strong>.</p>
 <hr>
 <h2 id="appendix">Appendix: Terminology Reference</h2>
 <table>
@@ -1912,6 +2004,7 @@
 <p id="ref-91">[91] Anthropic, &quot;Agent Skills Specification,&quot; 2025. <a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a></p>
 <p id="ref-92">[92] Anthropic, &quot;Effective Harnesses for Long-Running Agents,&quot; 2025. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></p>
 <p id="ref-93">[93] Meta, &quot;LlamaFirewall: An Open Source Guardrail System for Building Secure AI Agents,&quot; 2025. <a href="https://arxiv.org/abs/2505.03574">arxiv.org/abs/2505.03574</a></p>
+<p id="ref-96">[96] V. Dibia, &quot;LIDA: A Tool for Automatic Generation of Grammar-Agnostic Visualizations and Infographics using Large Language Models,&quot; <em>ACL</em>, 2023. <a href="https://arxiv.org/abs/2303.02927">arxiv.org/abs/2303.02927</a></p>
 <hr>
 <p><strong>Document Status</strong>: Work in Progress
 <strong>Version</strong>: Null

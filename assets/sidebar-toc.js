@@ -13,14 +13,22 @@ function initSidebarTOC({ sectionSelector, scrollOffset = 120 } = {}) {
 
     let lastActiveHref = null;
 
-    const updateActiveSection = () => {
-        const sections = document.querySelectorAll(sectionSelector);
-        const sidebarLinks = sidebar.querySelectorAll('a');
+    // Derive tracked sections from the sidebar's own links.
+    // This guarantees every sidebar entry can be highlighted —
+    // no matter what heading level (h2, h3, h4, …) the target is.
+    const sidebarLinks = sidebar.querySelectorAll('a[href^="#"]');
+    const trackedSections = [];
+    sidebarLinks.forEach(link => {
+        const id = link.getAttribute('href').substring(1);
+        const el = document.getElementById(id);
+        if (el) trackedSections.push(el);
+    });
 
+    const updateActiveSection = () => {
         let currentSection = '';
         const scrollPos = window.scrollY + scrollOffset;
 
-        sections.forEach(section => {
+        trackedSections.forEach(section => {
             if (!section.offsetParent) return; // skip hidden (display:none) elements
             if (scrollPos >= section.offsetTop) {
                 currentSection = section.id;
