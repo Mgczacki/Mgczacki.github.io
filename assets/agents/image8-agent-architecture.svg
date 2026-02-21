@@ -1,86 +1,154 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 670">
   <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
   <defs>
-    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path d="M0 0L10 5L0 10z" fill="#111"/>
     </marker>
-    <marker id="am" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <marker id="m" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path d="M0 0L10 5L0 10z" fill="#999"/>
     </marker>
   </defs>
 
   <!-- Title -->
-  <text x="350" y="30" text-anchor="middle" font-size="11" font-weight="600" fill="#999">AGENT ARCHITECTURE</text>
+  <text x="400" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#999">AGENT MODEL</text>
 
-  <!-- WORLD (large encompassing region, top) -->
-  <rect x="40" y="50" width="620" height="120" rx="8" fill="#f7f7f7" stroke="#111" stroke-width="2"/>
-  <text x="350" y="82" text-anchor="middle" font-size="18" font-weight="700" fill="#111">World</text>
-  <text x="350" y="102" text-anchor="middle" font-size="11" fill="#666">External environment: files, APIs, databases, users, other systems</text>
-  <!-- World internals -->
-  <rect x="75" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
-  <text x="112" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Files</text>
-  <rect x="165" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
-  <text x="202" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">APIs</text>
-  <rect x="255" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
-  <text x="292" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Databases</text>
-  <rect x="345" y="118" width="75" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
-  <text x="382" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Users</text>
-  <rect x="435" y="118" width="95" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
-  <text x="482" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Other Agents</text>
-  <rect x="545" y="118" width="80" height="32" rx="4" fill="#fff" stroke="#111" stroke-width="1"/>
-  <text x="585" y="139" text-anchor="middle" font-size="9" font-weight="600" fill="#111">Services</text>
+  <!-- ===== WORLD ===== -->
+  <rect x="50" y="38" width="700" height="55" rx="4" fill="#e0e0e0" stroke="#111" stroke-width="2"/>
+  <text x="400" y="62" text-anchor="middle" font-size="14" font-weight="700" fill="#111">World</text>
+  <text x="400" y="78" text-anchor="middle" font-size="9" fill="#666">files, APIs, databases, users, other agents, services</text>
 
-  <!-- ACTIONS / TOOLS (middle band) -->
-  <rect x="140" y="210" width="420" height="60" rx="6" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="350" y="237" text-anchor="middle" font-size="14" font-weight="700" fill="#111">Actions</text>
-  <text x="350" y="255" text-anchor="middle" font-size="10" fill="#666">Tools, MCP servers, CLI utilities, coding-model functions</text>
+  <!-- ===== STATE (outline first) ===== -->
+  <rect x="50" y="120" width="700" height="400" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
 
-  <!-- Arrows: World <-> Actions -->
-  <line x1="300" y1="170" x2="300" y2="205" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
-  <text x="282" y="192" font-size="9" fill="#666">observe</text>
-  <line x1="400" y1="205" x2="400" y2="170" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
-  <text x="410" y="192" font-size="9" fill="#666">affect</text>
+  <!-- ========================================= -->
+  <!-- ARROWS TO/FROM WORLD (painted BEFORE title overlay) -->
+  <!-- ========================================= -->
+  <!-- Outbound UP to world -->
+  <line x1="130" y1="175" x2="130" y2="96" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <line x1="250" y1="175" x2="250" y2="96" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <!-- Inbound DOWN from world -->
+  <line x1="395" y1="96" x2="395" y2="172" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <line x1="525" y1="96" x2="525" y2="172" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <!-- execute_sql UP to world -->
+  <line x1="660" y1="175" x2="660" y2="96" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <!-- execute_sql DOWN to structure classes border -->
+  <line x1="672" y1="205" x2="640" y2="256" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <!-- Inbound tools arrows DOWN to structure classes border -->
+  <line x1="395" y1="205" x2="395" y2="256" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
+  <line x1="525" y1="205" x2="525" y2="256" stroke="#111" stroke-width="1.2" marker-end="url(#a)"/>
 
-  <!-- STATE (bottom left) -->
-  <rect x="40" y="320" width="280" height="120" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="180" y="352" text-anchor="middle" font-size="14" font-weight="700" fill="#111">State</text>
-  <text x="180" y="370" text-anchor="middle" font-size="10" fill="#666">Structured internal representation</text>
-  <!-- State internals (mini boxes) -->
-  <rect x="60" y="385" width="65" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
-  <text x="92" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Schema</text>
-  <rect x="135" y="385" width="55" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
-  <text x="162" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">KG</text>
-  <rect x="200" y="385" width="55" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
-  <text x="227" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Config</text>
-  <rect x="265" y="385" width="40" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
-  <text x="285" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">DB</text>
+  <!-- STATE TITLE -->
+  <text x="80" y="148" font-size="16" font-weight="700" fill="#111">State</text>
 
-  <!-- AGENT (bottom right) -->
-  <rect x="380" y="320" width="280" height="120" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
-  <text x="520" y="352" text-anchor="middle" font-size="14" font-weight="700" fill="#111">Agent</text>
-  <text x="520" y="370" text-anchor="middle" font-size="10" fill="#666">LLM / reasoning core</text>
-  <!-- Agent internals -->
-  <rect x="395" y="385" width="105" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
-  <text x="447" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Context Window</text>
-  <rect x="510" y="385" width="70" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
-  <text x="545" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Directives</text>
-  <rect x="590" y="385" width="55" height="28" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
-  <text x="617" y="404" text-anchor="middle" font-size="8" font-weight="600" fill="#111">Tools</text>
+  <!-- ========================================= -->
+  <!-- WORLD-FACING TOOLS                        -->
+  <!-- ========================================= -->
 
-  <!-- Arrows: Actions <-> State -->
-  <line x1="250" y1="270" x2="180" y2="315" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
-  <text x="188" y="292" font-size="9" fill="#666">read / write</text>
+  <!-- call_api: outbound to world -->
+  <rect x="80" y="175" width="100" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="130" y="194" text-anchor="middle" font-size="9" font-weight="500" fill="#111">call_api</text>
 
-  <!-- Arrows: Actions <-> Agent -->
-  <line x1="450" y1="270" x2="520" y2="315" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
-  <text x="510" y="292" font-size="9" fill="#666">invoke / return</text>
+  <!-- send_msg: outbound to world -->
+  <rect x="200" y="175" width="100" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="250" y="194" text-anchor="middle" font-size="9" font-weight="500" fill="#111">send_msg</text>
 
-  <!-- Arrow: Agent -> State (observes state) -->
-  <line x1="380" y1="380" x2="325" y2="380" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#am)"/>
-  <text x="352" y="373" font-size="9" fill="#999">perceive</text>
+  <!-- receive_msg: inbound from world -->
+  <rect x="340" y="175" width="110" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="395" y="194" text-anchor="middle" font-size="9" font-weight="500" fill="#111">receive_msg</text>
 
-  <!-- Loop annotation (curved path from Agent back up to Actions) -->
-  <path d="M 640 380 Q 680 280 560 270" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#am)"/>
-  <text x="670" y="330" font-size="9" fill="#999" font-style="italic">agentic</text>
-  <text x="676" y="342" font-size="9" fill="#999" font-style="italic">loop</text>
+  <!-- fetch_emails: inbound from world -->
+  <rect x="470" y="175" width="110" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="525" y="194" text-anchor="middle" font-size="9" font-weight="500" fill="#111">fetch_emails</text>
+
+  <!-- execute_sql: BOTH world and state -->
+  <rect x="620" y="175" width="105" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="672" y="194" text-anchor="middle" font-size="9" font-weight="500" fill="#111">execute_sql</text>
+
+  <!-- ========================================= -->
+  <!-- STRUCTURE CLASSES (domain data)           -->
+  <!-- ========================================= -->
+
+  <!-- Subtle group border -->
+  <rect x="72" y="258" width="596" height="50" rx="5" fill="none" stroke="#bbb" stroke-width="0.8" stroke-dasharray="6 3"/>
+  <text x="78" y="254" font-size="8" fill="#aaa" font-weight="600">STRUCTURE CLASSES</text>
+
+  <rect x="82" y="270" width="100" height="30" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="132" y="289" text-anchor="middle" font-size="9" font-weight="500" fill="#111">Schema</text>
+
+  <rect x="197" y="270" width="110" height="30" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="252" y="289" text-anchor="middle" font-size="9" font-weight="500" fill="#111">Knowledge Graph</text>
+
+  <rect x="322" y="270" width="105" height="30" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="374" y="289" text-anchor="middle" font-size="9" font-weight="500" fill="#111">Configuration</text>
+
+  <rect x="442" y="270" width="100" height="30" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="492" y="289" text-anchor="middle" font-size="9" font-weight="500" fill="#111">Databases</text>
+
+  <rect x="557" y="270" width="100" height="30" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="607" y="289" text-anchor="middle" font-size="9" font-weight="500" fill="#111">Memories</text>
+
+  <!-- ========================================= -->
+  <!-- STATE-FACING TOOLS                        -->
+  <!-- ========================================= -->
+
+  <!-- Arrows UP to structure classes border -->
+  <line x1="150" y1="340" x2="150" y2="310" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="292" y1="340" x2="292" y2="310" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="440" y1="340" x2="440" y2="310" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="590" y1="340" x2="590" y2="310" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- list_tables -->
+  <rect x="100" y="340" width="100" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="150" y="359" text-anchor="middle" font-size="9" font-weight="500" fill="#111">list_tables</text>
+
+  <!-- get_schema -->
+  <rect x="240" y="340" width="105" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="292" y="359" text-anchor="middle" font-size="9" font-weight="500" fill="#111">get_schema</text>
+
+  <!-- read_context -->
+  <rect x="385" y="340" width="110" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="440" y="359" text-anchor="middle" font-size="9" font-weight="500" fill="#111">read_context</text>
+
+  <!-- search_state -->
+  <rect x="535" y="340" width="110" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="590" y="359" text-anchor="middle" font-size="9" font-weight="500" fill="#111">search_state</text>
+
+  <!-- ========================================= -->
+  <!-- UNIVERSAL FLOW: all results → WM          -->
+  <!-- ========================================= -->
+
+  <rect x="180" y="440" width="440" height="22" rx="4" fill="#f7f7f7" stroke="#999" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="400" y="455" text-anchor="middle" font-size="9" font-weight="600" fill="#666">all tool results → working memory</text>
+
+  <!-- Arrow from band down to agent -->
+  <line x1="400" y1="462" x2="400" y2="537" stroke="#999" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#m)"/>
+
+  <!-- Right annotation -->
+  <text x="660" y="400" font-size="9" fill="#999">Tools are state.</text>
+  <text x="660" y="414" font-size="9" fill="#999">Coding agents can</text>
+  <text x="660" y="428" font-size="9" fill="#999">modify their tools.</text>
+
+  <!-- ===== AGENT ===== -->
+  <rect x="150" y="540" width="500" height="95" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="168" cy="558" r="4" fill="#111"/>
+  <text x="400" y="562" text-anchor="middle" font-size="14" font-weight="700" fill="#111">Agent</text>
+  <text x="400" y="577" text-anchor="middle" font-size="10" fill="#666">Reasoning core</text>
+
+  <!-- Working Memory box -->
+  <rect x="175" y="585" width="220" height="38" rx="4" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="285" y="603" text-anchor="middle" font-size="10" font-weight="500" fill="#111">Working Memory</text>
+  <text x="285" y="616" text-anchor="middle" font-size="8" fill="#999">(context window)</text>
+
+  <!-- Directives box -->
+  <rect x="410" y="585" width="220" height="38" rx="4" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="520" y="603" text-anchor="middle" font-size="10" font-weight="500" fill="#111">Directives</text>
+  <text x="520" y="616" text-anchor="middle" font-size="8" fill="#999">(goals, constraints, rules)</text>
+
+  <!-- Arrow: Agent invokes tools (from agent left, curving up into state) -->
+  <path d="M150 558 Q 80 535 80 468" fill="none" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="30" y="530" font-size="9" fill="#666">invoke</text>
+  <text x="30" y="542" font-size="9" fill="#666">tools</text>
+
+  <!-- Bottom annotation -->
+  <text x="400" y="660" text-anchor="middle" font-size="10" fill="#999" font-style="italic">Bootstrapping requires state introspection tools at minimum</text>
 </svg>

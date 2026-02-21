@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120">
+  <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
+
+  <text x="400" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#999">ICONOGRAPHY</text>
+
+  <!-- Agent -->
+  <rect x="30" y="40" width="50" height="30" rx="5" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="40" cy="55" r="3.5" fill="#111"/>
+  <text x="55" y="100" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Agent</text>
+  <text x="55" y="113" text-anchor="middle" font-size="8" fill="#999">Reasoning core</text>
+
+  <!-- LLM -->
+  <rect x="150" y="40" width="50" height="30" rx="5" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <path d="M160 55 l4 -5 4 5 -4 5z" fill="#111"/>
+  <text x="175" y="100" text-anchor="middle" font-size="10" font-weight="600" fill="#111">LLM</text>
+  <text x="175" y="113" text-anchor="middle" font-size="8" fill="#999">Model call</text>
+
+  <!-- Tool -->
+  <rect x="270" y="40" width="50" height="30" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="295" y="100" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Tool</text>
+  <text x="295" y="113" text-anchor="middle" font-size="8" fill="#999">Action / interface</text>
+
+  <!-- Data -->
+  <rect x="390" y="40" width="50" height="30" rx="3" fill="#f7f7f7" stroke="#111" stroke-width="1"/>
+  <text x="415" y="100" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Data</text>
+  <text x="415" y="113" text-anchor="middle" font-size="8" fill="#999">Passive state</text>
+
+  <!-- World -->
+  <rect x="510" y="40" width="50" height="30" rx="4" fill="#e0e0e0" stroke="#111" stroke-width="2"/>
+  <text x="535" y="100" text-anchor="middle" font-size="10" font-weight="600" fill="#111">World</text>
+  <text x="535" y="113" text-anchor="middle" font-size="8" fill="#999">External env</text>
+
+  <!-- Arrows legend -->
+  <line x1="640" y1="44" x2="700" y2="44" stroke="#111" stroke-width="1.5"/>
+  <text x="708" y="48" font-size="8" fill="#666">Primary flow</text>
+  <line x1="640" y1="62" x2="700" y2="62" stroke="#999" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="708" y="66" font-size="8" fill="#666">Return / secondary</text>
+  <line x1="640" y1="80" x2="700" y2="80" stroke="#4a9" stroke-width="1.5"/>
+  <text x="708" y="84" font-size="8" fill="#666">Success / valid</text>
+  <line x1="640" y1="98" x2="700" y2="98" stroke="#c44" stroke-width="1.5"/>
+  <text x="708" y="102" font-size="8" fill="#666">Error / noise</text>
+</svg>

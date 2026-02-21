@@ -8,139 +8,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="assets/base.css">
     <style>
         :root {
-            --bg: #fff;
-            --bg-alt: #f7f7f7;
-            --text: #111;
-            --text-secondary: #333;
-            --text-muted: #666;
-            --text-faint: #999;
-            --border: #111;
-            --border-light: #e5e5e5;
-            --border-faint: #f0f0f0;
-            --accent: #000;
             --green: #3d7a4a;
             --green-light: #e8f0ea;
             --green-border: #b8d4be;
         }
 
         [data-theme="dark"] {
-            --bg: #0d0d0d;
-            --bg-alt: #1a1a1a;
-            --text: #f0f0f0;
-            --text-secondary: #d0d0d0;
-            --text-muted: #a0a0a0;
-            --text-faint: #606060;
-            --border: #404040;
-            --border-light: #2a2a2a;
-            --border-faint: #1f1f1f;
-            --accent: #fff;
             --green: #6aab73;
             --green-light: #1a2b1e;
             --green-border: #2d4a33;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.65;
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .masthead {
-            padding: 48px 0 40px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .masthead-inner {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .masthead-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.2s;
-            font-weight: 500;
-        }
-
-        .nav-links a:hover {
-            color: var(--text);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            padding: 6px 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--text-muted);
-            transition: all 0.2s;
-        }
-
-        .theme-toggle:hover {
-            border-color: var(--text);
-            color: var(--text);
-        }
-
-        .theme-toggle svg {
-            width: 14px;
-            height: 14px;
-        }
-
-        [data-theme="dark"] .sun-icon {
-            display: block;
-        }
-
-        [data-theme="dark"] .moon-icon {
-            display: none;
-        }
-
-        [data-theme="light"] .sun-icon {
-            display: none;
-        }
-
-        [data-theme="light"] .moon-icon {
-            display: block;
         }
 
         .container {
@@ -703,26 +586,48 @@
                     </li>
                     <li><a href="#taxonomy">3. Taxonomy of Structured Agents</a>
                         <ul class="subsection">
-                            <li><a href="#agent-model">3.1 Agent Model</a>
+                            <li><a href="#agent">3.1 Agent</a>
+                                <ul class="subsection">
+                                    <li><a href="#invocation">Invocation</a></li>
+                                    <li><a href="#working-memory">Working Memory</a></li>
+                                    <li><a href="#directives">Directives</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#state">3.2 State</a>
                                 <ul class="subsection">
                                     <li><a href="#structure-classes">Structure Classes</a></li>
+                                    <li><a href="#tools-as-state">Tools as State</a></li>
+                                    <li><a href="#why-tools-are-state">Why Tools Are State</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#actions">3.2 Actions</a></li>
-                            <li><a href="#information">3.3 Information Mgmt</a></li>
-                            <li><a href="#composition">3.4 Composition</a>
+                            <li><a href="#tools-section">3.3 Tools</a>
                                 <ul class="subsection">
-                                    <li><a href="#delegation-challenges">3.4.1 Delegation Challenges</a></li>
+                                    <li><a href="#tool-categories">Tool Categories</a></li>
+                                    <li><a href="#tool-design">Tool Design</a></li>
+                                    <li><a href="#forced-tools">Forced Tool Use</a></li>
+                                    <li><a href="#communication">Communication</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#planning">3.5 Planning</a></li>
-                            <li><a href="#error-handling">3.6 Error Handling</a>
+                            <li><a href="#contexts">3.4 Contexts</a>
+                                <ul class="subsection">
+                                    <li><a href="#progressive-disclosure">Progressive Disclosure</a></li>
+                                    <li><a href="#forced-contexts">Forced Contexts</a></li>
+                                    <li><a href="#retrieval">Retrieval Mechanisms</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#composition">3.5 Composition</a>
+                                <ul class="subsection">
+                                    <li><a href="#delegation-challenges">Delegation Challenges</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#planning">3.6 Planning</a></li>
+                            <li><a href="#error-handling">3.7 Error Handling</a>
                                 <ul class="subsection">
                                     <li><a href="#interruptions">Interruptions</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#evaluation">3.7 Evaluation</a></li>
-                            <li><a href="#safety">3.8 Safety & Security</a></li>
+                            <li><a href="#evaluation">3.8 Evaluation</a></li>
+                            <li><a href="#safety">3.9 Safety & Security</a></li>
                         </ul>
                     </li>
                     <li><a href="#future">4. Open Questions</a></li>
@@ -786,7 +691,7 @@ The convergence on composable tooling has gone beyond individual systems to prod
 
 **2. The most effective agents exploit the underlying structure of their problem domain.**
 
-Composable tools are the mechanism, but the deeper pattern is that capable agents don't treat the world as unstructured text to reason over—they navigate the domain's own organization. Every major coding agent—Claude Code [7], Codex [84], Copilot [85], Jules [86], Cursor, Amazon Q—exploits the inherent structure of code: grepping file trees, following import graphs, reading type signatures, querying language server protocols [81][82]. A database agent that queries schemas before writing SQL exploits the structure of relational data. In each case, effectiveness comes not from raw reasoning over tokens but from leveraging domain structure that already exists—or, where it doesn't exist, creating it (Section 3.3).
+Composable tools are the mechanism, but the deeper pattern is that capable agents don't treat the world as unstructured text to reason over—they navigate the domain's own organization. Every major coding agent—Claude Code [7], Codex [84], Copilot [85], Jules [86], Cursor, Amazon Q—exploits the inherent structure of code: grepping file trees, following import graphs, reading type signatures, querying language server protocols [81][82]. A database agent that queries schemas before writing SQL exploits the structure of relational data. In each case, effectiveness comes not from raw reasoning over tokens but from leveraging domain structure that already exists—or, where it doesn't exist, creating it (Section 3.4).
 
 **3. External systems validate better and cheaper than models self-assess** [17][18].
 
@@ -821,7 +726,7 @@ Crucially, these levels are not a strict progression where each supersedes the l
 
 <p><strong>Level 4 — Subagent delegation.</strong> The general agent delegates the transformation task to a specialized data transformation subagent, passing a structured instruction: "Extract the brand from these product names."</p>
 
-<p><strong>Level 3 — Agentic routing.</strong> The data transformation subagent operates in a ReAct loop. It dynamically selects which tool to call based on the instruction—in this case, a column transformation workflow that works on a Table (a structured class, see Section 3.1) and targets a specific column.</p>
+<p><strong>Level 3 — Agentic routing.</strong> The data transformation subagent operates in a ReAct loop. It dynamically selects which tool to call based on the instruction—in this case, a column transformation workflow that works on a Table (a structured class, see Section 3.2) and targets a specific column.</p>
 
 <p><strong>Level 2 — Workflow with deterministic transitions.</strong> The column transformation tool is itself a workflow—a state machine that orchestrates a fixed sequence of operations: (1) obtain the column values, (2) deduplicate to extract unique values, (3) run a map operation over the unique values using an LLM, (4) apply the resulting mapping to the entire column to produce a derived column.</p>
 
@@ -884,7 +789,7 @@ This is the foundational principle from which most others follow. Constraints:
 2. Reduce problem spaces (fewer paths to explore)
 3. Improve computational economy (less work per step) [14]
 4. Prevent error propagation between tasks (isolation)
-5. Enable effective delegation (clear boundaries for splitting work across agents—see Section 3.4 for the full treatment)
+5. Enable effective delegation (clear boundaries for splitting work across agents—see Section 3.5 for the full treatment)
 
 #### 2.1.1 External Validation Signals
 
@@ -940,7 +845,7 @@ Even when a model *could* solve a task without tools, well-designed tools provid
 </div>
 </details>
 
-Structure also carries implicit alignment—a point developed fully in Section 3.8.
+Structure also carries implicit alignment—a point developed fully in Section 3.9.
 
 ### 2.2 Context Engineering
 
@@ -1176,15 +1081,29 @@ With the principles established, we now turn to how they manifest concretely in 
 
 The structured agency framework decomposes agents into a set of concerns—each representing a surface where harnesses can be applied. This taxonomy describes those surfaces.
 
-### 3.1 The Agent Model
+The following iconography is used consistently across all diagrams in this paper:
 
-![Agent Architecture](assets/agents/image8-agent-architecture.svg)
+![Iconography](assets/agents/image0-iconography.svg)
+
+### 3.1 Agent
+
+<div class="definition">
+
+**Agent** — A reasoning core that observes the world through actions and builds an internal state representation.
+
+</div>
+
+![Agent Architecture](assets/agents/image8-agent-architecture.svg?v=6)
 
 Borrowing from the reinforcement learning framework [43], and informed by recent surveys on LLM-based autonomous agents [44], we define the following components.
 
 #### Invocation
 
-**Definition**: The period from when an agent "starts up" until it "dies" and stops performing actions.
+<div class="definition">
+
+**Invocation** — The period from when an agent "starts up" until it "dies" and stops performing actions.
+
+</div>
 
 An agent may persist across multiple invocations with the same state. Each invocation provides specific settings:
 - **Allowed tools** → What actions are permitted
@@ -1193,39 +1112,55 @@ An agent may persist across multiple invocations with the same state. Each invoc
 
 **Implementation note**: Whether each user input triggers a new invocation (daemon shuts down) or the agent persists across inputs is an implementation detail. The key is distinguishing between invocations and mere instruction reception.
 
-**Interruptions as a lifecycle property**: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling's failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.6 for how interruptions propagate through hierarchical systems.
+**Interruptions as a lifecycle property**: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling's failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.7 for how interruptions propagate through hierarchical systems.
 
-#### Agent
+#### Working Memory
 
-**Definition**: An organism that observes the world through actions and builds an internal state representation.
+<div class="definition">
 
-For most current "agentic" systems, this is modeled through LLMs or derived technologies.
+**Working Memory** — What the agent can currently attend to. Working memory is populated by tool results, directive content, and prior conversation. It is finite and transient — information not actively maintained is effectively forgotten.
 
-#### Context Window
+</div>
 
-**Definition**: The working space of a given model for observing its state. Exists as a stream of tokens.
+In LLMs, working memory is realized as the **context window** — a fixed-size stream of tokens [33][34][35][45]. The context window is an implementation constraint, not a conceptual primitive.
 
-**Best practice**: Treat the context window as a **scratchpad**, not permanent storage [33][34][35].
+**Best practice**: Treat the context window as a **scratchpad**, not permanent storage:
 
 - Don't depend on it for long-term memory
 - Successive invocations should preserve only relevant information (through pruning or compression)
 - Supplement with forced tool use and external contexts
 
-**Critical distinction**: The context window is NOT the agent's state—it's merely a working memory [45].
+**Critical distinction**: The context window is NOT the agent's state — it is the agent's *view* of its state. Working memory is populated by tools that load, search, and surface relevant state into the context window. The quality of that population — what gets loaded, when, and in what form — is context engineering (Section 2.2).
 
-#### State
+[**TODO**: Working memory management — strategies for vacating, pruning, and compacting working memory during long-running invocations. When and how should an agent decide to evict information from its context window? What are the tradeoffs between summarization, selective retention, and offloading to external state?]
+
+#### Directives
+
+<div class="definition">
+
+**Directives** — The goals, constraints, and rules that guide the agent's behavior. These include system prompts, task descriptions, and behavioral guardrails. Directives shape *what* the agent does and *how* it does it.
+
+</div>
+
+For most current "agentic" systems, the agent is an LLM or derived technology. The agent has two essential aspects — working memory (what it can attend to) and directives (what it should do) — that together determine its behavior at any point in an invocation.
+
+### 3.2 State
+
+<div class="definition">
+
+**State** — The totality of an agent's structured understanding of the world. State is all — domain data, configuration, memories, and critically, *tools themselves*.
+
+</div>
 
 ![Context Window vs. State](assets/agents/image4-context-vs-state.svg)
-
-**Definition**: The internal understanding an agent has of the world.
 
 **Key properties**:
 - Updated through actions (tool calls)
 - Measured and modified by tools
-- Tools can be seen as part of state
-- **State is NOT the context window**
-- **State is NOT a string**
-- **State is structured** (e.g., class instances, databases, knowledge graphs)
+- **Tools are part of state** (see Tools as State below)
+- **State is NOT the context window** — the context window is a *view* of state
+- **State is NOT a string** — it is structured (class instances, databases, knowledge graphs)
+- **State persists** across invocations; working memory does not
 
 **Benefits of structured state**:
 - Enables validation signals
@@ -1241,22 +1176,71 @@ The principle that "state is NOT a string" raises a natural question: what *is* 
 
 **Core structure classes**:
 
-- **Tasks** — Status, dependencies, ownership, assignment. Tasks are not just strings in a plan but structured objects with a lifecycle: created, assigned, in-progress, blocked, completed, failed. They carry metadata (who owns them, what blocks them, what they produce) that enables the planning (Section 3.5) and composition (Section 3.4) layers to operate on them programmatically.
-- **Contexts** — Addressable information blocks that agents can load, search, and reference (see Section 3.3 for the full treatment). Listed here because they are a state type: they exist in state, are updated through actions, and have lifecycle properties.
+- **Tasks** — An encapsulation of work. Having tasks as a first-class structure class — not strings in a plan but structured objects with status, dependencies, ownership, and results — enables referencing work across invocations of the same agent, tracking the work of other agents, deferring or scheduling asynchronous work, and integrating tasks that arise from external systems. This is analogous to task primitives in orchestration frameworks (Celery, Temporal, Airflow), elevated to a core concept of agent state. Tasks carry lifecycle metadata (created, assigned, in-progress, blocked, completed, failed) that enables the planning (Section 3.6) and composition (Section 3.5) layers to operate on them programmatically.
+- **Contexts** — Addressable information blocks that agents can load, search, and reference — the building blocks of context engineering (Section 2.2). Listed here because they are a state type: they exist in state, are updated through actions, and have lifecycle properties. See Section 3.4 for the full treatment.
 - **Messages / Communications** — Structured records of inter-agent and user-agent communication. Not just log entries but typed objects with sender, recipient, content, timestamp, and thread/conversation metadata.
-- **Plans** — Structured plan representations that live in state. A plan is itself a state object that can be inspected, validated, and revised (see Section 3.5).
-- **Tool Results / Action History** — Structured log of actions taken and their outcomes. Each entry records the tool called, its arguments, its result, and any state mutations it caused. This is the basis for observability (Section 3.7) and recovery (Section 3.6).
+- **Plans** — Structured plan representations that live in state. A plan is itself a state object that can be inspected, validated, and revised (see Section 3.6).
+- **Tool Results / Action History** — Structured log of actions taken and their outcomes. Each entry records the tool called, its arguments, its result, and any state mutations it caused. This is the basis for observability (Section 3.8) and recovery (Section 3.7).
 - **Domain-specific types** — The types that encode the actual problem domain: tickets, orders, code files, database schemas, customer records. These are what make a structured agent domain-aware rather than domain-agnostic.
+
+**Introspection without intervention.** Structure classes can always be *introspected*—the agent can read tasks, query plans, search contexts—but they are not necessarily *modifiable*. A structure class may be read-only: the agent can observe it but cannot change it. This asymmetry is not a limitation; it is a feature. Read-only structure classes encode **domain-level constraints**—invariants that the harness enforces by making certain state unwritable. A customer record's compliance flags, an order's immutable audit trail, a plan's locked dependencies—these are state the agent must respect but cannot alter. The constraint lives in the access pattern, not in the prompt. This is structure (Section 2.1) applied at the data level: by controlling which structure classes are writable, the harness bounds the agent's action space without the agent needing to understand *why* certain mutations are forbidden.
 
 [**TODO**: Flesh out each structure class with concrete examples from production systems. Show how tasks-as-structured-objects differ from tasks-as-strings in a plan.]
 
 [**TODO**: Define the lifecycle properties common to all structure classes (creation, mutation, validation, serialization) and how they connect to the state principles above.]
 
-### 3.2 Actions
+#### Tools as State
 
-#### Tools
+The agent model diagram places tools *inside* state, not alongside it. This is not a visual convenience — it is a conceptual claim: **tools are a special case of state**.
 
-**Definition**: Actions an agent performs on the world or its state.
+In LISP, code is data. In agent systems, tools are state that the agent acts *through*. They exist in the agent's state, can be introspected, and in coding agents, can be modified. This has several implications.
+
+**Two orientations of tools**:
+
+1. **World-facing tools** (actions) — Reach *outside* state to observe or affect the external environment: \`execute_sql\`, \`call_api\`, \`write_file\`, \`send_message\`. These are the agent's hands.
+2. **State-facing tools** (cognitive economy) — Reach *into* state to introspect or modify the agent's own structured representation: \`list_tables\`, \`get_schema\`, \`read_context\`, \`search_state\`. These are the agent's capacity for self-reflection.
+
+State-facing tools are what make progressive disclosure (Section 2.2.1) possible in practice. Rather than loading all state into working memory, the agent uses state-facing tools to discover what exists (\`ls\`), search for relevance (\`grep\`), and read the detail (\`cat\`). The progressive disclosure funnel is *implemented* through state-facing tools.
+
+**Tools can be introspected and modified**: In coding agents, the toolset itself is editable state — an agent can inspect its available tools, understand their capabilities, and write new tools or modify existing ones. Non-coding agents cannot modify their tools but can still introspect them: reading tool descriptions, understanding parameters, discovering capabilities through progressive disclosure.
+
+**Bootstrapping requires state introspection**: For an agent to begin operating on structured state, it must have tools to discover what that state contains. Without \`list_tables\` or \`get_schema\` or equivalent, the agent cannot learn what it has to work with. State-facing tools are the minimal bootstrap — they must be available from the first invocation. Some tools must be automatically invoked or their descriptions automatically loaded into the agent's directives or working memory. This is forced tool use (Section 3.3) — a bootstrapping mechanism that ensures the agent starts with the minimum context needed to act effectively.
+
+Section 3.3 elaborates on tool design, categorization, and forced tool use patterns. The distinction here is conceptual: tools are not a separate concern from state but a structured interface *within* it.
+
+#### Why Tools Are State
+
+The claim that tools are state is the most counterintuitive assertion in this taxonomy. Most engineers think of tools as *capabilities*—fixed interfaces that an agent calls—not as data that lives alongside database rows and configuration objects. This section makes the affirmative case and addresses the objections.
+
+**The affirmative case.** Consider what it means for something to be state: it exists in the agent's representation of the world, it can be observed, and it can (in principle) be modified. Tools satisfy all three criteria. An agent's available tools are *listed* in its state (tool descriptions are data). An agent *observes* its tools (reading descriptions, understanding parameters, discovering capabilities). And in coding agents, tools are *modified*—an agent can write a new bash script, define a new function, or compose existing tools into new ones. The toolset is not fixed infrastructure; it is a mutable part of the agent's world model.
+
+The LISP parallel is precise, not metaphorical. In LISP, the boundary between code and data dissolves: functions are first-class values that can be stored, passed, inspected, and rewritten. In structured agents, the same dissolution occurs. A tool description is data (a JSON schema). A tool implementation is code. But from the agent's perspective, both are entries in its state that it reasons about and acts through. The agent does not distinguish between "looking up a database schema" (state introspection) and "reading a tool's parameter list" (tool introspection)—both are queries against structured state.
+
+**The explanatory payoff.** Treating tools as state is not just taxonomic elegance—it unlocks explanations that a "tools are separate" framing cannot provide:
+
+- **Dynamic toolsets become natural.** If tools are state, then adding, removing, or modifying tools is just a state mutation—no different from updating a database record. This explains why MCP servers can dynamically register tools, why coding agents can extend their own capabilities, and why tool availability can vary across invocations.
+- **Bootstrapping has a coherent story.** The chicken-and-egg problem—how does an agent discover its tools without already having tools?—resolves cleanly: the initial toolset is the seed state, and state-facing tools (the minimal bootstrap) are how the agent introspects the rest. Without "tools as state," bootstrapping requires a separate mechanism outside the state model.
+- **Tool selection is state-dependent reasoning.** When an agent chooses which tool to call, it is reasoning over its state—specifically, the subset of state that describes available actions. This is the same cognitive operation as reasoning over any other state: evaluating options, checking preconditions, selecting the best fit. Separating tools from state would require a parallel reasoning mechanism for tool selection, which is both unnecessary and architecturally incoherent.
+
+**Objections and responses.**
+
+*"State changes; tools don't."* For non-coding agents with a fixed toolset, this is largely true—the tool list is constant across an invocation. But constancy does not disqualify something from being state. A read-only database table is still state; it just happens to be immutable. Configuration that doesn't change at runtime is still state. The relevant property is not mutability but *membership in the agent's structured representation of the world*. Tools satisfy this regardless of whether they change.
+
+*"This overloads the term 'state' beyond recognition."* A fair concern. If everything is state, the term loses discriminating power. The boundary this framework draws is: state is everything the agent can observe, reason about, or act on, *excluding the agent's own reasoning process* (working memory and directives). Tools fall on the state side of this boundary because the agent reasons *about* them (which tool to call?) and acts *through* them—they are objects of reasoning, not the reasoning itself.
+
+*"In traditional software, we distinguish between code and data."* We do—and that distinction is useful for compilers, not for agents. An agent's relationship to its tools is fundamentally different from a program's relationship to its functions. A program *executes* functions; an agent *selects* tools based on reasoning. The selection process treats tools as options to evaluate—as data to reason over—even if the tools themselves contain executable logic. The traditional code/data distinction applies within the tool implementation, not at the level of the agent's interaction with tools.
+
+*"The RL framework you cite doesn't model actions as part of state."* Correct. In standard RL, the action space is separate from the state space—the agent observes state and selects actions. This framework deliberately departs from that formalism. The departure is justified because LLM-based agents, unlike RL agents, *reason over their action descriptions as text*. Tool descriptions enter the context window alongside other state representations. The agent processes them identically. From the agent's computational perspective, there is no boundary between "state data" and "tool data"—both are tokens in the context window that inform the next action. The RL formalism's separation is a modeling choice that does not reflect how LLM agents actually process information.
+
+### 3.3 Tools
+
+<div class="definition">
+
+**Tools** — The interfaces through which an agent acts on the world and its state. As established in Section 3.2, tools are a special case of state.
+
+</div>
+
+#### Tool Categories
 
 **Categories** [1][2]:
 1. **Bespoke tools** → Hardcoded by developers for specific use cases
@@ -1264,17 +1248,9 @@ The principle that "state is NOT a string" raises a natural question: what *is* 
 3. **Coding-model functions** → Libraries like pandas, scikit-learn, matplotlib
 4. **CLI utilities** → Unix tools like grep, cat, sed
 
-**How tools interact with state**:
-- Tools observe the world, state, or both
-- Tools write to state
-- Tools affect the external world
-- Tool arguments reference state (e.g., \`read(document_name)\` not \`read(document_content)\`)
-
-**Analogy**: In LISP and similar languages, code is data. In coding agents, **tools are a special case of state** (they're often code that can be edited).
-
 ![Tool Anatomy](assets/agents/image7-tool-anatomy.svg)
 
-##### Best Practices for Tool Design
+#### Tool Design
 
 1. **Multi-level descriptions**
    - Short description (like Unix tool summary)
@@ -1318,7 +1294,7 @@ Communication with users, other agents, or external systems should follow the sa
 - Validation of inputs/outputs
 - Observable effects on state
 
-Communication channels—whether inter-agent messaging, user-facing output, or external notifications—are tools with the same design principles as any other: they should be idempotent where possible, scoped to a clear purpose, and observable. Communication is the mechanism by which the hierarchical system propagates signals, including interruptions (see Section 3.6).
+Communication channels—whether inter-agent messaging, user-facing output, or external notifications—are tools with the same design principles as any other: they should be idempotent where possible, scoped to a clear purpose, and observable. Communication is the mechanism by which the hierarchical system propagates signals, including interruptions (see Section 3.7).
 
 [**TODO**: Inter-agent messaging patterns — how do agents in a hierarchy exchange structured information beyond tool-call arguments and return values?]
 
@@ -1326,13 +1302,15 @@ Communication channels—whether inter-agent messaging, user-facing output, or e
 
 [**TODO**: Communication channels as tools — design patterns for messaging tools that follow the same principles as other tools (scoped, observable, validated)]
 
-### 3.3 Information Management
+### 3.4 Contexts
+
+<div class="definition">
+
+**Contexts** — Addressable blocks of information that agents can load, search, and reference — the building blocks of context engineering (Section 2.2).
+
+</div>
 
 Section 2.2 established context engineering as a principle—the *why*. This section provides the taxonomy—the *what*: the concrete primitives that context engineering operates on.
-
-#### Contexts
-
-**Definition**: Addressable blocks of information (text) that may or may not exist in the agent's working memory.
 
 **Key properties**:
 - **Addressable** → Can be referenced by name/ID
@@ -1410,7 +1388,7 @@ This distinction maps cleanly onto domain type. For **structured domains** (code
 
 This is a special case of the contexts taxonomy above: different retrieval mechanisms are different strategies for accessing contexts, each with tradeoffs in precision, recall, latency, and setup cost. Traditional RAG trades setup cost (embedding, chunking, indexing) for broad recall across unstructured corpora. Agentic search trades generality for high precision in structured domains—it's fast and accurate when the domain has navigable structure, but inapplicable when it doesn't. GraphRAG occupies a middle ground: it invests heavily in creating structure (knowledge graph construction) to enable structured retrieval over originally unstructured data. The choice between these mechanisms is itself a context engineering decision—matching the retrieval strategy to the structure (or lack thereof) of the domain.
 
-### 3.4 Composition
+### 3.5 Composition
 
 #### Subagents
 
@@ -1441,7 +1419,7 @@ Delegation—whether to subagents or across multi-agent systems—introduces cos
 
 **Scope rediscovery.** Each delegated agent starts with a fresh or partial context window. The parent agent has built up a rich working memory over the course of the task—observations, intermediate results, implicit assumptions, domain context. When it delegates to a subagent, much of this working memory must be *re-established* in the subagent's context. This creates a **working-memory discontinuity** (see Section 2.2): the subagent must spend tokens and reasoning cycles recontextualizing before it can do useful work. The more complex the parent's accumulated context, the more expensive this rediscovery becomes. This is why delegation works best for tasks that are relatively self-contained—where the required context can be transmitted cheaply and the subagent doesn't need to reconstruct the full reasoning history of the parent.
 
-**Tool segmentation failures.** In systems with a router or orchestrator that dispatches tasks to specialized agents, a common failure mode is routing to an agent that lacks the right tools or context for the task. The agent attempts the task, fails, and the error bubbles back up to the router, which must retry—potentially multiple times—before either finding the right agent or escalating. This retry cycle compounds latency and cost, and is especially pernicious because it's often silent: the system *eventually* succeeds, masking the inefficiency. Structured composition (clear tool boundaries, explicit capability declarations, well-defined routing rules) mitigates this, but doesn't eliminate it. This pattern connects directly to the error handling concerns in Section 3.6.
+**Tool segmentation failures.** In systems with a router or orchestrator that dispatches tasks to specialized agents, a common failure mode is routing to an agent that lacks the right tools or context for the task. The agent attempts the task, fails, and the error bubbles back up to the router, which must retry—potentially multiple times—before either finding the right agent or escalating. This retry cycle compounds latency and cost, and is especially pernicious because it's often silent: the system *eventually* succeeds, masking the inefficiency. Structured composition (clear tool boundaries, explicit capability declarations, well-defined routing rules) mitigates this, but doesn't eliminate it. This pattern connects directly to the error handling concerns in Section 3.7.
 
 The upshot: delegation is not free. It works best for **cheaper, more reliable subtasks** where the cost of recontextualization is justified by the benefits of isolation, parallelism, or specialization. When a subtask requires deep access to the parent's accumulated context, the cost of transmitting that context may exceed the cost of simply having the parent do the work itself.
 
@@ -1469,7 +1447,7 @@ Skills encapsulate:
 
 Composition defines the *who* of agent systems. Planning defines the *what* and *when*—the mechanism by which composed agents coordinate their work.
 
-### 3.5 Planning
+### 3.6 Planning
 
 Planning is the mechanism by which agents decide **what to do before doing it** [58]. While reactive agents execute actions step-by-step based on immediate observations, planning introduces deliberation—a lookahead that evaluates potential action sequences before committing.
 
@@ -1552,7 +1530,7 @@ A plan is only as good as its execution. Key concerns:
 
 #### Planning and Composition
 
-Planning interacts closely with composition (Section 3.4):
+Planning interacts closely with composition (Section 3.5):
 - **Subagent delegation** → A plan can assign subtasks to subagents
 - **Skill matching** → Planning can involve selecting which skills to invoke
 - **Resource budgeting** → Plans can allocate context window space, API calls, or time budgets across subtasks
@@ -1569,7 +1547,7 @@ Planning interacts closely with composition (Section 3.4):
 </div>
 </details>
 
-### 3.6 Error Handling & Recovery
+### 3.7 Error Handling & Recovery
 
 Agents fail. Tools return errors, APIs time out, models hallucinate [17]. The question is not whether failures occur, but how the system responds [63].
 
@@ -1605,13 +1583,13 @@ Interruptions are not just failures—they are first-class signals in hierarchic
 
 **Example**: In a schema-aware multi-query system, if one query reveals that the schema assumption underlying all queries is wrong, the parent can interrupt the remaining queries since their results would be wasted work. The interruption signal propagates *down* the hierarchy (parent → children), while failure signals propagate *up* (child → parent). Both must be handled, but they have different semantics: a failure says "I couldn't do what you asked," while an interruption says "stop—what I asked is no longer relevant."
 
-This connects to composition (Section 3.4)—the parent-child relationship defines who can interrupt whom—and to planning (Section 3.5)—plan revision may trigger interruptions of in-progress subtasks that the revised plan no longer requires.
+This connects to composition (Section 3.5)—the parent-child relationship defines who can interrupt whom—and to planning (Section 3.6)—plan revision may trigger interruptions of in-progress subtasks that the revised plan no longer requires.
 
 [**TODO**: Interruption propagation patterns — how do interruptions cascade through a hierarchy? What happens to in-progress state when a subtask is interrupted?]
 
 [**TODO**: Interruption vs. cancellation vs. preemption — are these meaningfully different in practice, and should the agent model distinguish them?]
 
-### 3.7 Evaluation & Observability
+### 3.8 Evaluation & Observability
 
 Building agents without the ability to measure their behavior is building blind [42]. This section covers how to observe, measure, and improve agentic systems.
 
@@ -1646,7 +1624,7 @@ Testing agentic systems is inherently integration testing (as framed above), but
 
 [**TODO**: Document your testing approaches and any benchmark suites you use]
 
-### 3.8 Safety & Security
+### 3.9 Safety & Security
 
 Agents that interact with the real world—executing code, calling APIs, sending messages—introduce attack surfaces that don't exist in pure text generation. Safety is not a feature to bolt on after deployment; it is a structural concern that permeates every layer of a structured agent.
 
@@ -1701,8 +1679,8 @@ Even without adversarial intent, agents can misuse tools in ways that cause harm
 **Structural safeguards**:
 - **Scoped tool access** → Each invocation grants only the tools needed for the task. A summarization agent does not need file-write permissions.
 - **Read-before-write** → Require observation before mutation. Prevent blind state changes by forcing the agent to inspect current state before modifying it.
-- **Dry-run modes** → Allow plan validation without execution for high-risk operations. Verification-driven planning (Section 3.5) provides a natural checkpoint—validate the safety properties of a plan before executing it.
-- **Audit trails** → Every tool call, its arguments, and its results are logged (Section 3.7). This is both an observability concern and a security requirement.
+- **Dry-run modes** → Allow plan validation without execution for high-risk operations. Verification-driven planning (Section 3.6) provides a natural checkpoint—validate the safety properties of a plan before executing it.
+- **Audit trails** → Every tool call, its arguments, and its results are logged (Section 3.8). This is both an observability concern and a security requirement.
 - **Human-in-the-loop gates** → Irreversible or externally-visible actions (sending messages, deleting data, modifying permissions) require explicit user confirmation before execution.
 
 **Connection to the cost model**: From Section 2.3, the irreversibility cost component of C_f is what makes safety harnesses economically justified. The cost of a leaked API key or a deleted production database dwarfs the cost of adding a confirmation step.
@@ -1763,7 +1741,7 @@ None of the individual principles in this paper are new. Constraints, validation
 
 These principles are not a checklist to be applied independently. They are a connected framework: structure enables validation, validation enables tool reliability, tool reliability enables composition, and composition enables agents that solve complex problems without compounding errors at every step.
 
-The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. **Harnesses are designed to weaken**: the framework explicitly anticipates that today's structural scaffolding becomes tomorrow's unnecessary overhead as models internalize the patterns (Section 2.4.1). **Structure provides alignment, not just reliability**: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.8). **Economy is orthogonal to capability**: even when a model *can* derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: **it is almost always cheaper to prevent failure through structure than to recover from it through flexibility**.
+The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. **Harnesses are designed to weaken**: the framework explicitly anticipates that today's structural scaffolding becomes tomorrow's unnecessary overhead as models internalize the patterns (Section 2.4.1). **Structure provides alignment, not just reliability**: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.9). **Economy is orthogonal to capability**: even when a model *can* derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: **it is almost always cheaper to prevent failure through structure than to recover from it through flexibility**.
 
 ---
 
@@ -2029,40 +2007,42 @@ The field is evolving rapidly. Models will continue to improve, context windows 
                 '2.5 Practical Corollaries': 'corollaries',
                 '2.5.1 Redundancy is a Feature': 'redundancy',
                 '3. Taxonomy of Structured Agents': 'taxonomy',
-                '3.1 The Agent Model': 'agent-model',
+                '3.1 Agent': 'agent',
                 'Invocation': 'invocation',
-                'Agent': 'agent',
-                'Context Window': 'context-window',
-                'State': 'state',
+                'Working Memory': 'working-memory',
+                'Directives': 'directives',
+                '3.2 State': 'state',
                 'Structure Classes': 'structure-classes',
-                '3.2 Actions': 'actions',
-                'Tools': 'tools-section',
+                'Tools as State': 'tools-as-state',
+                'Why Tools Are State': 'why-tools-are-state',
+                '3.3 Tools': 'tools-section',
+                'Tool Categories': 'tool-categories',
+                'Tool Design': 'tool-design',
                 'Forced Tool Use': 'forced-tools',
                 'Communication': 'communication',
-                '3.3 Information Management': 'information',
-                'Contexts': 'contexts',
+                '3.4 Contexts': 'contexts',
                 'Progressive Disclosure in Practice': 'progressive-disclosure',
                 'Forced Contexts': 'forced-contexts',
                 'Retrieval Mechanisms (RAG, GraphRAG, grep, etc.)': 'retrieval',
-                '3.4 Composition': 'composition',
+                '3.5 Composition': 'composition',
                 'Subagents': 'subagents',
                 'Delegation Challenges': 'delegation-challenges',
                 'Skills': 'skills',
-                '3.5 Planning': 'planning',
+                '3.6 Planning': 'planning',
                 'Why Planning Matters': 'planning-why',
                 'Plan Representations': 'plan-representations',
                 'Planning Strategies': 'planning-strategies',
                 'Plan Execution': 'plan-execution',
                 'Planning and Composition': 'planning-composition',
-                '3.6 Error Handling & Recovery': 'error-handling',
+                '3.7 Error Handling & Recovery': 'error-handling',
                 'Failure Modes': 'failure-modes',
                 'Recovery Strategies': 'recovery-strategies',
                 'Interruptions as Hierarchical Signals': 'interruptions',
-                '3.7 Evaluation & Observability': 'evaluation',
+                '3.8 Evaluation & Observability': 'evaluation',
                 'What to Measure': 'what-to-measure',
                 'Observability Primitives': 'observability',
                 'Testing Agentic Systems': 'testing-agents',
-                '3.8 Safety & Security': 'safety',
+                '3.9 Safety & Security': 'safety',
                 'Prompt Injection': 'prompt-injection',
                 'Adversarial Resilience': 'adversarial-resilience',
                 'Tool Misuse': 'tool-misuse',
@@ -2246,26 +2226,7 @@ The field is evolving rapidly. Models will continue to improve, context windows 
             scrollOffset: 120
         });
 
-        // Theme toggle
-        function getPreferredTheme() {
-            const stored = localStorage.getItem('theme');
-            if (stored) return stored;
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('theme', theme);
-        }
-
-        function toggleTheme() {
-            const current = document.documentElement.getAttribute('data-theme');
-            setTheme(current === 'dark' ? 'light' : 'dark');
-        }
-
-
         // Initialize
-        setTheme(getPreferredTheme());
         addHeadingIds();
         linkCitations();
         // tagVersionContent();
@@ -2273,11 +2234,7 @@ The field is evolving rapidly. Models will continue to improve, context windows 
         // if (viewParam && ['formal', 'builder'].includes(viewParam)) {
         //     applyVersionFilter(viewParam);
         // }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
     </script>
+    <script src="assets/theme-toggle.js"></script>
 </body>
 </html>
