@@ -21,6 +21,23 @@
             --green-border: #2d4a33;
         }
 
+        .wip-banner {
+            background: #fff0f0;
+            border: 2px solid #c00;
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            color: #900;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        [data-theme="dark"] .wip-banner {
+            background: #2b1414;
+            border-color: #a33;
+            color: #e8a0a0;
+        }
+
         body {
             font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
@@ -659,7 +676,7 @@
 
             <div id="content">
 <h3>On Building Reliable Agents</h3>
-<div style="background:#fff0f0; border:2px solid #c00; border-radius:6px; padding:16px 20px; margin:24px 0; color:#900; font-size:15px; line-height:1.6;">
+<div class="wip-banner">
 <strong>Work in Progress.</strong> This document contains many placeholders, unverified citations, and slop illustrations. Do not treat it as a finished or authoritative reference.
 </div>
 
@@ -739,7 +756,7 @@
 <h2 id="principles">2. Core Principles</h2>
 <div class="definition">
 
-<p><strong>Structure</strong>, in this framework, is any pre-computed, human-designed organization that reduces the space an agent must navigate. It is the opposite of &quot;let the model figure it out from scratch.&quot; Structure takes many forms:</p>
+<p><strong>Structure</strong>, in this framework, is any pre-computed organization that reduces the space an agent must navigate — whether designed by humans, derived automatically from previous usage, or produced through optimization. It is the opposite of &quot;let the model figure it out from scratch.&quot; Structure takes many forms:</p>
 <ul>
 <li><strong>Domain structure</strong> — Encoding the problem domain: schemas, entity relationships, business rules, valid states. The domain has inherent structure; the harness captures it rather than asking the model to rediscover it.</li>
 <li><strong>Cognitive structure</strong> — Human-aligned reasoning patterns: decomposition, planning, step-by-step processes, hierarchical thinking. Structure that mirrors how humans organize complex work.</li>
