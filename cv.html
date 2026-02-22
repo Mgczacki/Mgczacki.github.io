@@ -431,7 +431,7 @@
             <div class="page-header">
                 <h1>Mario H. Garrido Czacki</h1>
                 <p class="subtitle">
-                    Principal Research Scientist. Energy-based world models, multi-agent systems, structured evaluation. Fulbright-García Robles Scholar. NYU M.S. Data Science, UNAM B.Eng. + B.Sc.
+                    System Architect &amp; AI Infrastructure Engineer. Agent systems architecture, foundation model infrastructure, distributed ML platforms. Fulbright&ndash;García Robles Scholar. NYU M.S. Data Science, UNAM B.Eng. + B.Sc.
                 </p>
                 <div class="contact-links">
                     <a href="mailto:mgczacki@gmail.com">Email</a>
@@ -444,9 +444,23 @@
             <section id="summary" class="cv-section">
                 <h2>Summary</h2>
                 <div class="timeline-body">
-                    <p>Research scientist and technical lead. I design novel architectures &mdash; energy-based world models, multi-agent orchestration, structured evaluation &mdash; and lead the teams that bring them to production. Have grown from lead architect of a 3-person ML team to principal scientist leading two teams across research and applied AI, shipping six production systems in under a year along the way.</p>
-                    <p style="margin-top: 12px;">Started with two simultaneous degrees at UNAM, then shipped large-scale forecasting systems at Kuona before earning a Fulbright for a Masters at NYU. Returned to Kuona as Principal Research Scientist and product lead.</p>
-                    <p style="margin-top: 12px;">Current research: energy-based latent-variable models with JEPA-style training for learning compact representations of unobservable dynamics. Current applied work: leading the ExpertAI multi-agent platform end-to-end &mdash; architecture, product, and team.</p>
+                    <p>System architect and AI infrastructure engineer. I define technical direction and system architecture for agent systems and foundation model infrastructure at Kuona &mdash; designing composable platforms, orchestration systems, and infrastructure primitives that enable AI systems across products and teams.</p>
+                    <p style="margin-top: 12px;">Defined the architectural direction for Kuona's agent systems, unifying multiple initiatives into a single coherent architecture with execution, orchestration, and evaluation patterns adopted across products. Separately, redesigned the forecasting platform from client-specific pipelines into composable infrastructure serving as the foundation for both production forecasting and foundation model development.</p>
+                    <p style="margin-top: 12px;">Previously rewrote Kuona's distributed ML training platform from scratch &mdash; 500+ servers, thousands of model training jobs weekly &mdash; and established engineering infrastructure adopted across teams: eliminating development-to-production drift, standardizing deployment environments, and implementing reproducible infrastructure. Fulbright&ndash;García Robles Scholar; M.S. Data Science from NYU; dual degrees from UNAM.</p>
+                </div>
+            </section>
+
+            <!-- Technical Scope -->
+            <section id="technical-scope" class="cv-section">
+                <h2>Technical Scope</h2>
+                <div class="timeline-body">
+                    <ul>
+                        <li><strong>Agent Systems Architecture</strong> &mdash; Defined organizational architecture for multi-agent execution, orchestration, context management, plan validation, and evaluation infrastructure.</li>
+                        <li><strong>Foundation Model Infrastructure</strong> &mdash; Designed composable ETL pipelines, scalable inference infrastructure, and modular per-client adaptation enabling foundation model development.</li>
+                        <li><strong>Distributed ML Systems</strong> &mdash; Built distributed training platform spanning 500+ servers with custom task orchestration, heterogeneous compute management, and horizontal scalability.</li>
+                        <li><strong>Platform Engineering</strong> &mdash; Established reproducible environments, ephemeral infrastructure, and development-to-production consistency adopted across engineering teams.</li>
+                        <li><strong>Technical Leadership</strong> &mdash; Defined architectural direction followed by multiple teams; established engineering patterns and infrastructure foundations across the organization.</li>
+                    </ul>
                 </div>
             </section>
 
@@ -556,38 +570,38 @@
 
                 <div class="timeline-entry">
                     <div class="timeline-header">
-                        <span class="timeline-title">Kuona &mdash; Principal Research Scientist</span>
+                        <span class="timeline-title">Kuona &mdash; System Architect, Forecasting &amp; Foundation Model Infrastructure</span>
                         <span class="timeline-date">2025 &ndash; Present</span>
                     </div>
-                    <div class="timeline-subtitle">Foundation Models for Panel Data (USA) &bull; Team of 7</div>
+                    <div class="timeline-subtitle">Platform Architecture (USA) &bull; Team of 7</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Leading the design of a JEPA-style energy-based foundation model with structural inductive biases &mdash; learning compact representations of unobservable dynamics via synthetic supervision, supporting multi-horizon forecasting, intervention simulation, and causal probing without direct observation.</li>
-                            <li>Developed mechanisms to model latent, unobservable market drivers (e.g., price elasticity, cannibalization) via partial supervision from synthetic markets, allowing causal probing without direct observation in real data.</li>
-                            <li>Designed training objectives emphasizing structural inductive biases and compact representations, embedding key economic effects directly into the model and reducing reliance on brittle downstream estimation pipelines.</li>
-                            <li>Energy-based latent-variable architecture with JEPA-style training objective, trained on real market data, synthetic markets with known unobservable drivers, and distilled predictions from 4+ years of Kuona's production forecasting models. Modular adapters per client without full retraining &mdash; eliminating the 1&ndash;12 hour per-client cycle of prior approaches.</li>
+                            <li>Defined the architectural direction for Kuona's forecasting platform, redesigning it from client-specific pipelines into composable, reusable infrastructure now serving as the technical foundation for both production forecasting and foundation model systems.</li>
+                            <li>Decoupled system components into composable ETL pipelines, eliminating hardcoded client-specific workflows. Promoted anomaly detection and outlier tracking to first-class persistent training signals within the platform architecture.</li>
+                            <li>Designed generalized forecasting infrastructure supporting immediate inference without per-client retraining &mdash; scalable inference infrastructure with modular per-client adapters, eliminating 1&ndash;12 hour retraining cycles of prior approaches.</li>
+                            <li>Leading the design of a JEPA-style energy-based foundation model on this platform &mdash; learning compact representations of unobservable market dynamics via synthetic supervision, supporting multi-horizon forecasting, intervention simulation, and causal probing.</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="timeline-entry">
                     <div class="timeline-header">
-                        <span class="timeline-title">Kuona &mdash; Product Owner & AI Lead</span>
+                        <span class="timeline-title">Kuona &mdash; AI Lead &amp; Agent Systems Architect</span>
                         <span class="timeline-date">2024 &ndash; Present</span>
                     </div>
-                    <div class="timeline-subtitle">ExpertAI (USA) &bull; Team of 4</div>
+                    <div class="timeline-subtitle">Agent Systems Architecture (USA) &bull; Team of 4</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Concept to production in under a year, leading a 4-person team. Full-stack: multi-agent backend (Django, Python), React frontend with WebSocket real-time communication, RabbitMQ/Kombu messaging, cloud deployment (AWS EKS).</li>
-                            <li>Reduced cross-silo analytical queries from hours to minutes. Multi-agent orchestration with compartmentalized context, two-layer plan validation (formal PDDL gates + LLM-as-a-judge evaluators), and checkpoint-based resilience. Deployed across 5 database backends.</li>
-                            <li>Built an evaluation system that represents the agent as a directed graph of components, attributes failures to specific nodes via automated triage, ranks components by downstream harm for prioritized improvement, and provides deterministic replay for counterfactual experiments.</li>
-                            <li>Designed bypass auditing for agentic systems: when agents override validation gates, decisions are explicitly recorded &mdash; what was bypassed, why, and downstream consequences &mdash; making safety exceptions analyzable rather than invisible.</li>
-                            <li>Designed a formal tool-planning framework where agents generate and execute multi-step plans verified via PDDL-style preconditions and effects, ensuring logical validity and dependency satisfaction before execution.</li>
-                            <li>Implemented deterministic plan reuse and semantic grounding mechanisms, enabling consistent execution, controlled plan adaptation, and resolution of ambiguous user inputs into unambiguous, executable specifications.</li>
-                            <li>Built Grafa: sub-second federated retrieval, ~95% recall, significant token consumption reduction. Knowledge graph engine giving LLMs structured, relationship-aware memory over heterogeneous documents. Multi-tenant isolation with hook-based extensibility at every pipeline stage.</li>
-                            <li>Built KQuery: sub-minute cross-source query generation, ~95% SQL accuracy across five database backends. Plans and verifies the full query hierarchy upfront &mdash; deciding intermediate schemas and SQL implementation details before execution &mdash; then runs all queries in parallel as dependencies resolve. Generation rules stored as data in the knowledge graph, scoped by platform, company, or user and tunable without code changes.</li>
-                            <li>Built KNER (Kuona Named Entity Recognition): multi-agent entity resolution pipeline that resolves free-text query segments against all company entity systems &mdash; catalog products, geographic hierarchies, promotions, brands, and ontological business concepts &mdash; in 10&ndash;20 seconds including interactive disambiguation. Implemented as nested LangGraph state machines with four specialized LLM agents selected for cost/latency/capability tradeoffs.</li>
-                            <li>Designed UserAI, an autonomous evaluation harness that drives multi-turn agent sessions end-to-end &mdash; enabling CI-integrated regression detection of failure modes invisible in single-turn testing.</li>
+                            <li>Defined and led the architectural direction for Kuona's agent systems &mdash; unifying multiple agent initiatives into a single coherent system architecture with execution, orchestration, and evaluation patterns adopted across products and teams.</li>
+                            <li>Established infrastructure and architectural patterns for agent systems followed across the organization, including context management, plan validation, evaluation infrastructure, and resilience mechanisms.</li>
+                            <li>ExpertAI (flagship implementation): concept to production in under a year. Multi-agent analytical platform &mdash; 90% task success rate, reduces cross-silo queries from hours to minutes across 5 database backends. Full-stack: Django/Python backend, React frontend, WebSocket real-time communication, RabbitMQ/Kombu messaging, AWS EKS deployment.</li>
+                            <li>Designed the evaluation and observability infrastructure for agent systems: agents represented as directed graphs with automated failure attribution to specific nodes, component ranking by downstream harm, and deterministic replay for counterfactual experiments.</li>
+                            <li>Designed formal tool-planning framework where agents generate multi-step plans verified via PDDL-style preconditions and effects, with bypass auditing that explicitly records safety exception decisions for post-hoc analysis.</li>
+                            <li>Implemented deterministic plan reuse and semantic grounding mechanisms, enabling consistent execution, controlled plan adaptation, and resolution of ambiguous inputs into executable specifications.</li>
+                            <li>Built Grafa: knowledge graph engine providing LLMs structured memory over heterogeneous documents. Sub-second federated retrieval, ~95% recall. Multi-tenant isolation with hook-based extensibility. Deployed as shared infrastructure across agent products.</li>
+                            <li>Built KQuery: NL-to-SQL engine across five database backends, ~95% SQL accuracy. Plans and verifies the full query hierarchy upfront, then runs all queries in parallel as dependencies resolve. Generation rules stored as data in the knowledge graph, scoped by platform, company, or user.</li>
+                            <li>Built KNER: multi-agent entity resolution pipeline resolving free-text queries against all company entity systems &mdash; products, geographies, promotions, brands, ontological concepts &mdash; in 10&ndash;20 seconds including disambiguation. Implemented as nested LangGraph state machines with four specialized agents.</li>
+                            <li>Designed UserAI, an autonomous evaluation harness driving multi-turn agent sessions end-to-end for CI-integrated regression detection of failure modes invisible in single-turn testing.</li>
                         </ul>
                     </div>
                 </div>
@@ -607,18 +621,17 @@
 
                 <div class="timeline-entry">
                     <div class="timeline-header">
-                        <span class="timeline-title">Kuona &mdash; Data Scientist / Machine Learning Engineer</span>
+                        <span class="timeline-title">Kuona &mdash; ML Infrastructure Engineer</span>
                         <span class="timeline-date">February 2022 &ndash; 2024</span>
                     </div>
-                    <div class="timeline-subtitle">Mexico</div>
+                    <div class="timeline-subtitle">Distributed ML Infrastructure &amp; Platform Engineering (Mexico)</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Designed and deployed large-scale forecasting systems across thousands of market-correlated time series.</li>
-                            <li>Design, implementation, testing and deployment of a Machine Learning Pipeline that generates weekly demand forecasts for a major CPG company across hundreds of SKUs and geographies. Rewrote the entire system from scratch, raising forecast accuracy from the high 60s/low 70s to 80%, spanning 500+ servers and training approximately 3,500 recurrent neural networks weekly.</li>
-                            <li>Led a 3-person team as lead architect in the redesign and standardization of one of Kuona's main products, the Perfect Order demand forecasting system. Introduced pre-modeling data governance checks that caught data errors upstream, saving hundreds of GPU hours in wasted training.</li>
-                            <li>Design and implementation of a new time series forecasting library featuring transparent multi-horizon predictions, automatic hyperparameter search, and native support for ensemble models.</li>
-                            <li>Design and implementation of a custom task orchestration system for Kuona's Machine Learning Pipelines with native support for heterogeneous distributed computing, arbitrary horizontal scalability, and easy management for remote tasks by abstracting the compute resources behind a UNIX-like process control interface.</li>
-                            <li>Regular meetings with clients to identify data requirements in order to guarantee consistent and precise forecasting. Evaluation of alternative datasources originating within clients' organizations.</li>
+                            <li>Rewrote Kuona's distributed ML training platform from scratch &mdash; spanning 500+ servers, supporting thousands of model training jobs weekly, including orchestration infrastructure, training pipelines, and monitoring systems supporting production forecasting for enterprise clients.</li>
+                            <li>Designed and implemented a custom task orchestration system with native support for heterogeneous distributed computing, arbitrary horizontal scalability, and a UNIX-like process control interface for remote task management.</li>
+                            <li>Led a 3-person team as lead architect in the redesign of Kuona's Perfect Order demand forecasting system. Introduced pre-modeling data governance checks that caught data errors upstream, saving hundreds of GPU hours in wasted training.</li>
+                            <li>Established engineering infrastructure and practices adopted across teams: eliminated development-to-production drift, implemented ephemeral environments and reproducible infrastructure, and standardized deployment environments across production ML systems.</li>
+                            <li>Designed and implemented a time series forecasting library with transparent multi-horizon predictions, automatic hyperparameter search, and native ensemble model support.</li>
                         </ul>
                     </div>
                 </div>

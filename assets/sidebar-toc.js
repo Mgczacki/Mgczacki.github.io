@@ -67,8 +67,7 @@ function initSidebarTOC({ sectionSelector, scrollOffset = 120 } = {}) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                const headerEl = document.querySelector('.masthead');
-                const offset = headerEl ? headerEl.offsetHeight + 16 : 100;
+                const offset = 20;
                 window.scrollTo({
                     top: target.offsetTop - offset,
                     behavior: 'smooth'
