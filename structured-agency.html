@@ -342,6 +342,66 @@
             font-size: 15px;
         }
 
+        #content details.deep-dive {
+            margin: 24px 0 32px;
+            border: 1px solid var(--border-faint);
+            border-left: 3px solid var(--text-faint);
+            border-radius: 6px;
+            padding: 0;
+            background: var(--bg-alt);
+        }
+
+        #content details.deep-dive summary {
+            cursor: pointer;
+            padding: 14px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: var(--text-faint);
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+
+        #content details.deep-dive summary::-webkit-details-marker {
+            display: none;
+        }
+
+        #content details.deep-dive summary::before {
+            content: '\25B8';
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        #content details.deep-dive[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        #content details.deep-dive summary:hover {
+            color: var(--text);
+        }
+
+        #content details.deep-dive .deep-dive-body {
+            padding: 0 20px 20px;
+            border-top: 1px solid var(--border-faint);
+        }
+
+        #content details.deep-dive .deep-dive-body p {
+            font-size: 15px;
+            margin-bottom: 1em;
+        }
+
+        #content details.deep-dive .deep-dive-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        #content details.deep-dive .deep-dive-body h5 {
+            margin-top: 1.5em;
+        }
+
         #content .definition {
             margin: 24px 0;
             padding: 16px 20px;
@@ -601,6 +661,7 @@
                                 <ul class="subsection">
                                     <li><a href="#redundancy">Redundancy is a Feature</a></li>
                                     <li><a href="#stress-strengthens">Stress Strengthens a System</a></li>
+                                    <li><a href="#harness-awareness">The Agent Should Know Its Harness</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -610,8 +671,8 @@
                             <li><a href="#agent">3.1 Agent</a>
                                 <ul class="subsection">
                                     <li><a href="#invocation">Invocation</a></li>
-                                    <li><a href="#working-memory">Working Memory</a></li>
                                     <li><a href="#directives">Directives</a></li>
+                                    <li><a href="#working-memory">Working Memory</a></li>
                                 </ul>
                             </li>
                             <li><a href="#state">3.2 State</a>
@@ -766,6 +827,8 @@
 <li><strong>Information structure</strong> — How context is organized, layered, and disclosed. What the agent knows, when it knows it, and in what format.</li>
 </ul>
 </div>
+
+<p><strong>A clarification on what structure is not.</strong> By "structure" this paper does not mean the old-style prescription of rigid multi-agent workflows — "build subagent A for extraction, subagent B for validation, subagent C for formatting, connected by a fixed DAG." Any practitioner who has built agents at scale reaches the same conclusion: more flexibility, more shared context, and fewer hard boundaries produce the most general and frictionless designs. Cognition AI's argument against multi-agent architectures <a class="citation" href="#ref-50">[50]</a> captures an intuition widely held in the field — that parallelism boundaries and context isolation often create more friction than they resolve. But the conclusion should not be "therefore, remove all structure." Agents that are both reliable and fast can shed the old rigid context boundaries <em>while</em> introducing more precise structures — structures that enable better orchestration, lower latency, and capabilities that exceed the cognitive ceiling of the base model alone. Parallelism <em>is</em> an incredibly useful concept within agentic systems, and context boundaries <em>are</em> powerful — as long as they can be gracefully bypassed when the task demands it. The structure advocated here is as much about progressive disclosure as it is about alignment: the agent can always explore beyond what is initially provided, but certain task boundaries, tool constraints, and information layers are simply smart design. They don't cage the agent — they give it a head start.</p>
 
 <p>Most of these principles are individually well-established—constraint satisfaction, external validation, progressive disclosure, and hierarchical decomposition appear across the existing literature on agent design <a class="citation" href="#ref-3">[3]</a><a class="citation" href="#ref-9">[9]</a><a class="citation" href="#ref-90">[90]</a>. The contribution of this section is not the individual principles but their organization into a <strong>dependency chain</strong>: each principle follows logically from the previous, and the chain as a whole provides a framework for reasoning about <em>when</em> and <em>why</em> to invest in structure, not just <em>what</em> structure to apply.</p>
 <p><img src="assets/agents/image1-principle-graph.svg" alt="Principle Dependency Graph"></p>
@@ -1053,7 +1116,7 @@
 
 <p>The cost model above is deliberately abstract — C_s and C_f are expressed in generic "cost" without specifying <em>what</em> that cost measures. This is intentional: the dominant cost dimension varies across systems, and the structural decisions that follow from the model change accordingly. The framework is a general heuristic; the instantiation is domain-specific.</p>
 
-<p><strong>When latency is the cost function.</strong> At <a href="https://kuona.ai">kuona.ai</a>, latency was the north-star metric. The system serves business analysts who ask questions and expect answers in seconds, not minutes. In this regime, C_f is measured primarily in <em>time</em>: a failed step triggers a retry loop, each retry adds seconds of model inference, and users abandon queries that take too long. Structure is justified when it eliminates retry cycles — a validation check that takes 5ms and prevents a 3-second retry loop is an obvious win. This shaped every architectural decision: pre-computed semantic indexes (Section 2.1, Tools) exist because entity resolution at query time added unacceptable latency, visualization templates replaced code generation because retrying failed plots was too slow, and context was structured by change rate (Section 3.1) because KV cache reuse cut per-turn inference time. The cost model didn't say "add structure everywhere" — it said "add structure wherever it eliminates a latency-visible failure mode."</p>
+<p><strong>When latency is the cost function.</strong> At <a href="https://kuona.ai">kuona.ai</a>, latency is one of the north-star metrics — particularly for certain tasks and subagents in the interactive query pipeline, where the system serves business analysts who ask questions and expect answers in seconds, not minutes. (Correctness is an even higher priority — see below — but for the latency-sensitive surfaces, speed dominates the structural decisions.) In this regime, C_f is measured primarily in <em>time</em>: a failed step triggers a retry loop, each retry adds seconds of model inference, and users abandon queries that take too long. Structure is justified when it eliminates retry cycles — a validation check that takes 5ms and prevents a 3-second retry loop is an obvious win. This shaped every architectural decision: pre-computed semantic indexes (Section 2.1, Tools) exist because entity resolution at query time added unacceptable latency, visualization templates replaced code generation because retrying failed plots was too slow, and context was structured by change rate (Section 3.1) because KV cache reuse cut per-turn inference time. The cost model didn't say "add structure everywhere" — it said "add structure wherever it eliminates a latency-visible failure mode."</p>
 
 <p><strong>When inference cost is the cost function.</strong> A different system — a batch processing pipeline that runs overnight, classifying and routing thousands of documents — operates under a completely different C. Latency is irrelevant; the pipeline has hours. But every token costs money, and at scale, wasted tokens dominate the budget. Here, C_f is measured in <em>dollars</em>: a failed classification triggers a re-inference on a document that might be 50k tokens, and propagation cost means a misclassification early in the pipeline causes expensive downstream reprocessing. Structure is justified when it prevents token waste — a lightweight classifier that routes documents to specialized prompts (cheaper, shorter) instead of feeding everything to a single expensive prompt, or a schema validator that catches malformed output before it propagates to the next stage. Retry loops are acceptable (time is cheap); token-burning retry loops are not.</p>
 
@@ -1147,6 +1210,22 @@
 </div>
 </details>
 
+<h4 id="harness-awareness">The Agent Should Know Its Harness</h4>
+<div class="principle">
+
+<p><strong>Principle</strong>: Design the harness so the agent can introspect it, reason about it, and use it to amplify its own capabilities — not merely be constrained by it.</p>
+</div>
+
+<p><strong>Rationale</strong>: The default framing of structure is restrictive — guardrails, constraints, boundaries, limitations. This framing is incomplete. A well-designed harness is not a cage; it is an exoskeleton. The agent that is <em>aware</em> of its tools, its context boundaries, its validation signals, and its delegation paths can reason about them as resources, not just obey them as rules. The shift is from structure-as-restriction to <strong>structure-as-capability</strong>.</p>
+<p>An agent that knows it has a schema validator can proactively check its own output before submitting it. An agent that knows its context is structured by change rate can decide what to offload and what to keep. An agent that knows it can delegate to a scoped subagent can choose delegation strategically rather than having it imposed. An agent that knows its working memory has been compacted can recognize when it is operating on incomplete information and reach for addressable history. In each case, the harness becomes something the agent <em>uses</em>, not something that <em>uses</em> the agent.</p>
+<p><strong>Design implications</strong>:</p>
+<ul>
+<li><strong>Make structure visible</strong> — Tool descriptions, available contexts, delegation capabilities, and validation mechanisms should be legible in the agent's working memory. The agent should know what it has access to, not discover it by accident.</li>
+<li><strong>Make structure introspectable</strong> — The agent should be able to query its own harness: what tools are available, what contexts are loaded, what constraints are active, what has been compacted. Introspection turns the harness from an external imposition into an internal resource.</li>
+<li><strong>Design for leverage, not just compliance</strong> — When adding a structural element, ask not just "does this prevent the agent from failing?" but "does this enable the agent to succeed in ways it couldn't without it?" The best harnesses do both.</li>
+</ul>
+<p>This principle connects back to the clarification at the opening of this section: structure is not the old-style rigid workflow that constrains the agent into a fixed path. It is the set of capabilities, boundaries, and information architecture that the agent can leverage to reason better, act faster, and recover from errors more gracefully. The agent that understands its own harness is more capable than the unstructured agent — not less flexible, but more <em>powerful</em>.</p>
+
 <hr>
 <p>With the principles established, we now turn to how they manifest concretely in agent design. The taxonomy below maps each principle to the architectural surfaces where harnesses can be applied.</p>
 <h2 id="taxonomy">3. Taxonomy of Structured Agents</h2>
@@ -1189,6 +1268,13 @@
 </details>
 
 <p><strong>Interruptions as a lifecycle property</strong>: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling&#39;s failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.7 for how interruptions propagate through hierarchical systems.</p>
+<h4 id="directives">Directives</h4>
+<div class="definition">
+
+<p><strong>Directives</strong> — The goals, constraints, and rules that guide the agent&#39;s behavior. These include system prompts, task descriptions, and behavioral guardrails. Directives shape <em>what</em> the agent does and <em>how</em> it does it.</p>
+</div>
+
+<p>For most current &quot;agentic&quot; systems, the agent is an LLM or derived technology. The agent has two essential aspects — directives (what it should do) and working memory (what it can attend to) — that together determine its behavior at any point in an invocation.</p>
 <h4 id="working-memory">Working Memory</h4>
 <div class="definition">
 
@@ -1204,14 +1290,34 @@
 </ul>
 <p><strong>Caveat</strong>: The scratchpad metaphor has limits. LLMs are <strong>causal models</strong> — each token&#39;s representation depends only on the tokens before it, and inference engines exploit this through <strong>KV caches</strong> and <strong>prompt caching</strong>. When the prefix of the context window is unchanged across requests, its key-value representations can be reused, dramatically reducing cost and latency. Treating working memory as a freely mutable scratchpad — inserting, reordering, or modifying content near the top — invalidates these caches and forces full recomputation. This creates a practical design constraint: <strong>structure context by change rate</strong>. Place invariant content (system prompts, tool definitions, stable directives) at the beginning, semi-stable content (loaded contexts, retrieved documents) in the middle, and volatile content (recent conversation turns, tool results) at the end. This layering — invariant → semi-stable → volatile — maximizes cache reuse while preserving the scratchpad&#39;s flexibility where it matters most.</p>
 <p><strong>Critical distinction</strong>: The context window is NOT the agent&#39;s state — it is the agent&#39;s <em>view</em> of its state. Working memory is populated by tools that load, search, and surface relevant state into the context window. The quality of that population — what gets loaded, when, and in what form — is context engineering (Section 2.2).</p>
-<p>[<strong>TODO</strong>: Working memory management — strategies for vacating, pruning, and compacting working memory during long-running invocations. When and how should an agent decide to evict information from its context window? What are the tradeoffs between summarization, selective retention, and offloading to external state?]</p>
-<h4 id="directives">Directives</h4>
-<div class="definition">
+<details class="deep-dive">
+<summary>Working Memory Management — Context Rot, Compaction, and the Limits of Summarization</summary>
+<div class="deep-dive-body">
 
-<p><strong>Directives</strong> — The goals, constraints, and rules that guide the agent&#39;s behavior. These include system prompts, task descriptions, and behavioral guardrails. Directives shape <em>what</em> the agent does and <em>how</em> it does it.</p>
+<p>Long-running invocations inevitably exhaust the context window. When the agent must transition between tasks or shed old interactions to make room for new ones, the question becomes: what to keep, what to compress, and what to discard.</p>
+
+<h5>Context Rot</h5>
+
+<p>This is not merely a space management problem. <strong>Context rot</strong> — the empirically demonstrated degradation in LLM performance as context length increases — means that accumulated content actively harms the agent before the window is even full. Research across 18 models shows that accuracy declines consistently with input length, that irrelevant-but-similar content (distractors) amplifies degradation disproportionately, and that information buried in the middle of the context is recalled far less reliably than content at the beginning or end. Stale tool results, old reasoning traces, and superseded constraints don't just waste tokens — they dilute the model's attention budget and degrade its performance on the current task. This makes working memory management not an optimization but a correctness concern: an agent that retains too much irrelevant context will perform worse than one that strategically forgets.</p>
+
+<h5>Lossy Summarization</h5>
+
+<p>The common approach is <strong>lossy summarization</strong>: when transitioning between tasks, generate a compressed summary of past interactions and continue with the new task on a fresh context. This works in the narrow sense — the agent retains a high-level understanding of what happened — but it introduces problems that go beyond simple forgetting. Summarization loses the specific constraints, edge cases, and corrections that accumulated during the prior task. When the agent later re-encounters a related situation, it must re-acquire that context from scratch — a <strong>context re-acquisition cost</strong> that can exceed the original interaction. Worse, lossy compression runs counter to the prompt caching systems discussed above: rewriting the context prefix invalidates the KV cache, so every compaction triggers a full recomputation of the surviving content. Summarization trades token count for cache efficiency — often a bad trade.</p>
+
+<h5>Structured Compaction</h5>
+
+<p><strong>Structured compaction</strong> offers a better model. Rather than summarizing everything uniformly, exploit the structure of the conversation itself. Claude Code's context compaction, for instance, performs summarization but retains some addressability of previous interactions — before summarizing, it uses the structure of messages to selectively drop previous tool results, intermediate reasoning, and other high-volume low-retention content, while preserving the decisions, constraints, and corrections that are likely to matter later. This is closer to what this framework proposes with Contexts (Section 3.4): working memory content that has been used should be offloaded to addressable, retrievable state rather than compressed into a lossy summary. The agent can then re-acquire specific context on demand rather than carrying everything or losing everything.</p>
+
+<h5>Epistemological Humility</h5>
+
+<p>The deeper challenge is epistemological. A compacted agent doesn't know what it has forgotten. Without some form of introspection into past interactions — even a structured index of what was discussed, decided, and constrained — the agent cannot know when it is operating on incomplete information. The ideal is <strong>epistemological humility baked into the system</strong>: the agent should have awareness of the boundaries of its current working memory, know that prior interactions existed beyond what it currently sees, and have tools to reach back into them when needed. If the system provides structured introspection into past interactions within the limits of working memory — a table of contents of what was compacted, what decisions were made, what constraints were established — the agent can adapt: it can recognize when a current task touches on prior context and selectively re-acquire what it needs.</p>
+
+<h5>An Open Problem</h5>
+
+<p>This remains an open problem. Current systems either summarize too aggressively (losing critical detail) or retain too much (exhausting the context window and accelerating context rot). The structured agency approach suggests a middle path: treat compacted history as a Context — addressable, searchable, and selectively loadable — rather than as a string to be summarized or discarded. The Contexts primitive introduced in Section 3.4 maps cleanly to the concept of external memory in recursive language models — state that lives outside the agent's immediate observation but can be accessed through deliberate action. Minimizing dependency on the context window beyond a certain saturation point will likely be crucial for reliable long-horizon agents, but the design to do this properly remains unclear. The natural approach — recursive decomposition into subagents with scoped contexts — runs into latency costs that quickly exceed acceptable thresholds for interactive systems. Each delegation boundary adds round-trip overhead, and deeply nested decompositions multiply that cost. The tension between context rot (too much in one window) and delegation latency (too many windows) is one of the central unsolved design problems in agentic systems.</p>
+
 </div>
-
-<p>For most current &quot;agentic&quot; systems, the agent is an LLM or derived technology. The agent has two essential aspects — working memory (what it can attend to) and directives (what it should do) — that together determine its behavior at any point in an invocation.</p>
+</details>
 <h3 id="state">3.2 State</h3>
 <div class="definition">
 
