@@ -1,99 +1,127 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 500">
   <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0 0L10 5L0 10z" fill="#111"/>
     </marker>
-    <marker id="am" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-      <path d="M0 0L10 5L0 10z" fill="#999"/>
-    </marker>
   </defs>
 
   <!-- Title -->
-  <text x="350" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#999">STATE ANATOMY</text>
+  <text x="370" y="22" text-anchor="middle" font-size="11" font-weight="600" fill="#999">STATE &amp; STRUCTURE CLASSES</text>
 
   <!-- Outer State boundary -->
-  <rect x="30" y="45" width="640" height="380" rx="10" fill="#f7f7f7" stroke="#111" stroke-width="2"/>
-  <text x="70" y="72" font-size="16" font-weight="700" fill="#111">State</text>
-  <text x="70" y="88" font-size="10" fill="#666">The agent's structured internal representation of the world</text>
+  <rect x="25" y="38" width="690" height="440" rx="10" fill="#f7f7f7" stroke="#111" stroke-width="2"/>
+  <text x="60" y="63" font-size="15" font-weight="700" fill="#111">State</text>
+  <text x="111" y="63" font-size="10" fill="#666">— persistent, structured, NOT a string, NOT the context window</text>
 
-  <!-- Row 1: Core data structures -->
-  <!-- Application Schema -->
-  <rect x="55" y="110" width="155" height="90" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="132" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Application Schema</text>
-  <line x1="70" y1="145" x2="195" y2="145" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="132" y="163" text-anchor="middle" font-size="9" fill="#666">Class instances</text>
-  <text x="132" y="177" text-anchor="middle" font-size="9" fill="#666">Type-safe structures</text>
-  <text x="132" y="191" text-anchor="middle" font-size="9" fill="#666">Domain models</text>
+  <!-- Row 1 label -->
+  <text x="60" y="90" font-size="9" font-weight="600" fill="#666" letter-spacing="0.5">READ / WRITE</text>
 
-  <!-- Knowledge Graph -->
-  <rect x="230" y="110" width="155" height="90" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="307" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Knowledge Graph</text>
-  <line x1="245" y1="145" x2="370" y2="145" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="307" y="163" text-anchor="middle" font-size="9" fill="#666">Entities &amp; relations</text>
-  <text x="307" y="177" text-anchor="middle" font-size="9" fill="#666">Traversable structure</text>
-  <text x="307" y="191" text-anchor="middle" font-size="9" fill="#666">Semantic connections</text>
+  <!-- Tasks -->
+  <rect x="45" y="100" width="155" height="80" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="122" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Tasks</text>
+  <line x1="60" y1="131" x2="185" y2="131" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="122" y="148" text-anchor="middle" font-size="9" fill="#666">Status, dependencies, ownership</text>
+  <text x="122" y="162" text-anchor="middle" font-size="9" fill="#666">Lifecycle: created → completed</text>
+  <text x="122" y="176" text-anchor="middle" font-size="9" fill="#666">Cross-invocation referencing</text>
 
-  <!-- Databases / Tables -->
-  <rect x="405" y="110" width="155" height="90" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="482" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Databases</text>
-  <line x1="420" y1="145" x2="545" y2="145" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="482" y="163" text-anchor="middle" font-size="9" fill="#666">Tables &amp; rows</text>
-  <text x="482" y="177" text-anchor="middle" font-size="9" fill="#666">Queryable storage</text>
-  <text x="482" y="191" text-anchor="middle" font-size="9" fill="#666">Transactional integrity</text>
+  <!-- Plans -->
+  <rect x="215" y="100" width="155" height="80" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="292" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Plans</text>
+  <line x1="230" y1="131" x2="355" y2="131" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="292" y="148" text-anchor="middle" font-size="9" fill="#666">Inspectable, revisable</text>
+  <text x="292" y="162" text-anchor="middle" font-size="9" fill="#666">Hypotheses, not commitments</text>
+  <text x="292" y="176" text-anchor="middle" font-size="9" fill="#666">Validatable before execution</text>
 
-  <!-- Row 2: Supporting structures -->
-  <!-- Configuration -->
-  <rect x="55" y="230" width="120" height="75" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="115" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Configuration</text>
-  <line x1="70" y1="265" x2="160" y2="265" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="115" y="283" text-anchor="middle" font-size="9" fill="#666">Settings, flags</text>
-  <text x="115" y="297" text-anchor="middle" font-size="9" fill="#666">Runtime params</text>
+  <!-- Contexts -->
+  <rect x="385" y="100" width="155" height="80" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="462" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Contexts</text>
+  <line x1="400" y1="131" x2="525" y2="131" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="462" y="148" text-anchor="middle" font-size="9" fill="#666">Addressable info blocks</text>
+  <text x="462" y="162" text-anchor="middle" font-size="9" fill="#666">Selectively loadable</text>
+  <text x="462" y="176" text-anchor="middle" font-size="9" fill="#666">Context engineering primitives</text>
+
+  <!-- Messages -->
+  <rect x="555" y="100" width="145" height="80" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
+  <text x="627" y="122" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Messages</text>
+  <line x1="570" y1="131" x2="685" y2="131" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="627" y="148" text-anchor="middle" font-size="9" fill="#666">Typed: sender, recipient</text>
+  <text x="627" y="162" text-anchor="middle" font-size="9" fill="#666">Thread &amp; conversation</text>
+  <text x="627" y="176" text-anchor="middle" font-size="9" fill="#666">Inter-agent &amp; user-facing</text>
+
+  <!-- Separator line - positioned with clear space above and below labels -->
+  <line x1="45" y1="196" x2="700" y2="196" stroke="#ccc" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- Row 2 label - clear below the line -->
+  <text x="60" y="216" font-size="9" font-weight="600" fill="#666" letter-spacing="0.5">INTROSPECTABLE (may be read-only)</text>
+
+  <!-- Action History -->
+  <rect x="45" y="226" width="155" height="80" rx="6" fill="#fff" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="122" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Action History</text>
+  <line x1="60" y1="257" x2="185" y2="257" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="122" y="274" text-anchor="middle" font-size="9" fill="#666">Tool calls &amp; results</text>
+  <text x="122" y="288" text-anchor="middle" font-size="9" fill="#666">State mutations log</text>
+  <text x="122" y="302" text-anchor="middle" font-size="9" fill="#666">Observability &amp; recovery</text>
+
+  <!-- Domain Types -->
+  <rect x="215" y="226" width="155" height="80" rx="6" fill="#fff" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="292" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Domain Types</text>
+  <line x1="230" y1="257" x2="355" y2="257" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="292" y="274" text-anchor="middle" font-size="9" fill="#666">Tickets, orders, schemas</text>
+  <text x="292" y="288" text-anchor="middle" font-size="9" fill="#666">Domain-specific constraints</text>
+  <text x="292" y="302" text-anchor="middle" font-size="9" fill="#666">Compliance flags, audit trails</text>
 
   <!-- Indexes -->
-  <rect x="195" y="230" width="120" height="75" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="255" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Indexes</text>
-  <line x1="210" y1="265" x2="300" y2="265" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="255" y="283" text-anchor="middle" font-size="9" fill="#666">Search indices</text>
-  <text x="255" y="297" text-anchor="middle" font-size="9" fill="#666">Embeddings</text>
+  <rect x="385" y="226" width="155" height="80" rx="6" fill="#fff" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="462" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Indexes</text>
+  <line x1="400" y1="257" x2="525" y2="257" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="462" y="274" text-anchor="middle" font-size="9" fill="#666">Semantic indexes</text>
+  <text x="462" y="288" text-anchor="middle" font-size="9" fill="#666">Search structures</text>
+  <text x="462" y="302" text-anchor="middle" font-size="9" fill="#666">Pre-computed embeddings</text>
 
-  <!-- File System -->
-  <rect x="335" y="230" width="120" height="75" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="395" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#111">File System</text>
-  <line x1="350" y1="265" x2="440" y2="265" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="395" y="283" text-anchor="middle" font-size="9" fill="#666">Code, docs</text>
-  <text x="395" y="297" text-anchor="middle" font-size="9" fill="#666">Artifacts, logs</text>
+  <!-- Configuration -->
+  <rect x="555" y="226" width="145" height="80" rx="6" fill="#fff" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3"/>
+  <text x="627" y="248" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Configuration</text>
+  <line x1="570" y1="257" x2="685" y2="257" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="627" y="274" text-anchor="middle" font-size="9" fill="#666">Settings, flags</text>
+  <text x="627" y="288" text-anchor="middle" font-size="9" fill="#666">Runtime parameters</text>
+  <text x="627" y="302" text-anchor="middle" font-size="9" fill="#666">Access control rules</text>
 
-  <!-- Memories -->
-  <rect x="475" y="230" width="120" height="75" rx="6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="535" y="255" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Memories</text>
-  <line x1="490" y1="265" x2="580" y2="265" stroke="#e5e5e5" stroke-width="1"/>
-  <text x="535" y="283" text-anchor="middle" font-size="9" fill="#666">Long-term store</text>
-  <text x="535" y="297" text-anchor="middle" font-size="9" fill="#666">Cross-session</text>
+  <!-- Second separator -->
+  <line x1="45" y1="322" x2="700" y2="322" stroke="#ccc" stroke-width="1" stroke-dasharray="4 4"/>
 
-  <!-- Connections between state components -->
-  <line x1="210" y1="155" x2="230" y2="155" stroke="#111" stroke-width="1"/>
-  <line x1="385" y1="155" x2="405" y2="155" stroke="#111" stroke-width="1"/>
-  <line x1="132" y1="200" x2="132" y2="230" stroke="#111" stroke-width="1"/>
-  <line x1="307" y1="200" x2="255" y2="230" stroke="#111" stroke-width="1"/>
-  <line x1="307" y1="200" x2="395" y2="230" stroke="#111" stroke-width="1"/>
-  <line x1="482" y1="200" x2="535" y2="230" stroke="#111" stroke-width="1"/>
+  <!-- Tools section - INSIDE state -->
+  <text x="60" y="342" font-size="9" font-weight="600" fill="#666" letter-spacing="0.5">TOOLS — read / write interface</text>
 
-  <!-- Key properties (bottom band) -->
-  <rect x="55" y="340" width="540" height="68" rx="6" fill="#fff" stroke="#111" stroke-width="1.5" stroke-dasharray="6 3"/>
-  <text x="325" y="363" text-anchor="middle" font-size="11" font-weight="700" fill="#111">Key Properties</text>
-  <text x="140" y="385" text-anchor="middle" font-size="9" fill="#666">Persistent across invocations</text>
-  <text x="325" y="385" text-anchor="middle" font-size="9" fill="#666">Structured &amp; typed</text>
-  <text x="490" y="385" text-anchor="middle" font-size="9" fill="#666">Modified only through tools</text>
-  <text x="140" y="399" text-anchor="middle" font-size="9" fill="#666">Validatable</text>
-  <text x="325" y="399" text-anchor="middle" font-size="9" fill="#666">NOT a string</text>
-  <text x="490" y="399" text-anchor="middle" font-size="9" fill="#666">NOT the context window</text>
+  <!-- Tool boxes (using iconography style: dashed border, gray fill) -->
+  <rect x="45" y="352" width="105" height="40" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="97" y="376" text-anchor="middle" font-size="10" font-weight="600" fill="#111">State-facing</text>
 
-  <!-- Tools interface (outside State, bottom) -->
-  <rect x="230" y="450" width="240" height="36" rx="5" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="350" y="473" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Tools (read / write interface)</text>
+  <rect x="165" y="352" width="105" height="40" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="217" y="376" text-anchor="middle" font-size="10" font-weight="600" fill="#111">World-facing</text>
 
-  <!-- Arrows from Tools into State -->
-  <line x1="310" y1="450" x2="250" y2="425" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
-  <line x1="390" y1="450" x2="450" y2="425" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <rect x="285" y="352" width="105" height="40" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="337" y="376" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Validation</text>
+
+  <rect x="405" y="352" width="105" height="40" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="457" y="376" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Communication</text>
+
+  <rect x="525" y="352" width="120" height="40" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="585" y="376" text-anchor="middle" font-size="10" font-weight="600" fill="#111">Introspection</text>
+
+  <!-- Arrows from tools up to structure classes -->
+  <line x1="97" y1="352" x2="97" y2="310" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="337" y1="352" x2="337" y2="310" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="585" y1="352" x2="585" y2="310" stroke="#111" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Bottom annotation -->
+  <text x="370" y="420" text-anchor="middle" font-size="9" fill="#999">Tools are part of state (Section 3.2) — the context window is a view of state, not state itself</text>
+
+  <!-- Key at bottom -->
+  <rect x="180" y="440" width="50" height="16" rx="3" fill="#fff" stroke="#111" stroke-width="1.2"/>
+  <text x="248" y="452" font-size="8" fill="#666">Read/write</text>
+  <rect x="310" y="440" width="50" height="16" rx="3" fill="#fff" stroke="#999" stroke-width="1.2" stroke-dasharray="6 3"/>
+  <text x="378" y="452" font-size="8" fill="#666">May be read-only</text>
+  <rect x="450" y="440" width="50" height="16" rx="3" fill="#e8e8e8" stroke="#111" stroke-width="1.2" stroke-dasharray="3 2"/>
+  <text x="518" y="452" font-size="8" fill="#666">Tool</text>
 </svg>

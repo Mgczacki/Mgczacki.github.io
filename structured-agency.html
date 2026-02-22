@@ -671,6 +671,8 @@
                             <li><a href="#agent">3.1 Agent</a>
                                 <ul class="subsection">
                                     <li><a href="#invocation">Invocation</a></li>
+                                    <li><a href="#llm">LLM</a></li>
+                                    <li><a href="#turn">Turn</a></li>
                                     <li><a href="#directives">Directives</a></li>
                                     <li><a href="#working-memory">Working Memory</a></li>
                                 </ul>
@@ -678,6 +680,7 @@
                             <li><a href="#state">3.2 State</a>
                                 <ul class="subsection">
                                     <li><a href="#structure-classes">Structure Classes</a></li>
+                                    <li><a href="#state-staleness">State Staleness</a></li>
                                     <li><a href="#tools-as-state">Tools as State</a></li>
                                     <li><a href="#why-tools-are-state">Why Tools Are State</a></li>
                                 </ul>
@@ -742,7 +745,9 @@
 </div>
 
 <p>The individual principles behind reliable agents are not new—and the field knows it. Anthropic&#39;s &quot;Building Effective Agents&quot; <a class="citation" href="#ref-3">[3]</a> established that workflows and constraints outperform unconstrained autonomy. Their subsequent work on context engineering <a class="citation" href="#ref-90">[90]</a> and agent harnesses <a class="citation" href="#ref-91">[91]</a> codified progressive disclosure and structured state management. OpenAI&#39;s practical guide <a class="citation" href="#ref-9">[9]</a> converges on the same patterns. DSPy <a class="citation" href="#ref-92">[92]</a> formalized the shift from prompting to programming. The Bitter Lesson discourse <a class="citation" href="#ref-93">[93]</a><a class="citation" href="#ref-95">[95]</a> has been applied specifically to agent scaffolding. Context engineering as a discipline has its own rapidly growing literature <a class="citation" href="#ref-30">[30]</a><a class="citation" href="#ref-94">[94]</a>. The building blocks are well-understood.</p>
-<p>What has been missing is a <em>theory</em> that connects these ideas into a dependency chain—one that explains not just <em>what</em> to do, but <em>why</em> each principle follows from the others, and <em>when</em> the tradeoffs justify the investment. The existing literature offers cookbooks of patterns (Anthropic), toolkits of abstractions (LangChain, DSPy), and collections of best practices (OpenAI). This paper attempts something different: a unified framework with a formal cost model for deciding when structure is justified, an explicit dependency graph showing how principles build on each other, and a taxonomy of architectural surfaces where constraints can be applied.</p>
+<p>What has been missing is a coherent <em>mental model</em>. The field suffers from widespread semantic confusion: "agent," "tool," "context," "state," "memory," and "planning" are used inconsistently across frameworks, papers, and products—often meaning different things in different contexts, or conflating concepts that should be distinct. LangChain's "agent" is not Anthropic's "agent" is not a reinforcement learning "agent." A "tool" in one framework is a "skill" in another and an "action" in a third. "Memory" might mean the context window, a vector store, a conversation log, or persistent state, depending on who is speaking. This confusion is not merely terminological—it leads to architectural mistakes, because builders inherit muddled abstractions and wire systems together without a clear picture of what each component <em>is</em> and how it relates to the others.</p>
+
+<p>This paper attempts to cut through that confusion by proposing a first-principles mental model for thinking about agents: a dependency chain of principles that explains not just <em>what</em> to do, but <em>why</em> each principle follows from the others, and <em>when</em> the tradeoffs justify the investment. The existing literature offers cookbooks of patterns (Anthropic), toolkits of abstractions (LangChain, DSPy), and collections of best practices (OpenAI). This paper attempts something different: a unified framework with a cost model for deciding when structure is justified, an explicit dependency graph showing how principles build on each other, and a taxonomy of architectural surfaces where constraints can be applied.</p>
 <p>This paper proposes <strong>Structured Agency</strong>: a framework for building harnesses around LLM-powered agents through deliberate constraints, external validation, and composable tooling. The agents that result are <strong>structured agents</strong>—systems that trade unconstrained flexibility for reliability, observability, and predictable behavior. The framework is grounded in three years of experience building agents across production systems at <a href="https://kuona.ai">kuona.ai</a>, academic research, and personal projects, informed by industry analysis, and organized as a dependency chain of principles where each builds on the last. The naming and formalism are my own and evolve over time.</p>
 <hr>
 <h2 id="introduction">1. Introduction</h2>
@@ -1268,13 +1273,35 @@
 </details>
 
 <p><strong>Interruptions as a lifecycle property</strong>: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling&#39;s failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.7 for how interruptions propagate through hierarchical systems.</p>
+<h4 id="llm">LLM</h4>
+<div class="definition">
+
+<p><strong>LLM</strong> — The model that powers the agent&#39;s reasoning. The LLM is stateless: it has no memory between calls. All persistence is through working memory and state.</p>
+</div>
+
+<p>For most current &quot;agentic&quot; systems, the agent is an LLM or derived technology. The LLM is the implementation of the &quot;reasoning core&quot; in the agent definition above — the component that, given an observation of the world (working memory), decides what to do next (tool calls or terminal output).</p>
+<p><strong>Statelessness is the fundamental property.</strong> Between turns, the LLM retains nothing. No hidden state carries over, no internal &quot;memory&quot; persists. All continuity comes from working memory being re-presented at the start of the next turn. This is why context engineering (Section 2.2) matters so much — the only lever for shaping the agent&#39;s reasoning is shaping what it sees.</p>
+<p><strong>The LLM is a black box from the harness&#39;s perspective.</strong> The harness cannot inspect or modify the model&#39;s internal reasoning — it can only shape what goes in (context engineering) and constrain what comes out (validation, tool design). This asymmetry is why structure matters: you cannot fix reasoning directly, but you can make correct behavior the path of least resistance through well-designed tools and directives.</p>
+<p><strong>Model selection is a design decision.</strong> Different invocations, subagents, or tasks can use different LLMs. This connects directly to the cost functions in Section 2.3: risk-sensitive tasks warrant more capable models, latency-sensitive tasks warrant faster models, and cost-sensitive batch tasks warrant cheaper models. A well-structured harness makes model selection a configuration parameter, not an architectural commitment.</p>
+<p>The LLM&#39;s capabilities — context window size, tool-calling fidelity, reasoning depth — constrain what the agent can accomplish per turn. This is precisely why structure compensates for model limitations: a model that struggles with complex multi-step reasoning in a single pass can succeed when the harness decomposes the problem into simpler per-turn decisions.</p>
+<h4 id="turn">Turn</h4>
+<div class="definition">
+
+<p><strong>Turn</strong> — A single LLM call cycle: the agent receives its working memory as input, generates output (text and/or tool calls), tool calls are executed, results are appended to working memory, and the next turn begins. The turn is the atomic unit of agent computation.</p>
+</div>
+
+<p>The agent loop can be expressed as: <code>while not done: turn(working_memory) → output → execute tools → update working_memory</code>. Each turn transforms working memory through the LLM&#39;s reasoning — the model reads everything in the context window, decides on actions, and the harness executes those actions and appends results for the next turn.</p>
+<p><strong>Between turns, the agent does not exist as a process.</strong> No computation runs. The harness is what operates at turn boundaries: validating outputs, injecting context, synchronizing state, checking budgets, and deciding whether to continue or terminate the invocation. This is the harness&#39;s primary control surface.</p>
+<p>Each turn can produce multiple tool calls (parallel tool use) or no tool calls (terminal output that ends the invocation). A turn is to an invocation what a step is to an episode in reinforcement learning — the atomic transition within a bounded execution.</p>
+<p><strong>Budget is measured in turns.</strong> Turn count is a natural unit for bounding invocation cost — each turn represents an LLM call with measurable token consumption and latency. Token budgets accumulate across turns. This is where the cost functions from Section 2.3 are operationalized: the harness enforces budget constraints at turn boundaries, terminating the invocation when limits are exceeded.</p>
+<p>The harness&#39;s control surface operates entirely at the turn boundary. Between any two turns, it can: inject context into working memory, force specific tool use, validate or reject the previous turn&#39;s output, modify available tools, or terminate the invocation. The agent never &quot;sees&quot; this intervention — it simply receives a new working memory state at the start of the next turn.</p>
 <h4 id="directives">Directives</h4>
 <div class="definition">
 
 <p><strong>Directives</strong> — The goals, constraints, and rules that guide the agent&#39;s behavior. These include system prompts, task descriptions, and behavioral guardrails. Directives shape <em>what</em> the agent does and <em>how</em> it does it.</p>
 </div>
 
-<p>For most current &quot;agentic&quot; systems, the agent is an LLM or derived technology. The agent has two essential aspects — directives (what it should do) and working memory (what it can attend to) — that together determine its behavior at any point in an invocation.</p>
+<p>Directives and working memory together determine the agent&#39;s behavior at any point in an invocation. Where working memory defines what the agent can <em>see</em>, directives define what the agent should <em>do</em> with what it sees.</p>
 <h4 id="working-memory">Working Memory</h4>
 <div class="definition">
 
@@ -1298,7 +1325,7 @@
 
 <h5>Context Rot</h5>
 
-<p>This is not merely a space management problem. <strong>Context rot</strong> — the empirically demonstrated degradation in LLM performance as context length increases — means that accumulated content actively harms the agent before the window is even full. Research across 18 models shows that accuracy declines consistently with input length, that irrelevant-but-similar content (distractors) amplifies degradation disproportionately, and that information buried in the middle of the context is recalled far less reliably than content at the beginning or end. Stale tool results, old reasoning traces, and superseded constraints don't just waste tokens — they dilute the model's attention budget and degrade its performance on the current task. This makes working memory management not an optimization but a correctness concern: an agent that retains too much irrelevant context will perform worse than one that strategically forgets.</p>
+<p>This is not merely a space management problem. <strong>Context rot</strong> <a class="citation" href="#ref-97">[97]</a> — the empirically demonstrated degradation in LLM performance as context length increases — means that accumulated content actively harms the agent before the window is even full. Research across 18 models shows that accuracy declines consistently with input length, that irrelevant-but-similar content (distractors) amplifies degradation disproportionately, and that information buried in the middle of the context is recalled far less reliably than content at the beginning or end <a class="citation" href="#ref-98">[98]</a>. Stale tool results, old reasoning traces, and superseded constraints don't just waste tokens — they dilute the model's attention budget and degrade its performance on the current task. This makes working memory management not an optimization but a correctness concern: an agent that retains too much irrelevant context will perform worse than one that strategically forgets.</p>
 
 <h5>Lossy Summarization</h5>
 
@@ -1324,11 +1351,9 @@
 <p><strong>State</strong> — The totality of an agent&#39;s structured understanding of the world. State is all — domain data, configuration, memories, and critically, <em>tools themselves</em>.</p>
 </div>
 
-<p><img src="assets/agents/image4-context-vs-state.svg" alt="Context Window vs. State"></p>
 <p><strong>Key properties</strong>:</p>
 <ul>
-<li>Updated through actions (tool calls)</li>
-<li>Measured and modified by tools</li>
+<li><strong>All state changes must go through tools.</strong> This is not a stylistic preference — it is a structural requirement. Tools write to the context window, so every state mutation becomes visible in working memory: the agent <em>knows</em> what changed because it saw the tool result. Tools are introspectable by the system, so the harness can audit, validate, and reason about every mutation. And tool use can be forced at any point in the invocation, so the harness can ensure critical state synchronization happens even when the agent doesn't initiate it. If state could change through side channels — background processes, silent updates, external mutations not surfaced through tools — the agent would be reasoning about a world it cannot observe, violating the fundamental contract of structured agency.</li>
 <li><strong>Tools are part of state</strong> (see Tools as State below)</li>
 <li><strong>State is NOT the context window</strong> — the context window is a <em>view</em> of state</li>
 <li><strong>State is NOT a string</strong> — it is structured (class instances, databases, knowledge graphs)</li>
@@ -1341,7 +1366,7 @@
 <li>Type safety and constraints</li>
 <li>Clear interfaces</li>
 </ul>
-<p><img src="assets/agents/image9-state-anatomy.svg" alt="State Anatomy"></p>
+<p><img src="assets/agents/image9-state-anatomy.svg" alt="State and Structure Classes"></p>
 <h4 id="structure-classes">Structure Classes</h4>
 <p>The principle that &quot;state is NOT a string&quot; raises a natural question: what <em>is</em> state made of? Structure classes are the first-class types that populate structured state—the building blocks that make state genuinely structured rather than an opaque blob.</p>
 <p><strong>Core structure classes</strong>:</p>
@@ -1356,6 +1381,25 @@
 <p><strong>Introspection without intervention.</strong> Structure classes can always be <em>introspected</em>—the agent can read tasks, query plans, search contexts—but they are not necessarily <em>modifiable</em>. A structure class may be read-only: the agent can observe it but cannot change it. This asymmetry is not a limitation; it is a feature. Read-only structure classes encode <strong>domain-level constraints</strong>—invariants that the harness enforces by making certain state unwritable. A customer record&#39;s compliance flags, an order&#39;s immutable audit trail, a plan&#39;s locked dependencies—these are state the agent must respect but cannot alter. The constraint lives in the access pattern, not in the prompt. This is structure (Section 2.1) applied at the data level: by controlling which structure classes are writable, the harness bounds the agent&#39;s action space without the agent needing to understand <em>why</em> certain mutations are forbidden.</p>
 <p>[<strong>TODO</strong>: Flesh out each structure class with concrete examples from production systems. Show how tasks-as-structured-objects differ from tasks-as-strings in a plan.]</p>
 <p>[<strong>TODO</strong>: Define the lifecycle properties common to all structure classes (creation, mutation, validation, serialization) and how they connect to the state principles above.]</p>
+<h4 id="state-staleness">State Staleness</h4>
+<p>State represents the agent's structured understanding of the world — but the world keeps changing. A database schema queried ten minutes ago may have been altered. A task list fetched at the start of an invocation may have been updated by another agent or a user. An external API's response may have changed since the agent last called it. <strong>State can go stale</strong>, and stale state is a source of silent failures: the agent acts on a snapshot that no longer reflects reality.</p>
+<p>The problem is compounded by a fundamental limitation: <strong>LLMs are unreliable at temporal reasoning</strong>. A model cannot reliably determine whether one second or one week has passed since it last observed a piece of state. It has no internal clock, no sense of elapsed time, and no mechanism to reason about whether its cached knowledge is still valid. Left to its own devices, an agent will treat state fetched at the beginning of a long invocation as equally fresh throughout — even as the world diverges from its representation.</p>
+<p>Staleness operates at three levels, each requiring different mitigation:</p>
+<ul>
+<li><strong>World → State</strong>: The external world changes but the agent's state hasn't been updated to reflect it. A competitor's price changed, a customer submitted a new order, a deployment completed.</li>
+<li><strong>State → Working Memory</strong>: The agent's state has been updated (perhaps by another agent or an external system), but the agent's working memory still holds the old values from when it last loaded them.</li>
+<li><strong>World → Working Memory</strong>: Both state and working memory are stale — the agent is reasoning about a world that has moved on at every level.</li>
+</ul>
+<p><strong>Mitigation strategies</strong>:</p>
+<ol>
+<li><p><strong>Temporal guidance injection.</strong> The harness injects time-aware signals into the context window, compensating for the model's inability to track elapsed time. This can be as simple as a system-level annotation: <em>"It has been 45 seconds since tasks were last checked. Task state may have been updated by other agents or users."</em> The model doesn't need to reason about time — the harness does the temporal reasoning and translates it into natural language guidance that the model can act on. Timers, heartbeat signals, and staleness warnings are all forms of temporal guidance that the harness provides because the model cannot provide them for itself.</p>
+</li>
+<li><p><strong>Forced periodic tool use.</strong> Rather than relying on the agent to decide when to re-check state, the harness forces synchronization at defined intervals or triggers. This is forced tool use (Section 3.3) applied to staleness. For instance, if the agent is working on a task that depends on incoming changes from another system, the harness can poll automatically by forcing a tool call before each agent turn. In practice, this pattern works well for incoming user messages: a hook before each agent turn forces <code>receive_messages()</code>, and if any new messages are found, their content is present in working memory by the time the underlying LLM is invoked. The agent doesn't need to remember to check — the harness ensures it always has current information.</p>
+</li>
+<li><p><strong>Tool-level validation.</strong> Tools themselves can perform synchronization checks before acting on state, ensuring that the state they're about to modify still reflects reality. A tool that updates an order's status can first verify that the order hasn't been modified since the agent last read it — the same optimistic concurrency pattern used in database systems. If the state has drifted, the tool returns an introspective error ("Order #4521 was modified 12 seconds ago by another process. Current status is 'shipped', not 'processing' as expected. Re-read before proceeding.") rather than silently operating on stale data. This pushes staleness detection to the point of action, where it matters most.</p>
+</li>
+</ol>
+<p>State staleness is where the framework's commitment to external validation (Section 2.1, External Validation) becomes most concrete: the agent cannot reliably determine whether its own state is fresh, so the harness must provide the temporal awareness and synchronization mechanisms that the model lacks.</p>
 <h4 id="tools-as-state">Tools as State</h4>
 <p>The agent model diagram places tools <em>inside</em> state, not alongside it. This is not a visual convenience — it is a conceptual claim: <strong>tools are a special case of state</strong>.</p>
 <p>In LISP, code is data. In agent systems, tools are state that the agent acts <em>through</em>. They exist in the agent&#39;s state, can be introspected, and in coding agents, can be modified. This has several implications.</p>
@@ -1386,7 +1430,7 @@
 <h3 id="tools-section">3.3 Tools</h3>
 <div class="definition">
 
-<p><strong>Tools</strong> — The interfaces through which an agent acts on the world and its state. As established in Section 3.2, tools are a special case of state.</p>
+<p><strong>Tools</strong> — The functions that measure and modify state, and through which the agent acts on the world. As established in Section 3.2, tools are themselves a special case of state.</p>
 </div>
 
 <h4 id="tool-categories">Tool Categories</h4>
@@ -1397,7 +1441,7 @@
 <li><strong>Coding-model functions</strong> → Libraries like pandas, scikit-learn, matplotlib</li>
 <li><strong>CLI utilities</strong> → Unix tools like grep, cat, sed</li>
 </ol>
-<p><img src="assets/agents/image7-tool-anatomy.svg" alt="Tool Anatomy"></p>
+<p><img src="assets/agents/image7-tool-anatomy.svg" alt="Tool Lifecycle and Orientations"></p>
 <h4 id="bootstrapped-tools">Bootstrapped Tools</h4>
 <p><strong>Bootstrapped tools</strong> are tools whose definitions are loaded into working memory at the start of every invocation — they are always available, always visible, and always occupying context. Unlike tools discovered or loaded dynamically during execution, bootstrapped tools are part of the agent&#39;s initial prompt and shape its reasoning from the first token.</p>
 <p><strong>Why this matters</strong>: Because LLMs are causal models with KV caches (see Working Memory above), bootstrapped tool definitions sit in the invariant prefix of the context window. Their key-value representations are computed once and reused across every subsequent turn. This makes them essentially free after the first request — adding a bootstrapped tool increases first-request latency but has near-zero marginal cost for all subsequent interactions within an invocation. This is a fundamental asymmetry that should inform tool placement decisions.</p>
@@ -2128,6 +2172,8 @@
 <p id="ref-92">[92] Anthropic, &quot;Effective Harnesses for Long-Running Agents,&quot; 2025. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></p>
 <p id="ref-93">[93] Meta, &quot;LlamaFirewall: An Open Source Guardrail System for Building Secure AI Agents,&quot; 2025. <a href="https://arxiv.org/abs/2505.03574">arxiv.org/abs/2505.03574</a></p>
 <p id="ref-96">[96] V. Dibia, &quot;LIDA: A Tool for Automatic Generation of Grammar-Agnostic Visualizations and Infographics using Large Language Models,&quot; <em>ACL</em>, 2023. <a href="https://arxiv.org/abs/2303.02927">arxiv.org/abs/2303.02927</a></p>
+<p id="ref-97">[97] Chroma Research, &quot;Context Rot: How Increasing Input Tokens Impacts LLM Performance,&quot; 2025. <a href="https://research.trychroma.com/context-rot">research.trychroma.com/context-rot</a></p>
+<p id="ref-98">[98] N. F. Liu et al., &quot;Lost in the Middle: How Language Models Use Long Contexts,&quot; <em>TACL</em>, 2024. <a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a></p>
 <hr>
 <p><strong>Document Status</strong>: Work in Progress
 <strong>Version</strong>: Null

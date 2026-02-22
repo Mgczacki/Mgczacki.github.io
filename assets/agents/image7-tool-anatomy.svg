@@ -1,56 +1,101 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 380">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 420">
   <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
       <path d="M0 0L10 5L0 10z" fill="#111"/>
     </marker>
+    <marker id="err" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#c44"/>
+    </marker>
+    <marker id="ok" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#4a9"/>
+    </marker>
+    <marker id="res" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#999"/>
+    </marker>
   </defs>
 
-  <!-- Central tool box -->
-  <rect x="200" y="70" width="260" height="180" rx="8" fill="#fff" stroke="#111" stroke-width="2"/>
+  <!-- Title -->
+  <text x="370" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#999">TOOL LIFECYCLE &amp; ORIENTATIONS</text>
 
-  <!-- Tool name -->
-  <text x="330" y="105" text-anchor="middle" font-size="16" font-weight="700" fill="#111" font-family="'SF Mono',Monaco,monospace">read_document</text>
-  <line x1="220" y1="118" x2="440" y2="118" stroke="#e5e5e5" stroke-width="1"/>
+  <!-- Agent container (WM is part of the agent) -->
+  <rect x="115" y="24" width="510" height="72" rx="10" fill="none" stroke="#666" stroke-width="1.2" stroke-dasharray="8 4"/>
+  <text x="125" y="19" font-size="9" font-weight="600" fill="#666">AGENT</text>
 
-  <!-- Short description inside -->
-  <text x="330" y="142" text-anchor="middle" font-size="11" fill="#666">Reads a document by name from</text>
-  <text x="330" y="158" text-anchor="middle" font-size="11" fill="#666">the knowledge base and returns</text>
-  <text x="330" y="174" text-anchor="middle" font-size="11" fill="#666">its full contents as text.</text>
+  <!-- Working Memory (inside Agent) -->
+  <rect x="130" y="36" width="480" height="52" rx="6" fill="#fff" stroke="#111" stroke-width="2"/>
+  <circle cx="148" cy="62" r="3.5" fill="#111"/>
+  <text x="162" y="56" font-size="13" font-weight="700" fill="#111">Working Memory</text>
+  <text x="162" y="72" font-size="9" fill="#666">Bootstrapped definitions in invariant prefix (cached across turns)</text>
+  <!-- Tool schemas — definitions the agent reads, not tools themselves -->
+  <rect x="510" y="44" width="95" height="22" rx="3" fill="#f7f7f7" stroke="#ddd" stroke-width="0.8"/>
+  <text x="557" y="59" text-anchor="middle" font-size="8" fill="#999" font-style="italic">tool schemas</text>
 
-  <!-- Parameters hint -->
-  <text x="230" y="200" font-size="10" fill="#999" font-family="'SF Mono',Monaco,monospace">name: string (required)</text>
-  <text x="230" y="216" font-size="10" fill="#999" font-family="'SF Mono',Monaco,monospace">format: "raw" | "summary"</text>
-  <text x="230" y="232" font-size="10" fill="#999" font-family="'SF Mono',Monaco,monospace">returns: DocumentContent</text>
+  <!-- Arrow: invokes -->
+  <line x1="370" y1="88" x2="370" y2="118" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="380" y="108" font-size="8" fill="#666">invokes</text>
 
-  <!-- LEFT: Validators (input side) -->
-  <rect x="15" y="110" width="130" height="80" rx="5" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
-  <text x="80" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Validators</text>
-  <text x="80" y="152" text-anchor="middle" font-size="9" fill="#666">Document exists?</text>
-  <text x="80" y="166" text-anchor="middle" font-size="9" fill="#666">Valid format?</text>
-  <text x="80" y="180" text-anchor="middle" font-size="9" fill="#666">Permissions OK?</text>
+  <!-- Validation (data style: light gray fill) -->
+  <rect x="220" y="122" width="300" height="46" rx="5" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
+  <text x="370" y="143" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Validation</text>
+  <text x="370" y="158" text-anchor="middle" font-size="9" fill="#666">Preconditions · Type checks · Permissions</text>
 
-  <!-- Arrow from validators to tool -->
-  <line x1="145" y1="150" x2="195" y2="150" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <!-- Invalid arrow right to error -->
+  <line x1="520" y1="145" x2="555" y2="145" stroke="#c44" stroke-width="1.5" marker-end="url(#err)"/>
+  <text x="530" y="138" font-size="8" fill="#c44">✗</text>
 
-  <!-- RIGHT: Introspective errors (output side) -->
-  <rect x="515" y="110" width="135" height="80" rx="5" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
-  <text x="582" y="133" text-anchor="middle" font-size="11" font-weight="600" fill="#111">Error Messages</text>
-  <text x="582" y="152" text-anchor="middle" font-size="9" fill="#666">"Doc 'X' not found.</text>
-  <text x="582" y="166" text-anchor="middle" font-size="9" fill="#666">Available docs:</text>
-  <text x="582" y="180" text-anchor="middle" font-size="9" fill="#666">[report, summary, ...]"</text>
+  <!-- Introspective Error box -->
+  <rect x="560" y="116" width="155" height="68" rx="5" fill="#fff" stroke="#c44" stroke-width="1.5"/>
+  <text x="637" y="136" text-anchor="middle" font-size="10" font-weight="700" fill="#c44">Introspective Error</text>
+  <line x1="572" y1="143" x2="703" y2="143" stroke="#f5d5d5" stroke-width="1"/>
+  <text x="637" y="158" text-anchor="middle" font-size="8" fill="#666">"field 'X' not found.</text>
+  <text x="637" y="169" text-anchor="middle" font-size="8" fill="#666">Available: [a, b, c, ...]"</text>
+  <text x="637" y="180" text-anchor="middle" font-size="8" fill="#999" font-style="italic">Actionable, not opaque</text>
 
-  <!-- Arrow from tool to errors -->
-  <line x1="465" y1="150" x2="510" y2="150" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <!-- Error feedback arrow: right edge → up → back into WM -->
+  <path d="M715 150 Q728 150 728 138 L728 68 Q728 55 716 55 L610 55" fill="none" stroke="#c44" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#err)"/>
+  <text x="735" y="108" text-anchor="middle" font-size="7" fill="#c44" transform="rotate(-90 735 108)">feeds back</text>
 
-  <!-- BOTTOM: Arrow to State -->
-  <rect x="265" y="315" width="130" height="40" rx="5" fill="#fff" stroke="#111" stroke-width="1.5"/>
-  <text x="330" y="340" text-anchor="middle" font-size="12" font-weight="600" fill="#111">State</text>
+  <!-- Valid arrow down -->
+  <line x1="370" y1="168" x2="370" y2="198" stroke="#4a9" stroke-width="1.5" marker-end="url(#ok)"/>
+  <text x="380" y="187" font-size="8" fill="#4a9">✓</text>
 
-  <!-- Arrow from tool to state -->
-  <line x1="330" y1="250" x2="330" y2="310" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
-  <text x="348" y="285" font-size="10" fill="#666">reads / writes</text>
+  <!-- Execution (tool style: gray fill, dashed border) -->
+  <rect x="220" y="202" width="300" height="40" rx="5" fill="#e8e8e8" stroke="#111" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <text x="370" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Execution</text>
 
-  <!-- TOP: Annotation labels -->
-  <text x="330" y="52" text-anchor="middle" font-size="11" font-weight="600" fill="#999">TOOL ANATOMY</text>
+  <!-- Branch arrows to two orientations -->
+  <line x1="305" y1="242" x2="180" y2="282" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="435" y1="242" x2="560" y2="282" stroke="#111" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- STATE-FACING box (state/data style: light fill, solid border) -->
+  <rect x="30" y="286" width="300" height="80" rx="6" fill="#f7f7f7" stroke="#111" stroke-width="1.5"/>
+  <text x="180" y="308" text-anchor="middle" font-size="12" font-weight="700" fill="#111">State-facing</text>
+  <text x="180" y="322" text-anchor="middle" font-size="9" fill="#666" font-style="italic">cognitive economy — self-reflection</text>
+  <line x1="45" y1="329" x2="315" y2="329" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="70" y="346" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">list_tables</text>
+  <text x="70" y="360" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">get_schema</text>
+  <text x="200" y="346" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">read_context</text>
+  <text x="200" y="360" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">search_state</text>
+
+  <!-- WORLD-FACING box (world style: darker fill, thick border) -->
+  <rect x="410" y="286" width="300" height="80" rx="6" fill="#e0e0e0" stroke="#111" stroke-width="2"/>
+  <text x="560" y="308" text-anchor="middle" font-size="12" font-weight="700" fill="#111">World-facing</text>
+  <text x="560" y="322" text-anchor="middle" font-size="9" fill="#666" font-style="italic">actions — external effects</text>
+  <line x1="425" y1="329" x2="695" y2="329" stroke="#ccc" stroke-width="1"/>
+  <text x="450" y="346" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">execute_sql</text>
+  <text x="450" y="360" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">call_api</text>
+  <text x="580" y="346" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">write_file</text>
+  <text x="580" y="360" font-size="9" fill="#666" font-family="'SF Mono',Monaco,monospace">send_message</text>
+
+  <!-- Labels beneath boxes -->
+  <text x="180" y="385" text-anchor="middle" font-size="9" fill="#999">Reaches INTO state</text>
+  <text x="560" y="385" text-anchor="middle" font-size="9" fill="#999">Reaches OUT to world</text>
+
+  <!-- Result feedback arrow: left edge of Execution → up → back into WM (any tool, not just state-facing) -->
+  <path d="M220 222 L85 222 Q70 222 70 208 L70 76 Q70 62 85 62 L115 62" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#res)"/>
+  <text x="63" y="148" text-anchor="middle" font-size="7" fill="#999" transform="rotate(-90 63 148)">result → working memory</text>
+
+  <!-- Bottom annotation -->
+  <text x="370" y="410" text-anchor="middle" font-size="9" fill="#999">All state mutations go through tools — results write to context window, introspectable, forceable (Section 3.2)</text>
 </svg>
