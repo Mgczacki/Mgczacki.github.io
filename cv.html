@@ -444,9 +444,9 @@
             <section id="summary" class="cv-section">
                 <h2>Summary</h2>
                 <div class="timeline-body">
-                    <p>System architect and AI infrastructure engineer. I define technical direction and system architecture for agent systems and foundation model infrastructure at Kuona &mdash; designing composable platforms, orchestration systems, and infrastructure primitives that enable AI systems across products and teams.</p>
-                    <p style="margin-top: 12px;">Defined the architectural direction for Kuona's agent systems, unifying multiple initiatives into a single coherent architecture with execution, orchestration, and evaluation patterns adopted across products. Separately, redesigned the forecasting platform from client-specific pipelines into composable infrastructure serving as the foundation for both production forecasting and foundation model development.</p>
-                    <p style="margin-top: 12px;">Previously rewrote Kuona's distributed ML training platform from scratch &mdash; 500+ servers, thousands of model training jobs weekly &mdash; and established engineering infrastructure adopted across teams: eliminating development-to-production drift, standardizing deployment environments, and implementing reproducible infrastructure. Fulbright&ndash;García Robles Scholar; M.S. Data Science from NYU; dual degrees from UNAM.</p>
+                    <p>System architect and AI infrastructure engineer. I define system architecture and technical direction for agent systems and foundation model infrastructure at Kuona. I provide architectural guidance across engineering and data science teams, review and approve system designs, and define infrastructure standards used across the organization.</p>
+                    <p style="margin-top: 12px;">Defined the ExpertAI system architecture, which is now the required foundation through which all agent initiatives at Kuona operate &mdash; other teams build on this execution model, infrastructure, and architectural structure. Separately, defined the system decomposition and architectural structure for Kuona's forecasting platform; this architecture has been followed by the data science team for approximately two years and serves as the basis for the company's foundation model development.</p>
+                    <p style="margin-top: 12px;">Previously replaced Kuona's fragmented per-client training-on-demand systems with a unified, generalized distributed ML training platform &mdash; 500+ servers, thousands of model training jobs weekly &mdash; reducing onboarding time for new configurations from weeks to days and improving forecasting accuracy through standardized infrastructure. Established engineering infrastructure and practices adopted across teams: eliminating development-to-production drift, implementing ephemeral environments, and standardizing workflows across engineering and data science. Fulbright&ndash;García Robles Scholar; M.S. Data Science from NYU; dual degrees from UNAM.</p>
                 </div>
             </section>
 
@@ -455,11 +455,26 @@
                 <h2>Technical Scope</h2>
                 <div class="timeline-body">
                     <ul>
-                        <li><strong>Agent Systems Architecture</strong> &mdash; Defined organizational architecture for multi-agent execution, orchestration, context management, plan validation, and evaluation infrastructure.</li>
-                        <li><strong>Foundation Model Infrastructure</strong> &mdash; Designed composable ETL pipelines, scalable inference infrastructure, and modular per-client adaptation enabling foundation model development.</li>
-                        <li><strong>Distributed ML Systems</strong> &mdash; Built distributed training platform spanning 500+ servers with custom task orchestration, heterogeneous compute management, and horizontal scalability.</li>
-                        <li><strong>Platform Engineering</strong> &mdash; Established reproducible environments, ephemeral infrastructure, and development-to-production consistency adopted across engineering teams.</li>
-                        <li><strong>Technical Leadership</strong> &mdash; Defined architectural direction followed by multiple teams; established engineering patterns and infrastructure foundations across the organization.</li>
+                        <li><strong>Agent Systems Architecture</strong> &mdash; System design for multi-agent execution, orchestration, context management, plan validation, and evaluation infrastructure.</li>
+                        <li><strong>Distributed ML Infrastructure</strong> &mdash; Distributed training platforms, custom task orchestration, heterogeneous compute management, and horizontal scalability across 500+ servers.</li>
+                        <li><strong>Foundation Model Infrastructure</strong> &mdash; Composable ETL pipelines, scalable inference infrastructure, modular per-client adaptation, and generalized forecasting systems.</li>
+                        <li><strong>Platform &amp; Infrastructure Engineering</strong> &mdash; Reproducible environments, ephemeral infrastructure, development-to-production consistency, and standardized deployment workflows.</li>
+                        <li><strong>Architectural Leadership &amp; Technical Direction</strong> &mdash; Cross-team architectural guidance, system design review, and infrastructure standards definition across engineering and data science teams.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Architectural Impact -->
+            <section id="architectural-impact" class="cv-section">
+                <h2>Architectural Impact</h2>
+                <div class="timeline-body">
+                    <ul>
+                        <li>Defined the ExpertAI system architecture, now the required foundation through which all agent initiatives at Kuona operate. Other teams build on this execution model, infrastructure, and architectural structure.</li>
+                        <li>Defined the forecasting platform system decomposition and architectural structure, followed by the data science team for approximately two years. This architecture serves as the basis for the company's foundation model development.</li>
+                        <li>Reduced onboarding time for new client data from days to hours through forecasting infrastructure redesign. Removed architectural bottlenecks and standardized infrastructure across forecasting systems.</li>
+                        <li>Deprecated legacy per-client training-on-demand systems and replaced them with a unified, generalized distributed training platform spanning 500+ servers.</li>
+                        <li>Established engineering infrastructure standards and practices adopted across engineering and data science teams, including reproducible environments, ephemeral infrastructure, and development-to-production consistency.</li>
+                        <li>Provides architectural guidance across teams, reviews and approves system designs, and defines infrastructure standards used across the organization.</li>
                     </ul>
                 </div>
             </section>
@@ -576,9 +591,9 @@
                     <div class="timeline-subtitle">Platform Architecture (USA) &bull; Team of 7</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Defined the architectural direction for Kuona's forecasting platform, redesigning it from client-specific pipelines into composable, reusable infrastructure now serving as the technical foundation for both production forecasting and foundation model systems.</li>
-                            <li>Decoupled system components into composable ETL pipelines, eliminating hardcoded client-specific workflows. Promoted anomaly detection and outlier tracking to first-class persistent training signals within the platform architecture.</li>
-                            <li>Designed generalized forecasting infrastructure supporting immediate inference without per-client retraining &mdash; scalable inference infrastructure with modular per-client adapters, eliminating 1&ndash;12 hour retraining cycles of prior approaches.</li>
+                            <li>Defined the system decomposition and architectural structure for Kuona's forecasting platform, redesigning it from client-specific pipelines into generalized, reusable infrastructure. This architecture has been followed by the data science team for approximately two years and serves as the basis for the company's foundation model development.</li>
+                            <li>Decoupled system components into composable ETL pipelines, eliminating hardcoded client-specific workflows. Promoted anomaly detection and outlier tracking to first-class persistent training signals across datasets. Removed architectural bottlenecks and standardized infrastructure across forecasting systems.</li>
+                            <li>Designed generalized inference infrastructure supporting immediate forecasting without per-client retraining, with modular per-client adapters eliminating 1&ndash;12 hour retraining cycles. Reduced onboarding time for new client data from days to hours. Real-time forecasting capabilities enabled by this architecture are in active development.</li>
                             <li>Leading the design of a JEPA-style energy-based foundation model on this platform &mdash; learning compact representations of unobservable market dynamics via synthetic supervision, supporting multi-horizon forecasting, intervention simulation, and causal probing.</li>
                         </ul>
                     </div>
@@ -592,9 +607,9 @@
                     <div class="timeline-subtitle">Agent Systems Architecture (USA) &bull; Team of 4</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Defined and led the architectural direction for Kuona's agent systems &mdash; unifying multiple agent initiatives into a single coherent system architecture with execution, orchestration, and evaluation patterns adopted across products and teams.</li>
-                            <li>Established infrastructure and architectural patterns for agent systems followed across the organization, including context management, plan validation, evaluation infrastructure, and resilience mechanisms.</li>
-                            <li>ExpertAI (flagship implementation): concept to production in under a year. Multi-agent analytical platform &mdash; 90% task success rate, reduces cross-silo queries from hours to minutes across 5 database backends. Full-stack: Django/Python backend, React frontend, WebSocket real-time communication, RabbitMQ/Kombu messaging, AWS EKS deployment.</li>
+                            <li>Defined the ExpertAI system architecture, which is now the required architectural foundation through which all agent initiatives at Kuona operate. All agent-based systems and initiatives follow the execution model, infrastructure, and architectural structure defined in this system.</li>
+                            <li>Other teams build on top of this architecture &mdash; agent initiatives across the organization depend on the execution, orchestration, context management, plan validation, evaluation, and resilience patterns established in ExpertAI.</li>
+                            <li>Concept to production in under a year. Multi-agent analytical platform &mdash; 90% task success rate, reduces cross-silo queries from hours to minutes across 5 database backends. Full-stack: Django/Python backend, React frontend, WebSocket real-time communication, RabbitMQ/Kombu messaging, AWS EKS deployment.</li>
                             <li>Designed the evaluation and observability infrastructure for agent systems: agents represented as directed graphs with automated failure attribution to specific nodes, component ranking by downstream harm, and deterministic replay for counterfactual experiments.</li>
                             <li>Designed formal tool-planning framework where agents generate multi-step plans verified via PDDL-style preconditions and effects, with bypass auditing that explicitly records safety exception decisions for post-hoc analysis.</li>
                             <li>Implemented deterministic plan reuse and semantic grounding mechanisms, enabling consistent execution, controlled plan adaptation, and resolution of ambiguous inputs into executable specifications.</li>
@@ -627,10 +642,11 @@
                     <div class="timeline-subtitle">Distributed ML Infrastructure &amp; Platform Engineering (Mexico)</div>
                     <div class="timeline-body">
                         <ul>
-                            <li>Rewrote Kuona's distributed ML training platform from scratch &mdash; spanning 500+ servers, supporting thousands of model training jobs weekly, including orchestration infrastructure, training pipelines, and monitoring systems supporting production forecasting for enterprise clients.</li>
+                            <li>Replaced Kuona's fragmented per-client training-on-demand systems with a unified, generalized distributed ML training platform &mdash; deprecating legacy systems entirely and deploying a single platform spanning 500+ servers, supporting thousands of model training jobs weekly, with orchestration infrastructure, training pipelines, and monitoring systems.</li>
+                            <li>This structural architectural replacement reduced onboarding time for new configurations and clients from weeks to days, improved system scalability and reliability, and improved forecasting accuracy through standardized training infrastructure.</li>
                             <li>Designed and implemented a custom task orchestration system with native support for heterogeneous distributed computing, arbitrary horizontal scalability, and a UNIX-like process control interface for remote task management.</li>
                             <li>Led a 3-person team as lead architect in the redesign of Kuona's Perfect Order demand forecasting system. Introduced pre-modeling data governance checks that caught data errors upstream, saving hundreds of GPU hours in wasted training.</li>
-                            <li>Established engineering infrastructure and practices adopted across teams: eliminated development-to-production drift, implemented ephemeral environments and reproducible infrastructure, and standardized deployment environments across production ML systems.</li>
+                            <li>Established engineering infrastructure and practices adopted across engineering and data science teams: eliminated development-to-production drift, implemented ephemeral environments and reproducible infrastructure, and standardized workflows and deployment environments across production ML systems.</li>
                             <li>Designed and implemented a time series forecasting library with transparent multi-horizon predictions, automatic hyperparameter search, and native ensemble model support.</li>
                         </ul>
                     </div>
