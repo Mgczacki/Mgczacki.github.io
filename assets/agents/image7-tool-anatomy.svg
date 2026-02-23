@@ -101,5 +101,5 @@
   <text x="63" y="172" text-anchor="middle" font-size="7" fill="#999" transform="rotate(-90 63 172)">result → working memory</text>
 
   <!-- Bottom annotation -->
-  <text x="370" y="434" text-anchor="middle" font-size="9" fill="#999">All state mutations go through tools — results write to context window, introspectable, forceable (Section 3.2)</text>
+  <text x="370" y="434" text-anchor="middle" font-size="9" fill="#999">All state mutations go through tools — results write to context window, introspectable, forceable (Section 3.3)</text>
 </svg>
