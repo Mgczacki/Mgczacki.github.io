@@ -55,7 +55,10 @@ function initSidebarTOC({ sectionSelector, scrollOffset = 120 } = {}) {
                 const linkBottom = linkRect.bottom - sidebarRect.top;
 
                 if (linkTop < 0 || linkBottom > sidebarRect.height) {
-                    activeLink.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                    sidebar.scrollTo({
+                        top: sidebar.scrollTop + linkTop - sidebarRect.height / 2 + linkRect.height / 2,
+                        behavior: 'smooth'
+                    });
                 }
             }
         }

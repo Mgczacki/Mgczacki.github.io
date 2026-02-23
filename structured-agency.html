@@ -692,33 +692,37 @@
                                     <li><a href="#bootstrapped-tools">Bootstrapped Tools</a></li>
                                     <li><a href="#tool-design">Tool Design</a></li>
                                     <li><a href="#forced-tools">Forced Tool Use</a></li>
-                                    <li><a href="#communication">Communication</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#communication">3.5 Communication</a>
+                                <ul class="subsection">
                                     <li><a href="#communication-patterns">Communication Patterns</a></li>
-                                    <li><a href="#inter-agent-messaging">Inter-Agent Messaging</a></li>
                                     <li><a href="#channel-design">Channel Design</a></li>
                                     <li><a href="#durability-across-invocations">Durability Across Invocations</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#contexts">3.5 Contexts</a>
+                            <li><a href="#contexts">3.6 Contexts</a>
                                 <ul class="subsection">
                                     <li><a href="#progressive-disclosure">Progressive Disclosure</a></li>
                                     <li><a href="#forced-contexts">Forced Contexts</a></li>
                                     <li><a href="#retrieval">Retrieval Mechanisms</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#composition">3.6 Composition</a>
+                            <li><a href="#composition">3.7 Subagents &amp; Multi-Agent Systems</a>
                                 <ul class="subsection">
+                                    <li><a href="#subagents">Subagents</a></li>
+                                    <li><a href="#inter-agent-messaging">Inter-Agent Messaging</a></li>
                                     <li><a href="#delegation-challenges">Delegation Challenges</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#planning">3.7 Planning</a></li>
-                            <li><a href="#error-handling">3.8 Error Handling</a>
+                            <li><a href="#planning">3.8 Planning</a></li>
+                            <li><a href="#error-handling">3.9 Error Handling</a>
                                 <ul class="subsection">
                                     <li><a href="#interruptions">Interruptions</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#evaluation">3.9 Evaluation</a></li>
-                            <li><a href="#safety">3.10 Safety & Security</a></li>
+                            <li><a href="#evaluation">3.10 Evaluation</a></li>
+                            <li><a href="#safety">3.11 Safety &amp; Security</a></li>
                         </ul>
                     </li>
                     <li><a href="#future">4. Open Questions</a></li>
@@ -768,7 +772,7 @@
 </ul>
 <p>The convergence on composable tooling has gone beyond individual systems to produce open standards. The Model Context Protocol (MCP) <a class="citation" href="#ref-46">[46]</a> standardized how agents connect to tools through typed interfaces; Google&#39;s Agent2Agent Protocol (A2A) <a class="citation" href="#ref-99">[99]</a> standardized inter-agent communication through capability discovery (&quot;Agent Cards&quot;); Anthropic&#39;s Agent Skills specification <a class="citation" href="#ref-100">[100]</a> standardized reusable capability packages. By late 2025, MCP alone had 97M+ monthly SDK downloads and adoption from every major provider. This is not accidental—it reflects a structural insight: composable, well-defined tool interfaces are the foundation of reliable agent behavior.</p>
 <p><strong>2. The most effective agents exploit the underlying structure of their problem domain.</strong></p>
-<p>Composable tools are the mechanism, but the deeper pattern is that capable agents don&#39;t treat the world as unstructured text to reason over—they navigate the domain&#39;s own organization. Every major coding agent—Claude Code <a class="citation" href="#ref-7">[7]</a>, Codex <a class="citation" href="#ref-84">[84]</a>, Copilot <a class="citation" href="#ref-85">[85]</a>, Jules <a class="citation" href="#ref-86">[86]</a>, Cursor, Amazon Q—exploits the inherent structure of code: grepping file trees, following import graphs, reading type signatures, querying language server protocols <a class="citation" href="#ref-81">[81]</a><a class="citation" href="#ref-82">[82]</a>. A database agent that queries schemas before writing SQL exploits the structure of relational data. In each case, effectiveness comes not from raw reasoning over tokens but from leveraging domain structure that already exists—or, where it doesn&#39;t exist, creating it (Section 3.5).</p>
+<p>Composable tools are the mechanism, but the deeper pattern is that capable agents don&#39;t treat the world as unstructured text to reason over—they navigate the domain&#39;s own organization. Every major coding agent—Claude Code <a class="citation" href="#ref-7">[7]</a>, Codex <a class="citation" href="#ref-84">[84]</a>, Copilot <a class="citation" href="#ref-85">[85]</a>, Jules <a class="citation" href="#ref-86">[86]</a>, Cursor, Amazon Q—exploits the inherent structure of code: grepping file trees, following import graphs, reading type signatures, querying language server protocols <a class="citation" href="#ref-81">[81]</a><a class="citation" href="#ref-82">[82]</a>. A database agent that queries schemas before writing SQL exploits the structure of relational data. In each case, effectiveness comes not from raw reasoning over tokens but from leveraging domain structure that already exists—or, where it doesn&#39;t exist, creating it (Section 3.6).</p>
 <p><strong>3. External systems validate better and cheaper than models self-assess</strong> <a class="citation" href="#ref-17">[17]</a><a class="citation" href="#ref-18">[18]</a>.</p>
 <p>The field has converged on outsourcing verification to purpose-built external mechanisms—compilers, linters, test suites, schema validators, rule engines—not because models <em>cannot</em> self-correct, but because external validation provides reliable, deterministic signals. This pattern now appears at every scale: OpenAI Codex <a class="citation" href="#ref-84">[84]</a> runs in sandboxed containers with internet disabled (constraint through isolation), Operator <a class="citation" href="#ref-88">[88]</a> hands control to users when uncertain (human-in-the-loop validation), Meta&#39;s LlamaFirewall <a class="citation" href="#ref-101">[101]</a> provides guardrails as a separate system independent of the agent&#39;s reasoning, and Anthropic&#39;s harness patterns <a class="citation" href="#ref-91">[91]</a> use progress files and git checkpoints as external recovery signals for long-running agents. Section 2.1, External Validation establishes the principle; Section 2.3 makes the economic case.</p>
 <p><strong>4. The context window is scarce working memory, not a knowledge store</strong> <a class="citation" href="#ref-25">[25]</a><a class="citation" href="#ref-26">[26]</a><a class="citation" href="#ref-27">[27]</a>.</p>
@@ -854,7 +858,7 @@
 <li>Reduce problem spaces (fewer paths to explore)</li>
 <li>Improve computational economy (less work per step) <a class="citation" href="#ref-14">[14]</a></li>
 <li>Prevent error propagation between tasks (isolation)</li>
-<li>Enable effective delegation (clear boundaries for splitting work across agents—see Section 3.6 for the full treatment)</li>
+<li>Enable effective delegation (clear boundaries for splitting work across agents—see Section 3.7 for the full treatment)</li>
 </ol>
 <h4 id="validation">External Validation Signals</h4>
 <p>Once a system is structured, its boundaries become checkable—which is what enables external validation.</p>
@@ -937,7 +941,7 @@
 </div>
 </details>
 
-<p>Structure also carries implicit alignment—a point developed fully in Section 3.10.</p>
+<p>Structure also carries implicit alignment—a point developed fully in Section 3.11.</p>
 <h3 id="minimize-context">2.2 Context Engineering</h3>
 <p>Structure tells you what&#39;s relevant and what isn&#39;t—which leads to the operational principle of deliberately managing what enters the context window.</p>
 <p>The field has converged on the term <strong>context engineering</strong> <a class="citation" href="#ref-30">[30]</a> to describe this practice, with substantial recent treatment by Anthropic <a class="citation" href="#ref-90">[90]</a>, Martin <a class="citation" href="#ref-94">[94]</a>, and others. The discipline encompasses designing the full informational environment an agent operates within—not just what&#39;s in the prompt, but what&#39;s retrieved, when it&#39;s loaded, how it&#39;s structured, and what&#39;s excluded. Context engineering subsumes prompt engineering the same way software architecture subsumes writing functions. The principles below are well-established in this literature; our contribution is connecting them to the dependency chain—showing how context engineering follows from structure (Section 2.1) and feeds into the cost model (Section 2.3).</p>
@@ -1215,7 +1219,7 @@
 
 <p><strong>A subtlety in how this was achieved</strong>: the alternative to reuse is decomposition — splitting capabilities into separate specialized modules. For instance, SQL generation could live in a dedicated subagent that the main agent delegates to. But this creates a more brittle system with more dependencies: the main agent must know when to delegate, the subagent must understand the main agent's context, and the interface between them becomes a failure surface. Instead, the main agent was designed to be <em>reconfigurable</em> — its tool set and directives can be narrowed per invocation. When only SQL generation is needed, the agent is invoked with the SQL tool forced and a directive to return after generating the query. Same agent, same prompt, same battle-tested reasoning — just a narrower scope. This is reuse through reconfiguration, not decomposition through delegation.</p>
 
-<p>These lessons — that reuse hardens components, that monoliths are brittle, and that reconfiguration beats decomposition — heavily influence the formalisms in the taxonomy that follows. The distinction between invocation-level configuration (Section 3.2) and agent identity, the treatment of tools as state that can be added or removed per invocation (Section 3.3), and the composition patterns (Section 3.6) all trace back to this practical discovery.</p>
+<p>These lessons — that reuse hardens components, that monoliths are brittle, and that reconfiguration beats decomposition — heavily influence the formalisms in the taxonomy that follows. The distinction between invocation-level configuration (Section 3.2) and agent identity, the treatment of tools as state that can be added or removed per invocation (Section 3.3), and the composition patterns (Section 3.7) all trace back to this practical discovery.</p>
 
 </div>
 </details>
@@ -1235,7 +1239,7 @@
 <li><strong>Design for leverage, not just compliance</strong> — When adding a structural element, ask not just "does this prevent the agent from failing?" but "does this enable the agent to succeed in ways it couldn't without it?" The best harnesses do both.</li>
 </ul>
 <p>This principle connects back to the clarification at the opening of this section: structure is not the old-style rigid workflow that constrains the agent into a fixed path. It is the set of capabilities, boundaries, and information architecture that the agent can leverage to reason better, act faster, and recover from errors more gracefully. The agent that understands its own harness is more capable than the unstructured agent — not less flexible, but more <em>powerful</em>.</p>
-<p><strong>Security caveat</strong>: A capable-enough agent that can fully introspect its harness could also reason about how to circumvent its safety limitations. This means the harness must combine introspectable structure with non-negotiable boundaries: read-only, non-modifiable constraints that the agent can observe but not alter, and implicit guardrails — limited-access credentials, sandboxed execution environments, scoped permissions — that enforce safety regardless of what the agent reasons about them. Harness awareness amplifies capability, but the safety-critical parts of the harness must remain outside the agent&#39;s ability to modify. See Section 3.10 for how structured harnesses can be applied creatively to security.</p>
+<p><strong>Security caveat</strong>: A capable-enough agent that can fully introspect its harness could also reason about how to circumvent its safety limitations. This means the harness must combine introspectable structure with non-negotiable boundaries: read-only, non-modifiable constraints that the agent can observe but not alter, and implicit guardrails — limited-access credentials, sandboxed execution environments, scoped permissions — that enforce safety regardless of what the agent reasons about them. Harness awareness amplifies capability, but the safety-critical parts of the harness must remain outside the agent&#39;s ability to modify. See Section 3.11 for how structured harnesses can be applied creatively to security.</p>
 
 <hr>
 <p>With the principles established, we now turn to how they manifest concretely in agent design. The taxonomy below maps each principle to the architectural surfaces where harnesses can be applied.</p>
@@ -1304,7 +1308,7 @@
 </div>
 </details>
 
-<p><strong>Interruptions as a lifecycle property</strong>: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling&#39;s failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.8 for how interruptions propagate through hierarchical systems.</p>
+<p><strong>Interruptions as a lifecycle property</strong>: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling&#39;s failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.9 for how interruptions propagate through hierarchical systems.</p>
 <h4 id="llm">LLM</h4>
 <div class="definition">
 
@@ -1367,7 +1371,7 @@
 
 <h5>Structured Compaction</h5>
 
-<p><strong>Structured compaction</strong> offers a better model. Rather than summarizing everything uniformly, exploit the structure of the conversation itself. Claude Code's context compaction, for instance, performs summarization but retains some addressability of previous interactions — before summarizing, it uses the structure of messages to selectively drop previous tool results, intermediate reasoning, and other high-volume low-retention content, while preserving the decisions, constraints, and corrections that are likely to matter later. This is closer to what this framework proposes with Contexts (Section 3.5): working memory content that has been used should be offloaded to addressable, retrievable state rather than compressed into a lossy summary. The agent can then re-acquire specific context on demand rather than carrying everything or losing everything.</p>
+<p><strong>Structured compaction</strong> offers a better model. Rather than summarizing everything uniformly, exploit the structure of the conversation itself. Claude Code's context compaction, for instance, performs summarization but retains some addressability of previous interactions — before summarizing, it uses the structure of messages to selectively drop previous tool results, intermediate reasoning, and other high-volume low-retention content, while preserving the decisions, constraints, and corrections that are likely to matter later. This is closer to what this framework proposes with Contexts (Section 3.6): working memory content that has been used should be offloaded to addressable, retrievable state rather than compressed into a lossy summary. The agent can then re-acquire specific context on demand rather than carrying everything or losing everything.</p>
 
 <h5>Epistemological Humility</h5>
 
@@ -1375,7 +1379,7 @@
 
 <h5>An Open Problem</h5>
 
-<p>This remains an open problem. Current systems either summarize too aggressively (losing critical detail) or retain too much (exhausting the context window and accelerating context rot). The structured agency approach suggests a middle path: treat compacted history as a Context — addressable, searchable, and selectively loadable — rather than as a string to be summarized or discarded. The Contexts primitive introduced in Section 3.5 maps cleanly to the concept of external memory in recursive language models — state that lives outside the agent's immediate observation but can be accessed through deliberate action. Minimizing dependency on the context window beyond a certain saturation point will likely be crucial for reliable long-horizon agents, but the design to do this properly remains unclear. The natural approach — recursive decomposition into subagents with scoped contexts — runs into latency costs that quickly exceed acceptable thresholds for interactive systems. Each delegation boundary adds round-trip overhead, and deeply nested decompositions multiply that cost. The tension between context rot (too much in one window) and delegation latency (too many windows) is one of the central unsolved design problems in agentic systems.</p>
+<p>This remains an open problem. Current systems either summarize too aggressively (losing critical detail) or retain too much (exhausting the context window and accelerating context rot). The structured agency approach suggests a middle path: treat compacted history as a Context — addressable, searchable, and selectively loadable — rather than as a string to be summarized or discarded. The Contexts primitive introduced in Section 3.6 maps cleanly to the concept of external memory in recursive language models — state that lives outside the agent's immediate observation but can be accessed through deliberate action. Minimizing dependency on the context window beyond a certain saturation point will likely be crucial for reliable long-horizon agents, but the design to do this properly remains unclear. The natural approach — recursive decomposition into subagents with scoped contexts — runs into latency costs that quickly exceed acceptable thresholds for interactive systems. Each delegation boundary adds round-trip overhead, and deeply nested decompositions multiply that cost. The tension between context rot (too much in one window) and delegation latency (too many windows) is one of the central unsolved design problems in agentic systems.</p>
 
 </div>
 </details>
@@ -1407,15 +1411,15 @@
 <p><strong>Core structure classes</strong>:</p>
 <ul>
 <li><strong>Tools</strong> — The agent&#39;s action interface, elevated to a first-class state type. Tools live in state, can be introspected, and in coding agents can be modified (see Tools as State below). Listed here because tools are not external to the agent&#39;s state — they <em>are</em> state that the agent acts through.</li>
-<li><strong>Contexts</strong> — Addressable information blocks that agents can load, search, and reference — the building blocks of context engineering (Section 2.2). Listed here because they are a state type: they exist in state, are updated through actions, and have lifecycle properties. See Section 3.5 for the full treatment.</li>
-<li><strong>Messaging Channels</strong> — Structured records of inter-agent and user-agent communication. Not just log entries but typed objects with sender, recipient, content, timestamp, and thread/conversation metadata. Channels are the substrate for composition (Section 3.6) — without structured messaging, multi-agent coordination reduces to string passing.</li>
-<li><strong>Plans</strong> — Structured plan representations that live in state. A plan is itself a state object that can be inspected, validated, and revised (see Section 3.7).</li>
-<li><strong>Action History</strong> — Structured log of actions taken and their outcomes. Each entry records the tool called, its arguments, its result, and any state mutations it caused. This is the basis for observability (Section 3.9) and recovery (Section 3.8).</li>
+<li><strong>Contexts</strong> — Addressable information blocks that agents can load, search, and reference — the building blocks of context engineering (Section 2.2). Listed here because they are a state type: they exist in state, are updated through actions, and have lifecycle properties. See Section 3.6 for the full treatment.</li>
+<li><strong>Messaging Channels</strong> — Structured records of inter-agent and user-agent communication. Not just log entries but typed objects with sender, recipient, content, timestamp, and thread/conversation metadata. Channels are the substrate for composition (Section 3.7) — without structured messaging, multi-agent coordination reduces to string passing.</li>
+<li><strong>Plans</strong> — Structured plan representations that live in state. A plan is itself a state object that can be inspected, validated, and revised (see Section 3.8).</li>
+<li><strong>Action History</strong> — Structured log of actions taken and their outcomes. Each entry records the tool called, its arguments, its result, and any state mutations it caused. This is the basis for observability (Section 3.10) and recovery (Section 3.9).</li>
 </ul>
 <p><strong>Extended structure classes</strong> — not required for every agent, but valuable when the problem demands them:</p>
 <ul>
-<li><strong>Tasks</strong> — An encapsulation of work. Having tasks as a first-class structure class — not strings in a plan but structured objects with status, dependencies, ownership, and results — enables referencing work across invocations of the same agent, tracking the work of other agents, deferring or scheduling asynchronous work, and integrating tasks that arise from external systems. This is analogous to task primitives in orchestration frameworks (Celery, Temporal, Airflow), elevated to a core concept of agent state. Tasks carry lifecycle metadata (created, assigned, in-progress, blocked, completed, failed) that enables the planning (Section 3.7) and composition (Section 3.6) layers to operate on them programmatically.</li>
-<li><strong>Subagents</strong> — Child agents spawned by a parent, represented as structured state with their own invocation lifecycle, budget, tool access, and results. Making subagents a structure class — rather than opaque function calls — enables the parent to inspect progress, redirect work, and recover from child failures. See Section 3.6 for composition patterns.</li>
+<li><strong>Tasks</strong> — An encapsulation of work. Having tasks as a first-class structure class — not strings in a plan but structured objects with status, dependencies, ownership, and results — enables referencing work across invocations of the same agent, tracking the work of other agents, deferring or scheduling asynchronous work, and integrating tasks that arise from external systems. This is analogous to task primitives in orchestration frameworks (Celery, Temporal, Airflow), elevated to a core concept of agent state. Tasks carry lifecycle metadata (created, assigned, in-progress, blocked, completed, failed) that enables the planning (Section 3.8) and composition (Section 3.7) layers to operate on them programmatically.</li>
+<li><strong>Subagents</strong> — Child agents spawned by a parent, represented as structured state with their own invocation lifecycle, budget, tool access, and results. Making subagents a structure class — rather than opaque function calls — enables the parent to inspect progress, redirect work, and recover from child failures. See Section 3.7 for composition patterns.</li>
 <li><strong>Skills</strong> — Reusable, composable capability bundles that package directives, tool configurations, and context together. A skill is a structured recipe that can be invoked, parameterized, and combined — enabling agents to acquire new capabilities without modifying their core architecture.</li>
 </ul>
 <p><strong>Domain-specific types</strong> — The types that encode the actual problem domain: tickets, orders, code files, database schemas, customer records. These are what make a structured agent domain-aware rather than domain-agnostic.</p>
@@ -1519,7 +1523,12 @@
 </ol>
 <p><img src="assets/agents/image7-tool-anatomy.svg" alt="Tool Lifecycle and Orientations"></p>
 <h4 id="bootstrapped-tools">Bootstrapped Tools</h4>
-<p><strong>Bootstrapped tools</strong> are tools whose definitions are loaded into working memory at the start of every invocation — they are always available, always visible, and always occupying context. Unlike tools discovered or loaded dynamically during execution, bootstrapped tools are present before the agent&#39;s first meaningful turn. How they get there is an implementation choice: they may be included directly in the directives, or loaded via forced tool use (e.g., a <code>read_bootstrapped_definitions</code> call) that populates working memory before the agent begins reasoning.</p>
+<div class="definition">
+
+<p><strong>Bootstrapped Tools</strong> — Tools whose definitions are loaded into working memory at the start of every invocation — always available, always visible, and always occupying context.</p>
+</div>
+
+<p>Unlike tools discovered or loaded dynamically during execution, bootstrapped tools are present before the agent&#39;s first meaningful turn. How they get there is an implementation choice: they may be included directly in the directives, or loaded via forced tool use (e.g., a <code>read_bootstrapped_definitions</code> call) that populates working memory before the agent begins reasoning.</p>
 <p><strong>Why this matters</strong>: Because LLMs are causal models with KV caches (see Working Memory above), bootstrapped tool definitions sit in the invariant prefix of the context window. Their key-value representations are computed once and reused across every subsequent turn. This makes them essentially free after the first request — adding a bootstrapped tool increases first-request latency but has near-zero marginal cost for all subsequent interactions within an invocation. This is a fundamental asymmetry that should inform tool placement decisions.</p>
 <p><strong>Design implications</strong>:</p>
 <ul>
@@ -1557,7 +1566,10 @@
 </li>
 </ol>
 <h4 id="forced-tools">Forced Tool Use</h4>
-<p><strong>Definition</strong>: Forcing or injecting simulated tool uses into the agent&#39;s context window upon certain actions <a class="citation" href="#ref-7">[7]</a><a class="citation" href="#ref-47">[47]</a>.</p>
+<div class="definition">
+
+<p><strong>Forced Tool Use</strong> — Forcing or injecting simulated tool uses into the agent&#39;s context window upon certain actions <a class="citation" href="#ref-7">[7]</a><a class="citation" href="#ref-47">[47]</a>.</p>
+</div>
 <p><strong>Examples</strong>:</p>
 <ul>
 <li>Claude Code reads a file when users mention it with `@` syntax</li>
@@ -1566,20 +1578,22 @@
 </ul>
 <p><strong>Note</strong>: While this could be seen as hooks that run before actions, empirically there is significant value in treating these as injected tool calls rather than separate mechanisms.</p>
 <p><strong>Why this works</strong>: It leverages the agent&#39;s existing tool-use reasoning capabilities while ensuring critical operations always occur.</p>
-<h4 id="communication">Communication</h4>
+<h4 id="communication-as-tool">Communication as a Tool</h4>
+<p>Communication with users, other agents, or external systems follows the same patterns as other tools: well-defined interfaces, validation of inputs/outputs, and observable effects on state. See <a href="#communication">Section 3.5</a> for the full treatment of communication patterns, channel design, and durability across invocations. For inter-agent messaging specifically, see <a href="#inter-agent-messaging">Section 3.7</a>.</p>
+
+<h3 id="communication">3.5 Communication</h3>
+<div class="definition">
+
+<p><strong>Communication</strong> — The mechanisms through which agents exchange signals with users, other agents, and external systems. Communication channels are tools (Section 3.4) with the same design principles as any other: scoped, observable, and validated.</p>
+</div>
+
 <div class="principle">
 
 <p><strong>Principle</strong>: Treat communication as a tool.</p>
 </div>
 
-<p>Communication with users, other agents, or external systems should follow the same patterns as other tools:</p>
-<ul>
-<li>Well-defined interfaces</li>
-<li>Validation of inputs/outputs</li>
-<li>Observable effects on state</li>
-</ul>
-<p>Communication channels—whether inter-agent messaging, user-facing output, or external notifications—are tools with the same design principles as any other: they should be idempotent where possible, scoped to a clear purpose, and observable. Communication is the mechanism by which the hierarchical system propagates signals, including interruptions (see Section 3.8).</p>
-<h5 id="communication-patterns">Communication Patterns</h5>
+<p>Communication channels—whether user-facing output, inter-agent messaging (see <a href="#inter-agent-messaging">Section 3.7</a>), or external notifications—should be idempotent where possible, scoped to a clear purpose, and observable. Communication is the mechanism by which the hierarchical system propagates signals, including interruptions (see Section 3.9).</p>
+<h4 id="communication-patterns">Communication Patterns</h4>
 <p>Because communication is modeled as tools, different message delivery patterns emerge naturally from tool invocation mechanisms already present in the harness:</p>
 <ol>
 <li><p><strong>On-demand send and receive.</strong> The agent calls a communication tool when it decides to. A <code>send_user_message</code> tool delivers output; a <code>receive_user_message</code> tool polls for input. The agent controls timing — it sends when it has something to say, and checks for messages when it wants to. This is the simplest pattern and works for turn-by-turn conversational agents.</p></li>
@@ -1587,38 +1601,40 @@
 <li><p><strong>Asynchronous communication via external queues.</strong> Messages arrive while the agent is mid-turn or between invocations. An external message queue (or equivalent) receives them and holds them for delivery. Two sub-patterns apply depending on urgency:</p>
 <ul>
 <li><strong>Enqueue for next turn.</strong> The message is placed in the queue and delivered at the next turn boundary (via forced tool use or on-demand polling). The agent processes it when its current turn completes. This is appropriate for supplementary instructions, non-urgent updates, or context additions that can wait.</li>
-<li><strong>Interrupt then enqueue.</strong> For urgent signals — the agent has taken a wrong path, a parent agent needs to cancel a subtask, a user wants to redirect — the external system first calls an interrupt method on the harness, which terminates the current LLM turn. It then enqueues the message so the agent receives it at the start of its next turn. The harness re-invokes the agent with the new message in working memory. This pattern is how interruptions (Section 3.8) are implemented in practice: the signal propagates through the communication channel, not through a separate interruption mechanism.</li>
+<li><strong>Interrupt then enqueue.</strong> For urgent signals — the agent has taken a wrong path, a parent agent needs to cancel a subtask, a user wants to redirect — the external system first calls an interrupt method on the harness, which terminates the current LLM turn. It then enqueues the message so the agent receives it at the start of its next turn. The harness re-invokes the agent with the new message in working memory. This pattern is how interruptions (Section 3.9) are implemented in practice: the signal propagates through the communication channel, not through a separate interruption mechanism.</li>
 </ul>
 </li>
 </ol>
 
-<div class="example">
-<p><strong>Practical example — user correction during agent execution</strong></p>
-<p>An agent is mid-turn, generating a multi-step plan. The user sends a message: "Actually, don't touch the production database — use staging." The system has two options:</p>
-<ol>
-<li><strong>Enqueue</strong>: Let the current turn finish, deliver the message at the next turn boundary. The agent may have already issued a production query — too late.</li>
-<li><strong>Interrupt + enqueue</strong>: Interrupt the current turn immediately, enqueue the correction, re-invoke. The agent starts its next turn with the correction in working memory and adjusts before acting.</li>
-</ol>
-<p>The choice depends on the cost of a wrong action versus the cost of interrupting. For irreversible or expensive actions (database writes, external API calls, message sends), interrupt-then-enqueue is the safer default. For low-stakes actions (file reads, schema lookups), enqueue-for-next-turn avoids unnecessary disruption.</p>
-<p>[<strong>TODO</strong>: Expand with a concrete implementation example showing the harness interrupt/enqueue flow in code.]</p>
+<details class="practical-example">
+<summary>Practical Example — Enqueue vs. Interrupt During Agent Execution</summary>
+<div class="practical-example-body">
+
+<p>A user asks an analytical agent to assess the business impact of changing a product's price. The agent begins planning: it decomposes the task into data extraction (pull historical sales, competitor pricing, margin data), analysis (model demand elasticity, estimate revenue impact), and synthesis (compile findings into a recommendation). It starts executing — delegating database queries to subagents, pulling data from multiple sources.</p>
+
+<p><strong>Scenario 1: Enqueue — adding context without disrupting good work.</strong></p>
+
+<p>Midway through execution, the user realizes they forgot to mention something: "Oh — ROI should be the deciding factor, not just revenue." The agent is currently extracting historical sales data from the data warehouse — useful work regardless of how the final analysis is framed. There is no reason to interrupt this. The harness enqueues the message. The agent finishes its current data extraction turns, and at the next turn boundary it receives the user's clarification in its working memory. It adjusts its analysis plan to center ROI — reweighting the metrics it will compute, perhaps requesting additional cost data it hadn't originally planned to pull — and continues. No work was wasted. The data it already extracted is still needed. The correction was integrated cleanly at a natural seam.</p>
+
+<p><strong>Scenario 2: Interrupt — correcting a wrong path before it compounds.</strong></p>
+
+<p>Same task, but this time the user notices something more urgent: the agent is querying the wrong database. It's pulling from a legacy analytics warehouse that was deprecated last quarter — the data there is stale and will silently produce incorrect results. If the agent finishes these queries and builds its analysis on bad data, the entire downstream chain is poisoned: wrong elasticity estimates, wrong revenue projections, a confidently wrong recommendation. The user sends: "Stop — you're hitting the old warehouse. Use the new analytics platform." The harness triggers an interrupt, terminating the agent's current turn mid-execution. The correction is enqueued. The agent re-invokes with the user's message in working memory, re-plans its data extraction against the correct source, and resumes. The wasted work is a few database queries — far cheaper than a wrong analysis built on stale data.</p>
+
+<p>The two scenarios illustrate why the distinction matters. Enqueue-for-next-turn is the right default when the agent is doing useful work and the new information refines rather than invalidates it. Interrupt-then-enqueue is the right default when the agent is on a wrong path and continued execution will compound the error. The harness — not the agent — makes this routing decision, because the agent cannot know that a message is waiting while it is mid-turn.</p>
+
 </div>
+</details>
 
-<h5 id="inter-agent-messaging">Inter-Agent Messaging</h5>
-<p>The same communication patterns apply to inter-agent messaging. There is no separate "inter-agent protocol" — agents communicate through the same tools they use for user communication, because from the agent's perspective, a message is a message regardless of sender.</p>
-<p><strong>Synchronous composition.</strong> A parent agent launches subagents and waits for results. The subagent's return value flows back as a tool result. When the subagent completes, its output — structured results, state updates, error reports — is delivered to the parent's working memory. This is the simplest inter-agent pattern and is identical to calling any other tool that happens to run an LLM internally.</p>
-<p><strong>Asynchronous composition.</strong> A parent agent launches subagents and continues its own turns while subagents operate independently. The parent uses <code>receive_agent_messages()</code> — on-demand or forced — to check for results. Subagents write their outputs to shared state or message channels that the parent can poll. This pattern enables parallelism: the parent can launch multiple subagents, continue working on other tasks, and process results as they arrive.</p>
-<p><strong>Response severity and escalation.</strong> Inter-agent messages carry the same severity spectrum as user messages. A subagent reporting intermediate progress can be enqueued for the parent's next polling cycle. A subagent reporting a critical failure — "the database schema doesn't match expectations, all queries will fail" — should trigger the interrupt-then-enqueue pattern on the parent, because the parent's current plan may be based on invalid assumptions. The severity classification is the same mechanism described above for user messages: the external system (harness) decides whether to enqueue or interrupt based on the message's metadata, not the agent itself.</p>
-<p>This symmetry — user messages and agent messages flowing through identical pathways — is a deliberate design choice. It means the agent doesn't need separate reasoning about "how to talk to users" versus "how to talk to other agents." It also means the same testing infrastructure works for both: you can simulate user trajectories and inter-agent exchanges through the same message channels, and the agent cannot distinguish synthetic test messages from real ones (as noted in Section 3.2).</p>
-<p>The existence of asynchronous agents and tasks in general motivates the <strong>Task</strong> structure class (Section 3.3) as a recommended — though not core — component. When agents can launch work that outlives a single turn, something must track what was launched, what has completed, and what is still pending. Tasks provide this tracking. Without them, the parent must maintain this bookkeeping in unstructured working memory, which degrades as the number of concurrent activities grows.</p>
+<p>These same communication patterns extend to inter-agent messaging — see <a href="#inter-agent-messaging">Section 3.7</a> for how subagents and multi-agent systems use these channels for synchronous and asynchronous coordination.</p>
 
-<h5 id="channel-design">Communication Channels as Tools</h5>
+<h4 id="channel-design">Communication Channels as Tools</h4>
 <p>Communication channels are tools and should follow the same design principles as any other tool in the system: scoped, observable, and validated.</p>
 <p><strong>Scoped.</strong> Each channel should have a clear purpose and audience. A <code>send_user_message</code> tool is distinct from a <code>report_to_parent</code> tool, even if they ultimately use the same underlying transport. Scoping prevents the agent from accidentally sending internal debugging output to the user or routing a user-facing response to a subagent's log. The tool name and schema encode who the audience is.</p>
 <p><strong>Observable.</strong> Every message sent or received through a channel should be logged as a structured record in state — the Messaging Channel structure class (Section 3.3). This means messages are not fire-and-forget: they are first-class state objects with sender, recipient, timestamp, content, and thread metadata. Observability enables replay, debugging, and evaluation. When an agent makes a poor decision, you can inspect exactly what messages it received and when — the same way you inspect tool call history.</p>
 <p><strong>Validated.</strong> Outgoing messages should be validated before delivery. For user-facing channels, this might mean checking format constraints, content policies, or length limits. For inter-agent channels, it might mean validating that the message matches the expected schema for the receiving agent's input format. Validation catches malformed messages before they propagate — the same principle as tool input validation (Section 3.4), applied to communication.</p>
 <p><strong>Idempotent where possible.</strong> For channels that support retry (network failures, timeouts), idempotent message delivery prevents duplicate processing. Message IDs, deduplication logic, or exactly-once delivery guarantees at the transport layer reduce the agent's burden. The agent should not need to reason about "did my last message arrive?" — the channel infrastructure handles this.</p>
 
-<h5 id="durability-across-invocations">Durability Across Invocations</h5>
+<h4 id="durability-across-invocations">Durability Across Invocations</h4>
 <p>The previous patterns cover messages that arrive during an active invocation — mid-turn (interrupt), between turns (enqueue). But a third temporal window exists: messages that arrive when no invocation is running at all. The agent has finished its work, the LLM is not being called, the harness is idle — and an async subagent completes, an API callback fires, or a user sends a follow-up message.</p>
 <p>This is not an agent problem. The agent is stateless (Section 3.2) — it does not "go down" or "crash." It simply isn't being invoked. The question is entirely about harness design: what does the harness do when async results arrive and there is no active invocation to receive them?</p>
 <p>Three patterns address this:</p>
@@ -1628,8 +1644,8 @@
 <li><p><strong>Dead letter.</strong> If the invocation has been permanently terminated — budget exhausted, user cancelled, task no longer relevant — results are routed to a dead letter log. They are not processed, but they are observable: the system records that a result arrived, which invocation it was addressed to, and why it was not delivered. Dead letters are an evaluation signal — a high dead letter rate may indicate that the agent is launching async work it cannot follow up on, or that invocations are being terminated too aggressively.</p></li>
 </ol>
 <p>The critical enabling property is <strong>state serialization</strong> (Section 3.3). If state cannot be persisted and restored, wake-on-message and task-driven resumption are impossible — the harness has nothing to load into the new invocation. This is why serialization is listed as a lifecycle property of structure classes: not for caching convenience, but because it enables the system to survive the gap between invocations. The agent is ephemeral; the state is not.</p>
-<p>Note the symmetry with interruption (Section 3.8). Interruption handles the case where an invocation must stop prematurely; durability handles the case where an invocation must start in response to deferred work. Both are harness mechanisms. Both rely on persisted state. And both are invisible to the agent — it does not reason about "was I interrupted?" or "am I resuming?" It simply sees working memory at the start of its turn and acts.</p>
-<h3 id="contexts">3.5 Contexts</h3>
+<p>Note the symmetry with interruption (Section 3.9). Interruption handles the case where an invocation must stop prematurely; durability handles the case where an invocation must start in response to deferred work. Both are harness mechanisms. Both rely on persisted state. And both are invisible to the agent — it does not reason about "was I interrupted?" or "am I resuming?" It simply sees working memory at the start of its turn and acts.</p>
+<h3 id="contexts">3.6 Contexts</h3>
 <div class="definition">
 
 <p><strong>Contexts</strong> — Addressable blocks of information that agents can load, search, and reference — the building blocks of context engineering (Section 2.2).</p>
@@ -1726,9 +1742,12 @@
 <p>Aider&#39;s repo-map approach <a class="citation" href="#ref-82">[82]</a> illustrates this well: rather than embedding and retrieving code chunks, it builds condensed tree-sitter outlines of the repository—a structural summary that lets the model navigate the codebase by understanding its organization (modules, classes, function signatures, dependency graphs). Claude Code <a class="citation" href="#ref-7">[7]</a> takes a complementary approach: grep-over-filesystem, file tree exploration, and symbol-level navigation. In both cases, retrieval exploits the <strong>inherent structure of the domain</strong> to guide the model to relevant information, rather than relying on semantic similarity between a query embedding and document embeddings.</p>
 <p>This distinction maps cleanly onto domain type. For <strong>structured domains</strong> (codebases, databases, APIs, configuration systems), agentic search works because the domain provides navigable structure—file hierarchies, type systems, dependency graphs, schema definitions. The retrieval mechanism can follow the domain&#39;s own organization. For <strong>unstructured domains</strong> (document corpora, knowledge bases, conversation histories), that navigable structure doesn&#39;t exist natively. We must <strong>create</strong> it—via indexing, knowledge graphs (GraphRAG <a class="citation" href="#ref-49">[49]</a>), or other enrichment—before agentic search becomes viable. This is why GraphRAG exists: it manufactures the structural scaffolding that code and databases get for free.</p>
 <p>This is a special case of the contexts taxonomy above: different retrieval mechanisms are different strategies for accessing contexts, each with tradeoffs in precision, recall, latency, and setup cost. Traditional RAG trades setup cost (embedding, chunking, indexing) for broad recall across unstructured corpora. Agentic search trades generality for high precision in structured domains—it&#39;s fast and accurate when the domain has navigable structure, but inapplicable when it doesn&#39;t. GraphRAG occupies a middle ground: it invests heavily in creating structure (knowledge graph construction) to enable structured retrieval over originally unstructured data. The choice between these mechanisms is itself a context engineering decision—matching the retrieval strategy to the structure (or lack thereof) of the domain.</p>
-<h3 id="composition">3.6 Composition</h3>
-<h4 id="subagents">Subagents</h4>
+<h3 id="composition">3.7 Subagents &amp; Multi-Agent Systems</h3>
+<p>The previous sections establish the primitives of a single agent: its state (Section 3.3), tools (Section 3.4), communication channels (Section 3.5), and contexts (Section 3.6). But most production systems involve more than one agent. Two fundamentally different patterns govern how agents relate to each other, and the distinction matters because it determines state visibility, lifecycle coupling, and the communication mechanisms available.</p>
+<p><strong>Subagents</strong> are, in a meaningful sense, <em>part of</em> a larger agent. A subagent is spawned by a parent agent — typically via a tool call — and operates within the parent's invocation lifecycle. The subagent's lifetime is bounded by the parent's: it is created during the parent's execution, performs its work, and terminates before (or when) the parent completes. This containment relationship enables the hierarchical patterns discussed throughout this framework: parent-child delegation (Section 3.4, Forced Tool Use), interrupt propagation from parent to child (Section 3.9), synchronous and asynchronous composition via shared communication channels (Section 3.5), and scoped state sharing where the parent grants the subagent partial or complete access to its own state. The subagent inherits its operating context from the parent — its existence is not independent but derived.</p>
+<p><strong>Multi-agent systems</strong> involve agents that share no state. Each agent exists as part of the <em>world</em> of every other agent (Section 3.1) — an external entity to be observed and communicated with, not an internal component to be directly controlled. Their invocations are independent: one agent's lifecycle is not contained within another's. They may run concurrently, sequentially, or with non-overlapping lifetimes entirely — one agent may complete its work long before another begins. Because there is no shared state, all coordination must happen through explicit message passing over communication channels, and each agent must treat the other's outputs as external, potentially stale data subject to the same staleness concerns as any other world observation (Section 3.3).</p>
 <p><img src="assets/agents/image6-subagent-topology.svg" alt="Subagent vs. Multiagent Topology"></p>
+<h4 id="subagents">Subagents</h4>
 <p><strong>Definition</strong>: An agent invoked by another agent (via a tool) that has its own context access, directives, and tools <a class="citation" href="#ref-24">[24]</a><a class="citation" href="#ref-51">[51]</a>.</p>
 <p><strong>State sharing</strong>: May be partial or complete with the invoking agent.</p>
 <h5>Subagents vs. Multiagent Systems</h5>
@@ -1742,8 +1761,8 @@
 </thead>
 <tbody><tr>
 <td>Lifetime</td>
-<td>Invoked for specific purpose, dies when done</td>
-<td>Independent lifetimes</td>
+<td>Contained within parent's invocation lifecycle</td>
+<td>Independent, potentially non-overlapping lifetimes</td>
 </tr>
 <tr>
 <td>Relationship</td>
@@ -1768,10 +1787,17 @@
 <li>Want to reuse subagent across multiple invocations</li>
 <li>State sharing is important</li>
 </ul>
+<h4 id="inter-agent-messaging">Inter-Agent Messaging</h4>
+<p>The communication patterns established in <a href="#communication">Section 3.5</a> apply directly to inter-agent messaging. There is no separate "inter-agent protocol" — agents communicate through the same tools they use for user communication, because from the agent's perspective, a message is a message regardless of sender.</p>
+<p><strong>Synchronous composition.</strong> A parent agent launches subagents and waits for results. The subagent's return value flows back as a tool result. When the subagent completes, its output — structured results, state updates, error reports — is delivered to the parent's working memory. This is the simplest inter-agent pattern and is identical to calling any other tool that happens to run an LLM internally.</p>
+<p><strong>Asynchronous composition.</strong> A parent agent launches subagents and continues its own turns while subagents operate independently. The parent uses <code>receive_agent_messages()</code> — on-demand or forced — to check for results. Subagents write their outputs to shared state or message channels that the parent can poll. This pattern enables parallelism: the parent can launch multiple subagents, continue working on other tasks, and process results as they arrive.</p>
+<p><strong>Response severity and escalation.</strong> Inter-agent messages carry the same severity spectrum as user messages. A subagent reporting intermediate progress can be enqueued for the parent's next polling cycle. A subagent reporting a critical failure — "the database schema doesn't match expectations, all queries will fail" — should trigger the interrupt-then-enqueue pattern on the parent, because the parent's current plan may be based on invalid assumptions. The severity classification is the same mechanism described in <a href="#communication-patterns">Section 3.5</a> for user messages: the external system (harness) decides whether to enqueue or interrupt based on the message's metadata, not the agent itself.</p>
+<p>This symmetry — user messages and agent messages flowing through identical pathways — is a deliberate design choice. It means the agent doesn't need separate reasoning about "how to talk to users" versus "how to talk to other agents." It also means the same testing infrastructure works for both: you can simulate user trajectories and inter-agent exchanges through the same message channels, and the agent cannot distinguish synthetic test messages from real ones (as noted in Section 3.2).</p>
+<p>The existence of asynchronous agents and tasks in general motivates the <strong>Task</strong> structure class (Section 3.3) as a recommended — though not core — component. When agents can launch work that outlives a single turn, something must track what was launched, what has completed, and what is still pending. Tasks provide this tracking. Without them, the parent must maintain this bookkeeping in unstructured working memory, which degrades as the number of concurrent activities grows.</p>
 <h4 id="delegation-challenges">Delegation Challenges</h4>
 <p>Delegation—whether to subagents or across multi-agent systems—introduces costs that are easy to underestimate. Two failure patterns dominate production systems:</p>
 <p><strong>Scope rediscovery.</strong> Each delegated agent starts with a fresh or partial context window. The parent agent has built up a rich working memory over the course of the task—observations, intermediate results, implicit assumptions, domain context. When it delegates to a subagent, much of this working memory must be <em>re-established</em> in the subagent&#39;s context. This creates a <strong>working-memory discontinuity</strong> (see Section 2.2): the subagent must spend tokens and reasoning cycles recontextualizing before it can do useful work. The more complex the parent&#39;s accumulated context, the more expensive this rediscovery becomes. This is why delegation works best for tasks that are relatively self-contained—where the required context can be transmitted cheaply and the subagent doesn&#39;t need to reconstruct the full reasoning history of the parent.</p>
-<p><strong>Tool segmentation failures.</strong> In systems with a router or orchestrator that dispatches tasks to specialized agents, a common failure mode is routing to an agent that lacks the right tools or context for the task. The agent attempts the task, fails, and the error bubbles back up to the router, which must retry—potentially multiple times—before either finding the right agent or escalating. This retry cycle compounds latency and cost, and is especially pernicious because it&#39;s often silent: the system <em>eventually</em> succeeds, masking the inefficiency. Structured composition (clear tool boundaries, explicit capability declarations, well-defined routing rules) mitigates this, but doesn&#39;t eliminate it. This pattern connects directly to the error handling concerns in Section 3.8.</p>
+<p><strong>Tool segmentation failures.</strong> In systems with a router or orchestrator that dispatches tasks to specialized agents, a common failure mode is routing to an agent that lacks the right tools or context for the task. The agent attempts the task, fails, and the error bubbles back up to the router, which must retry—potentially multiple times—before either finding the right agent or escalating. This retry cycle compounds latency and cost, and is especially pernicious because it&#39;s often silent: the system <em>eventually</em> succeeds, masking the inefficiency. Structured composition (clear tool boundaries, explicit capability declarations, well-defined routing rules) mitigates this, but doesn&#39;t eliminate it. This pattern connects directly to the error handling concerns in Section 3.9.</p>
 <p>The upshot: delegation is not free. It works best for <strong>cheaper, more reliable subtasks</strong> where the cost of recontextualization is justified by the benefits of isolation, parallelism, or specialization. When a subtask requires deep access to the parent&#39;s accumulated context, the cost of transmitting that context may exceed the cost of simply having the parent do the work itself.</p>
 <h4 id="skills">Skills</h4>
 <p><strong>Definition</strong>: Pre-packaged instructions and context bundles.</p>
@@ -1794,7 +1820,7 @@
 </details>
 
 <p>Composition defines the <em>who</em> of agent systems. Planning defines the <em>what</em> and <em>when</em>—the mechanism by which composed agents coordinate their work.</p>
-<h3 id="planning">3.7 Planning</h3>
+<h3 id="planning">3.8 Planning</h3>
 <p>Planning is the mechanism by which agents decide <strong>what to do before doing it</strong> <a class="citation" href="#ref-58">[58]</a>. While reactive agents execute actions step-by-step based on immediate observations, planning introduces deliberation—a lookahead that evaluates potential action sequences before committing.</p>
 <h4 id="planning-why">Why Planning Matters</h4>
 <p>Without planning, an agent&#39;s behavior is purely reactive: observe → act → observe → act <a class="citation" href="#ref-56">[56]</a>. This works for simple tasks but fails when:</p>
@@ -1890,7 +1916,7 @@
 
 <p>[<strong>TODO</strong>: Document execution strategies and replanning triggers you&#39;ve built]</p>
 <h4 id="planning-composition">Planning and Composition</h4>
-<p>Planning interacts closely with composition (Section 3.6):</p>
+<p>Planning interacts closely with composition (Section 3.7):</p>
 <ul>
 <li><strong>Subagent delegation</strong> → A plan can assign subtasks to subagents</li>
 <li><strong>Skill matching</strong> → Planning can involve selecting which skills to invoke</li>
@@ -1907,7 +1933,7 @@
 </div>
 </details>
 
-<h3>3.8 Error Handling &amp; Recovery</h3>
+<h3 id="error-handling">3.9 Error Handling &amp; Recovery</h3>
 <p>Agents fail. Tools return errors, APIs time out, models hallucinate <a class="citation" href="#ref-17">[17]</a>. The question is not whether failures occur, but how the system responds <a class="citation" href="#ref-63">[63]</a>.</p>
 <h4 id="failure-modes">Failure Modes</h4>
 <table>
@@ -1961,10 +1987,10 @@
 <h4 id="interruptions">Interruptions as Hierarchical Signals</h4>
 <p>Interruptions are not just failures—they are first-class signals in hierarchical agent systems. When a parent agent determines that a subtask is no longer needed, it must be able to interrupt the child agent cleanly. This is distinct from error recovery: the child didn&#39;t fail—the parent&#39;s context changed.</p>
 <p><strong>Example</strong>: In a schema-aware multi-query system, if one query reveals that the schema assumption underlying all queries is wrong, the parent can interrupt the remaining queries since their results would be wasted work. The interruption signal propagates <em>down</em> the hierarchy (parent → children), while failure signals propagate <em>up</em> (child → parent). Both must be handled, but they have different semantics: a failure says &quot;I couldn&#39;t do what you asked,&quot; while an interruption says &quot;stop—what I asked is no longer relevant.&quot;</p>
-<p>This connects to composition (Section 3.6)—the parent-child relationship defines who can interrupt whom—and to planning (Section 3.7)—plan revision may trigger interruptions of in-progress subtasks that the revised plan no longer requires.</p>
+<p>This connects to composition (Section 3.7)—the parent-child relationship defines who can interrupt whom—and to planning (Section 3.8)—plan revision may trigger interruptions of in-progress subtasks that the revised plan no longer requires.</p>
 <p>[<strong>TODO</strong>: Interruption propagation patterns — how do interruptions cascade through a hierarchy? What happens to in-progress state when a subtask is interrupted?]</p>
 <p>[<strong>TODO</strong>: Interruption vs. cancellation vs. preemption — are these meaningfully different in practice, and should the agent model distinguish them?]</p>
-<h3>3.9 Evaluation &amp; Observability</h3>
+<h3 id="evaluation">3.10 Evaluation &amp; Observability</h3>
 <p>Building agents without the ability to measure their behavior is building blind <a class="citation" href="#ref-42">[42]</a>. This section covers how to observe, measure, and improve agentic systems.</p>
 <p><strong>Agentic testing is inherently integration testing</strong> <a class="citation" href="#ref-41">[41]</a><a class="citation" href="#ref-42">[42]</a>. You&#39;re not testing individual components in isolation—you&#39;re testing tool interactions, state updates, context retrieval, subagent coordination, and validation signals working together. This framing is essential: unit tests on individual tools or prompts are necessary but not sufficient. The interesting failures happen at the seams, and evaluation must be designed with this in mind.</p>
 <h4 id="what-to-measure">What to Measure</h4>
@@ -1993,7 +2019,7 @@
 <li><strong>Benchmark tasks</strong> <a class="citation" href="#ref-64">[64]</a><a class="citation" href="#ref-65">[65]</a><a class="citation" href="#ref-66">[66]</a> → Standardized tasks with known-good solutions</li>
 </ul>
 <p>[<strong>TODO</strong>: Document your testing approaches and any benchmark suites you use]</p>
-<h3>3.10 Safety &amp; Security</h3>
+<h3 id="safety">3.11 Safety &amp; Security</h3>
 <p>Agents that interact with the real world—executing code, calling APIs, sending messages—introduce attack surfaces that don&#39;t exist in pure text generation. Safety is not a feature to bolt on after deployment; it is a structural concern that permeates every layer of a structured agent.</p>
 <h4 id="prompt-injection">Prompt Injection</h4>
 <p><strong>The core threat</strong>: Untrusted content (user inputs, web pages, tool results, file contents) can contain instructions that the model treats as authoritative <a class="citation" href="#ref-47">[47]</a><a class="citation" href="#ref-79">[79]</a>.</p>
@@ -2060,8 +2086,8 @@
 <ul>
 <li><strong>Scoped tool access</strong> → Each invocation grants only the tools needed for the task. A summarization agent does not need file-write permissions.</li>
 <li><strong>Read-before-write</strong> → Require observation before mutation. Prevent blind state changes by forcing the agent to inspect current state before modifying it.</li>
-<li><strong>Dry-run modes</strong> → Allow plan validation without execution for high-risk operations. Verification-driven planning (Section 3.7) provides a natural checkpoint—validate the safety properties of a plan before executing it.</li>
-<li><strong>Audit trails</strong> → Every tool call, its arguments, and its results are logged (Section 3.9). This is both an observability concern and a security requirement.</li>
+<li><strong>Dry-run modes</strong> → Allow plan validation without execution for high-risk operations. Verification-driven planning (Section 3.8) provides a natural checkpoint—validate the safety properties of a plan before executing it.</li>
+<li><strong>Audit trails</strong> → Every tool call, its arguments, and its results are logged (Section 3.10). This is both an observability concern and a security requirement.</li>
 <li><strong>Human-in-the-loop gates</strong> → Irreversible or externally-visible actions (sending messages, deleting data, modifying permissions) require explicit user confirmation before execution.</li>
 </ul>
 <p><strong>Connection to the cost model</strong>: From Section 2.3, the irreversibility cost component of C_f is what makes safety harnesses economically justified. The cost of a leaked API key or a deleted production database dwarfs the cost of adding a confirmation step.</p>
@@ -2080,7 +2106,7 @@
 </details>
 
 <hr>
-<h2>4. Open Questions &amp; Future Directions</h2>
+<h2 id="future">4. Open Questions &amp; Future Directions</h2>
 <h3>Incomplete Sections</h3>
 <p>[<strong>TODO</strong>: Add the flexibility-reliability-latency graph]
 [<strong>TODO</strong>: Provide concrete examples of state schemas]</p>
@@ -2110,7 +2136,7 @@
 <li><strong>Composition requires boundaries</strong> → Subagents, skills, and plans only work when responsibilities, contexts, and tools are clearly partitioned</li>
 </ol>
 <p>These principles are not a checklist to be applied independently. They are a connected framework: structure enables validation, validation enables tool reliability, tool reliability enables composition, and composition enables agents that solve complex problems without compounding errors at every step.</p>
-<p>The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. <strong>Harnesses are designed to weaken</strong>: the framework explicitly anticipates that today&#39;s structural scaffolding becomes tomorrow&#39;s unnecessary overhead as models internalize the patterns (Section 2.4, Harness Obsolescence). <strong>Structure provides alignment, not just reliability</strong>: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.10). <strong>Economy is orthogonal to capability</strong>: even when a model <em>can</em> derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: <strong>it is almost always cheaper to prevent failure through structure than to recover from it through flexibility</strong>.</p>
+<p>The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. <strong>Harnesses are designed to weaken</strong>: the framework explicitly anticipates that today&#39;s structural scaffolding becomes tomorrow&#39;s unnecessary overhead as models internalize the patterns (Section 2.4, Harness Obsolescence). <strong>Structure provides alignment, not just reliability</strong>: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.11). <strong>Economy is orthogonal to capability</strong>: even when a model <em>can</em> derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: <strong>it is almost always cheaper to prevent failure through structure than to recover from it through flexibility</strong>.</p>
 <hr>
 <h2 id="appendix">Appendix: Terminology Reference</h2>
 <table>
