@@ -1441,6 +1441,8 @@
 
 <p>The principle underlying bootstrap is that <strong>the shorter-term the agent&#39;s dependency on the context window, the better</strong>. Every piece of information that must survive across many turns in working memory is a liability — subject to context rot, lost in compaction, competing for attention. If goals, decisions, and constraints are tracked in state as Contexts, bootstrap can reliably reconstruct the agent&#39;s orientation by loading those Contexts — converting long-term working memory dependency into short-term reconstruction from state. This shifts design overhead from compaction to state structure, which is a deliberate trade: state structure is explicit, inspectable, and testable, while compaction quality is opaque and model-dependent.</p>
 
+<p><strong>Bootstrap as an alternative to compaction.</strong> Prompt compaction — summarizing or truncating the context window to stay within token limits — is the dominant strategy in current agent systems for managing long-running conversations. But compaction is inherently lossy: a model summarizing its own context must decide what matters <em>before</em> discarding what doesn&#39;t, and that judgment is opaque, model-dependent, and irreversible. Bootstrap offers a structurally different approach. Rather than compressing existing working memory, it discards it entirely and reconstructs from state. This has several advantages. First, <strong>stable prefix efficiency</strong>: a well-designed bootstrap reconstructs the stable parts of working memory first (role, tools, schemas) and the variable parts second (current task state, recent results), producing a context with the kind of coherent structure that compaction destroys. Second, <strong>phased summarization</strong>: because state is persistent and tool-mediated, the agent can write intermediate result summaries to state <em>during</em> execution — not as a desperate compression step when the context window fills, but as a deliberate practice that keeps state current. These summaries are then immediately available whenever bootstrap is next triggered, turning what would be a lossy emergency operation into a structured, incremental one. Third, <strong>rediscovery over retention</strong>: compaction forces the agent to retain a compressed understanding of everything it might need; bootstrap allows the agent to rediscover specific structured state on demand. It is better to re-read a well-structured task result from state than to rely on a compacted summary of it that lives only in working memory — the former is lossless and addressable, the latter is degraded and opaque. Both compaction and bootstrap are lossy in principle, but bootstrap&#39;s losses are bounded by state design (which is explicit and testable), while compaction&#39;s losses are bounded by model summarization quality (which is neither). An agent that follows the principles in this paper — structured state, addressable contexts, progressive disclosure — can use bootstrap to go beyond what compaction alone can achieve.</p>
+
 <h3 id="state">3.3 State</h3>
 <div class="definition">
 
@@ -1902,6 +1904,7 @@
 <p>Composition defines the <em>who</em> of agent systems. Planning defines the <em>what</em> and <em>when</em>—the mechanism by which composed agents coordinate their work.</p>
 <h3 id="planning">3.8 Planning</h3>
 <p>Planning is the mechanism by which agents decide <strong>what to do before doing it</strong> <a class="citation" href="#ref-58">[58]</a>. While reactive agents execute actions step-by-step based on immediate observations, planning introduces deliberation—a lookahead that evaluates potential action sequences before committing.</p>
+<p>Planning is best understood as <strong>pre-runtime verification</strong>—an analogue of compilation. Just as a compiler catches type errors, unresolved references, and unreachable code before a program runs, a planning phase catches invalid action sequences, unsatisfied preconditions, and resource conflicts before the agent commits to execution. The economics are compelling: cheap verification signals—schema checks, precondition validation, syntax parsing—run in milliseconds at negligible compute cost, and their precision reduces the reasoning the model must do on its own. The model does not need to <em>think</em> about whether a query's output schema matches a join condition if a deterministic checker can answer that in microseconds. Planning time shrinks when verification signals are fast and cheap, because the model offloads the hard parts to external checks and focuses its token budget on what only it can do: creative decomposition and goal reasoning. Execution, by contrast, is expensive (API calls, database writes, external side effects that may be irreversible). Without planning, an agent might invoke an expensive data transformation tool only to discover that the next tool in the sequence requires a property of the output that was never produced—forcing a costly redo. Planning catches this class of error at planning-time cost rather than execution cost.</p>
 <h4 id="planning-why">Why Planning Matters</h4>
 <p>Without planning, an agent&#39;s behavior is purely reactive: observe → act → observe → act <a class="citation" href="#ref-56">[56]</a>. This works for simple tasks but fails when:</p>
 <ul>
@@ -1957,7 +1960,7 @@
 <td>Can lose cross-branch context</td>
 </tr>
 </tbody></table>
-<p>[<strong>TODO</strong>: Add examples from your own systems—which representations have you used and where?]</p>
+<p>In practice, each representation occupies a different point on the formality-flexibility spectrum. At Kuona, we use PDDL-style representations with declared preconditions and effects for tool sequences—a formal alternative that enables deterministic verification (see <a href="#planning-strategies">Verification-Driven Planning</a> below). This bridges the gap between state machines (deterministic but rigid) and DAGs (parallelizable but lacking formal verification): precondition/effect declarations give the planner enough formal structure to verify soundness while remaining flexible enough to compose novel tool sequences that were not anticipated at design time.</p>
 <h4 id="planning-strategies">Planning Strategies</h4>
 <h5>Decomposition</h5>
 <p>Breaking a task into subtasks before executing any of them. This is the most common planning pattern in current agentic systems <a class="citation" href="#ref-60">[60]</a><a class="citation" href="#ref-61">[61]</a>.</p>
@@ -1979,8 +1982,67 @@
 <p>[<strong>TODO</strong>: Document search-based approaches you&#39;ve experimented with]</p>
 <h5>Verification-Driven Planning</h5>
 <p>Using validation signals to guide plan construction—plans are iteratively refined until they pass verification checks.</p>
-<p><strong>Connection to Section 2.1, External Validation</strong>: External validation signals are not just useful during execution—they can also constrain the planning phase itself.</p>
-<p>[<strong>TODO</strong>: Document verification-driven planning patterns]</p>
+<p><strong>Connection to the <a href="#validation-asymmetry">Validation Cost Asymmetry</a> (Section 2.2)</strong>: Planning is where the validation cost asymmetry pays its highest dividends. If verification signals are faster and cheaper than execution—and they almost always are—then <em>verify-before-execute</em> dominates <em>execute-then-recover</em> on cost, speed, reliability, and determinism. A single verification pass over a proposed plan can prevent multiple expensive execution failures. Planning exploits a temporal asymmetry: by shifting verification to before execution, the agent converts what would be runtime failures (expensive, stateful, potentially irreversible) into planning-time rejections (cheap, stateless, trivially retried).</p>
+
+<p><strong>Formal plan verification with preconditions and effects.</strong> In <a href="https://kuona.ai">Kuona</a>, we model the agent's own state as a PDDL-like initial state. Each tool declares <strong>preconditions</strong> (predicates that must hold before invocation) and <strong>effects</strong> (predicates that become true or false after execution). Example predicates include <code>ran-query-this-plan</code>, <code>document-abc-exists</code>, <code>document-xyz-not-exists</code>, and <code>generated-graph</code>.</p>
+<p>The agent proposes a plan—a sequence of tool calls. A formal verifier then checks: given the initial state and the cumulative effects of each preceding step, do all preconditions hold at every step? Does the final state satisfy the goal predicates (e.g., <code>generated-graph = true</code>)? If verification fails, the agent receives a cheap, precise signal about <em>which</em> precondition failed and <em>where</em> in the plan, enabling targeted revision rather than blind retry.</p>
+<p>The agent iterates: <strong>propose → verify → revise</strong>, until the plan is logically sound. This loop is cheap—formal verification runs in milliseconds and is deterministic—compared to execution, which takes seconds to minutes, costs real resources, and may produce irreversible side effects. The propose-verify-revise loop is structurally identical to the compile-fix cycle in software development: the planner is the developer, the verifier is the compiler, and a passing verification is the equivalent of a clean build.</p>
+
+<details class="practical-example">
+<summary>Practical Example — PDDL-Style Plan Verification at Kuona</summary>
+<div class="practical-example-body">
+
+<p>A user asks: <em>"Show me a graph of monthly revenue by region."</em> The agent proposes a plan:</p>
+<ol>
+<li><code>generate-graph</code> — render the visualization</li>
+<li><code>run-query</code> — fetch monthly revenue data grouped by region</li>
+</ol>
+
+<p><strong>Initial state</strong>: <code>{ ran-query-this-plan: false, generated-graph: false }</code></p>
+
+<p>The verifier checks step 1: <code>generate-graph</code> requires precondition <code>ran-query-this-plan = true</code>. Current state has <code>ran-query-this-plan = false</code>. <strong>Verification fails.</strong> The error message is precise: <em>"Step 1 (generate-graph): unsatisfied precondition ran-query-this-plan."</em></p>
+
+<p>The agent revises — swap the order:</p>
+<ol>
+<li><code>run-query</code> — fetch monthly revenue data grouped by region</li>
+<li><code>generate-graph</code> — render the visualization</li>
+</ol>
+
+<p>The verifier re-checks. Step 1: <code>run-query</code> has no preconditions → passes. Effects: <code>ran-query-this-plan = true</code>. Step 2: <code>generate-graph</code> requires <code>ran-query-this-plan = true</code> → state now satisfies this. Effects: <code>generated-graph = true</code>. Final state: <code>{ ran-query-this-plan: true, generated-graph: true }</code>. Goal predicates satisfied. <strong>Verification passes.</strong></p>
+
+<p>This entire loop — propose, reject, revise, verify — took milliseconds. Without it, the agent would have attempted to render a graph with no data, received a runtime error, then had to reason about what went wrong and retry — a process measured in seconds and tokens rather than microseconds and deterministic checks.</p>
+
+</div>
+</details>
+
+<p><strong>Schema-aware multi-query planning.</strong> A second pattern from Kuona addresses data retrieval across heterogeneous datasources. The goal is to produce data matching a target schema. The planner decomposes this into individual queries to different datasources—including joins between query results—culminating in a unifying query that produces the final output.</p>
+<p>Verification signals validate the plan before any query executes: (1) each query's output schema is compatible with proposed joins, (2) the final unified schema matches the target. These checks are cheap deterministic operations—schema compatibility is type checking—applied before any expensive datasource interaction occurs. Notably, the plan does <em>not</em> specify exact SQL for each datasource. Instead, each subagent receives a natural language description of what data it must produce and which datasource to query. This shifts the responsibility of determining the best query strategy—dialect-specific syntax, available operations, optimization—to the subagent that owns the datasource interaction. The parent plans at the level of data contracts (schemas in, schemas out), not implementation details.</p>
+<p>Once the plan passes verification, individual queries are delegated to parallel subagents for execution. If a subagent fails (e.g., a datasource does not support a required operation), it first attempts local recovery. If local recovery fails, it escalates to the parent planner. The parent then: (1) interrupts all sibling agents—their work is now potentially invalid given the changed assumptions, (2) incorporates the failure information into its model of what went wrong, and (3) replans from the current state with the new constraint. This failure-triggered replanning connects directly to <a href="#interruptions">Interruptions as Hierarchical Signals</a> (Section 3.9): the subagent's escalation is an interruption that propagates up the agent hierarchy, and the parent's response—halt siblings, replan, re-delegate—is the structured recovery pattern that hierarchical composition enables.</p>
+
+<details class="practical-example">
+<summary>Practical Example — Schema-Aware Multi-Query Planning at Kuona</summary>
+<div class="practical-example-body">
+
+<p>A user asks: <em>"Compare promotional lift across online and in-store channels for Q4."</em> The target schema requires columns: <code>promotion_id</code>, <code>channel</code>, <code>baseline_revenue</code>, <code>promo_revenue</code>, <code>lift_pct</code>.</p>
+
+<p><strong>The planner produces:</strong></p>
+<ol>
+<li><strong>Query A</strong> (Snowflake) → fetch online transaction data, output schema: <code>{ promotion_id, revenue, date, channel="online" }</code></li>
+<li><strong>Query B</strong> (PostgreSQL) → fetch in-store POS data, output schema: <code>{ promo_code, store_revenue, sale_date, channel="in-store" }</code></li>
+<li><strong>Query C</strong> (local) → join A + B on <code>promotion_id = promo_code</code>, compute <code>lift_pct</code>, and project to target schema</li>
+</ol>
+
+<p><strong>Verification checks</strong>: (1) The join key <code>promotion_id</code> from Query A is compatible with <code>promo_code</code> from Query B — both are string-typed identifiers. (2) The unified output after the join and projection matches the target schema. Verification passes.</p>
+
+<p>Each subagent receives a natural language description — e.g., <em>"From the Snowflake warehouse, retrieve per-promotion online revenue for Q4 2024"</em> — not raw SQL. The subagent determines the best query strategy for its datasource.</p>
+
+<p><strong>Failure scenario</strong>: The PostgreSQL subagent discovers that the POS system stores <code>promo_code</code> as a composite key (<code>store_id + promo_id</code>) that cannot be directly joined with <code>promotion_id</code>. Local recovery fails — the subagent cannot resolve the key mismatch on its own. It escalates to the parent.</p>
+
+<p>The parent: (1) interrupts the Snowflake subagent (its results may need different join logic), (2) incorporates the constraint — <em>"POS promo_code is a composite key requiring decomposition"</em> — and (3) replans. The revised plan adds a transformation step to decompose <code>promo_code</code> before the join. The new plan is verified, and execution restarts with updated subagent assignments.</p>
+
+</div>
+</details>
+
 <h4 id="plan-execution">Plan Execution</h4>
 <p>A plan is only as good as its execution. Key concerns:</p>
 <ul>
@@ -1994,7 +2056,7 @@
 <p><strong>Principle</strong>: Plans should be treated as hypotheses, not commitments <a class="citation" href="#ref-57">[57]</a>. The agent should be willing to abandon or revise a plan when observations invalidate its assumptions.</p>
 </div>
 
-<p>[<strong>TODO</strong>: Document execution strategies and replanning triggers you&#39;ve built]</p>
+<p><strong>Replanning triggers.</strong> Plans are hypotheses, and hypotheses can be invalidated. In Kuona's multi-query planner, replanning is triggered when a subagent escalates a failure that invalidates plan assumptions—for instance, when a datasource lacks support for a required operation. Note that schema mismatches within a single query are caught by formal verification inside the subagent itself; what surfaces to the parent is a different class of error: the plan's own assumptions were incorrect. The datasource cannot deliver what the plan assumed it could. This triggers replanning—or, if no alternative plan can satisfy the goal, planning failure. The replanning process reuses the formal verification loop: the parent proposes a revised plan that accounts for the new constraint, verifies it, and re-delegates. Critically, the parent does not simply retry the failed step; it reconsiders the entire plan in light of what it has learned, because a single invalidated assumption can cascade through downstream dependencies.</p>
 <h4 id="planning-composition">Planning and Composition</h4>
 <p>Planning interacts closely with composition (Section 3.7):</p>
 <ul>
@@ -2002,7 +2064,7 @@
 <li><strong>Skill matching</strong> → Planning can involve selecting which skills to invoke</li>
 <li><strong>Resource budgeting</strong> → Plans can allocate context window space, API calls, or time budgets across subtasks</li>
 </ul>
-<p>[<strong>TODO</strong>: Document how planning integrates with your subagent and skill systems]</p>
+<p>Kuona's schema-aware query planner illustrates this integration concretely. The planner decomposes a data retrieval goal into individual queries, verifies the plan formally (schema compatibility, SQL validity, target schema match), then delegates each query to a parallel subagent. The plan is the contract between parent and children: it specifies what each subagent must produce, what schema its output must conform to, and how outputs will be joined. When a subagent fails and escalates, the parent interrupts siblings (their assumptions may be invalid), incorporates the failure, and replans—demonstrating the tight coupling between planning, parallel delegation, and failure-triggered replanning. This pattern generalizes: any system where a parent decomposes work, delegates to children, and must respond coherently to partial failure benefits from a verified plan that makes the assumptions explicit and the recovery path structural rather than ad hoc.</p>
 <details class="counterpoints">
 <summary>Counterpoints & Discussion</summary>
 <div class="counterpoints-body">
