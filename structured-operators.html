@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structured Operators | Mario Garrido</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/base.css">
+    <style>
+        .wip-banner {
+            background: #fff0f0;
+            border: 2px solid #c00;
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            color: #900;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        [data-theme="dark"] .wip-banner {
+            background: #2b1414;
+            border-color: #a33;
+            color: #e8a0a0;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 60px 120px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .content-wrapper {
+            min-width: 0;
+            max-width: 900px;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-faint);
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .meta {
+            color: var(--text-faint);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        #content {
+            background: transparent;
+        }
+
+        #content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 56px 0 20px 0;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+            padding-top: 8px;
+        }
+
+        #content h2:first-child {
+            margin-top: 0;
+        }
+
+        #content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 36px 0 16px 0;
+            color: var(--text);
+            letter-spacing: -0.2px;
+            line-height: 1.35;
+        }
+
+        #content p {
+            margin-bottom: 1.5em;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        #content ul, #content ol {
+            margin-bottom: 1.5em;
+            padding-left: 24px;
+        }
+
+        #content li {
+            margin-bottom: 0.65em;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        #content li ul {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        #content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        #content code {
+            background: var(--bg-alt);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 14px;
+            color: var(--text);
+            border: 1px solid var(--border-faint);
+        }
+
+        #content pre {
+            background: var(--bg-alt);
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin-bottom: 1.5em;
+            border: 1px solid var(--border-light);
+        }
+
+        #content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-muted);
+            border: none;
+            font-size: 13px;
+        }
+
+        #content a {
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: underline;
+            text-decoration-color: var(--border-light);
+            transition: text-decoration-color 0.2s;
+        }
+
+        #content a:hover {
+            text-decoration-color: var(--text);
+        }
+
+        #content a.citation {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.88em;
+        }
+
+        #content a.citation:hover {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        #content hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 48px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masthead-inner {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .container {
+                padding: 40px 24px 80px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            #content h2 {
+                font-size: 22px;
+            }
+
+            #content h3 {
+                font-size: 17px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/sidebar-toc.css">
+    <script src="assets/sidebar-toc.js"></script>
+    <link rel="stylesheet" href="assets/sticky-header.css">
+    <script src="assets/sticky-header.js"></script>
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-inner">
+            <a href="index.html" class="logo">Mario Garrido</a>
+            <div class="masthead-right">
+                <div class="nav-links">
+                    <a href="writings.html">Writings</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="cv.html">CV</a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Contents</h3>
+            <nav>
+                <ul>
+                    <li><a href="#premise">1. Premise</a></li>
+                    <li><a href="#saliency">2. Saliency vs. Extensionality</a>
+                        <ul class="subsection">
+                            <li><a href="#output-bias">2.1 The Output-Length Bias</a></li>
+                            <li><a href="#attention-dilution">2.2 Attention Dilution on Long Inputs</a></li>
+                            <li><a href="#decode-economics">2.3 Decode and KV-Cache Economics</a></li>
+                            <li><a href="#architecture-mismatch">2.4 Enumeration vs. Sequence Prediction</a></li>
+                            <li><a href="#failure-mode">2.5 The Resulting Failure Mode</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#multiturn">3. The Multi-Turn Workaround</a>
+                        <ul class="subsection">
+                            <li><a href="#refactor-example">3.1 The Refactor Example</a></li>
+                            <li><a href="#scratchpads">3.2 Scratchpads and Task Lists</a></li>
+                            <li><a href="#orchestration-tax">3.3 The Orchestration Tax</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#coding-shortcut">4. The Coding Shortcut</a>
+                        <ul class="subsection">
+                            <li><a href="#rename-example">4.1 The Rename Example</a></li>
+                            <li><a href="#why-it-works">4.2 Why It Works</a></li>
+                            <li><a href="#where-it-breaks">4.3 Where It Breaks</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#proposal">5. A Generalized Operator Language</a>
+                        <ul class="subsection">
+                            <li><a href="#selectors">5.1 Selectors, Cursors, Collections</a></li>
+                            <li><a href="#programmatic-agentic">5.2 Programmatic and Agentic Operators</a></li>
+                            <li><a href="#structured-classes">5.3 Operators Over Structured-Agency Classes</a></li>
+                            <li><a href="#apply">5.4 Apply: Tool Dispatch Over Typed Collections</a></li>
+                            <li><a href="#parallel-delegation">5.5 Parallel Cognitive Delegation</a></li>
+                            <li><a href="#rlm-connection">5.6 Connection to Recursive Language Models</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#open">6. Open Questions</a></li>
+                    <li><a href="#references">References</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1>Structured Operators</h1>
+                <div class="meta">Mario Garrido • May 2026 • Wireframe</div>
+            </div>
+
+            <div id="content">
+
+<div class="wip-banner">
+<strong>Wireframe.</strong> This piece extends <a href="structured-agency.html">Structured Agency</a> with a typed operator language over Selectors / Cursors / Collections, with <code>apply</code> as the principled lift of the harness's tool-calling fan-out. The argument runs end-to-end in §5; surrounding sections may still tighten.
+</div>
+
+<h2 id="premise">1. Premise</h2>
+
+<p>An agent given a task like <em>"extract every pattern matching X from this corpus,"</em> <em>"modify all files that import Y,"</em> or <em>"flag every problematic statement in this paragraph"</em> is being asked for an <strong>extensional</strong> answer — one that is correct only if it covers the full set. Large Language Models, as inference engines, are not built for extensionality. They are built for <strong>saliency</strong>: the most striking, the most representative, the most prompt-shaped few items. The gap between what we ask of agents and what the underlying model is structurally biased to deliver is the central pressure described here.</p>
+
+<p>The thesis: <strong>any agent that wants to act extensionally must, at some point, leave the model and run code.</strong> Not because code is more elegant, but because the cost surface of the transformer makes extensionality economically irrational inside a single completion. This piece traces the mechanism (§2), the workaround the field has converged on (§3), the cheap escape hatch agents already use (§4), and a generalized operator language built atop the <a href="structured-agency.html">Structured Agency</a> class system as the principled version of that escape hatch (§5).</p>
+
+<hr>
+
+<h2 id="saliency">2. Saliency vs. Extensionality</h2>
+
+<p>Three independent forces — preference-data length bias, attention dilution on long inputs, and the asymmetric economics of decode — push generation toward short, salience-weighted outputs, and underneath them sits a deeper architectural mismatch: enumeration is a set-construction task being performed by a sequence predictor. They compose. Each is enough on its own to discourage a model from enumerating a full set; together they make extensionality something the model will <em>attempt</em> when explicitly asked, but often fail at — silently truncating, hedging with "and others," fabricating plausible-shaped items to round out the list, or simply stopping early. The failure is not always visible to the agent that called it.</p>
+
+<h3 id="output-bias">2.1 The Output-Length Bias</h3>
+
+<p>RLHF reward models systematically reward longer responses on aesthetic grounds <a class="citation" href="#ref-rlhf-length">[1]</a>, but the more interesting bias for our purposes is the opposite tail: in <em>operator</em> tasks (extract, list, classify, modify), models trained on instruction-tuning preference data tend toward terse, summary-shaped completions over enumerative ones. Length-controlled win-rate evaluations have shown that judges prefer verbosity when the answer is a single argument <a class="citation" href="#ref-rlhf-length">[1]</a>, but an explicit list of forty matches is a different output shape — one whose marginal items contribute little additional reward and substantial additional risk of error. The model's prior is to compress.</p>
+
+<p>The practical consequence: ask "find all X in this document" and the typical generation produces a representative sample plus an ellipsis or a hedge ("among others," "for example"). The completion shape is the one rewarded during training; enumeration is not.</p>
+
+<h3 id="attention-dilution">2.2 Attention Dilution on Long Inputs</h3>
+
+<p>As input length grows, attention is zero-sum across an increasing number of tokens, and the share allocated to any single evidence token shrinks. Recent work names this <strong>score dilution</strong> and treats it as a fundamental limitation of the architecture, distinct from positional bias <a class="citation" href="#ref-tttlc">[2]</a>. The companion finding — that <em>context length alone</em> degrades performance even when retrieval is perfect <a class="citation" href="#ref-context-length">[3]</a> — rules out the convenient explanation that long-context failures are just bad retrieval.</p>
+
+<p>The original <em>Lost in the Middle</em> paper <a class="citation" href="#ref-lost-middle">[4]</a> showed the U-shaped attention bias: tokens at the start and end of a long input dominate, and material in the middle is systematically underweighted. <em>Found in the Middle</em> <a class="citation" href="#ref-found-middle">[5]</a> pinpointed this as an intrinsic positional bias in the attention distribution itself. The aggregate effect is that as a prompt grows, the model increasingly attends to <strong>salient</strong> regions — boundaries, repeated patterns, surface markers — and underweights uniform middle content. Extensional tasks, by definition, require uniform attention across the full input. Score dilution is the architectural reason that requirement is hard to meet.</p>
+
+<h3 id="decode-economics">2.3 Decode and KV-Cache Economics</h3>
+
+<p>Even if the model wanted to enumerate the full extension, the cost surface punishes it. Inference splits into a compute-bound prefill phase (the input is processed in parallel) and a memory-bandwidth-bound decode phase (tokens are emitted one at a time, each step reading the entire KV cache to compute attention) <a class="citation" href="#ref-inference-guide">[6]</a>. Output tokens are 3–10× more expensive than input tokens at every major API <a class="citation" href="#ref-inference-guide">[6]</a><a class="citation" href="#ref-token-econ">[7]</a> precisely because of this asymmetry: prefill amortizes across tokens, decode does not. Cached input is cheaper still — typically an order of magnitude — when the prefix can be reused <a class="citation" href="#ref-token-econ">[7]</a>.</p>
+
+<p>This produces a sharp economic preference for <strong>short outputs over long ones</strong> and for <strong>repeated calls with cached prefixes over single long completions</strong>. An extensional generation — say, a thousand-line list of every match in a corpus — pays the maximum decode bill. The same task, decomposed into a fan-out of short calls or a single tool call that returns a structured result without decoding, pays a small fraction of it.</p>
+
+<h3 id="architecture-mismatch">2.4 Enumeration vs. Sequence Prediction</h3>
+
+<p>Beneath the three pressures sits an architectural mismatch. Enumeration is a <strong>set-construction</strong> task — complete coverage, no duplicates, a principled stopping condition — but a decoder-only transformer is a <strong>sequence predictor</strong>. There is no native primitive for "members covered so far," "members still outstanding," or "set membership without duplication." Each of those properties has to be reconstructed at every decode step from the literal prefix that has already been emitted into the context window.</p>
+
+<p>Two consequences follow. The dilution that hurts long inputs (§2.2) recurs on the <em>output</em> side as the enumeration grows: the longer the list emitted, the more attention is spent on the tail of the model's own generation rather than on the source material it is meant to be enumerating. And stopping is itself a token decision, governed by the same priors as every other token. The architecture has no internal completeness predicate that fires when "every member has been covered" — the end of the enumeration is whichever closing token wins the next decode under the brevity, attention, and cost pressures from §2.1–§2.3.</p>
+
+<p>Neutralize the other three forces — train the model to prefer long outputs, fix attention dilution, make decode free — and the mismatch is still there. A sequence model can simulate set construction over short, well-bounded extensions, but the simulation degrades with cardinality, and the architecture provides no signal when it has.</p>
+
+<h3 id="failure-mode">2.5 The Resulting Failure Mode</h3>
+
+<p>Stack the four pressures and a coherent failure mode emerges. The model:</p>
+
+<ul>
+    <li>Prefers short, summary-shaped outputs (training prior).</li>
+    <li>Underweights middle-of-context evidence as inputs grow (attention dilution).</li>
+    <li>Pays a steep marginal cost per emitted token (inference economics).</li>
+    <li>Has no native set-construction primitive on which to ground completeness (architectural mismatch).</li>
+</ul>
+
+<p>Asked for an extensional answer, it tries. It begins enumerating, but the same forces that discouraged the attempt now degrade it mid-completion: items in the middle of the input are underweighted, the marginal token gets more expensive as the context grows, the trained prior nudges toward wrap-up, and there is no internal predicate that knows when "all" has been reached. The result is a list that <em>looks</em> extensional — confidently delivered, plausibly shaped — but is silently incomplete or partially fabricated. The agent calling the model has no signal that anything was missed. This is the worst kind of failure for almost any production agent task that has the words <em>all</em>, <em>every</em>, or <em>each</em> in its specification.</p>
+
+<hr>
+
+<h2 id="multiturn">3. The Multi-Turn Workaround</h2>
+
+<h3 id="refactor-example">3.1 The Refactor Example</h3>
+
+<p>Concrete case. An agent is asked: <em>"refactor every function in this codebase that calls <code>parseDate</code> so it accepts a timezone argument."</em> The current dominant pattern is a two-phase loop:</p>
+
+<ol>
+    <li><strong>Discover.</strong> Use <code>grep</code>/<code>rg</code> or a code-search tool to enumerate the call sites. The output is structured (a list of file:line matches) and cheap to produce — the model never has to decode it.</li>
+    <li><strong>Operate.</strong> Iterate over the discovered list, opening each file in turn, generating the edit, and applying it. One file per turn, sometimes one function per turn.</li>
+</ol>
+
+<p>The discovery step works <em>because</em> it is delegated to a deterministic tool. The model never tries to enumerate call sites from memory. The operate step works because each turn's input is small enough to keep attention concentrated on the file under edit. Extensionality is recovered, but only by paying for it in serial turns.</p>
+
+<h3 id="scratchpads">3.2 Scratchpads and Task Lists</h3>
+
+<p>More sophisticated agents externalize the iteration state into a scratchpad — a checked task list, a file of pending TODOs, an explicit "remaining" set. This is the move from implicit to explicit orchestration. It helps because it converts a property the model is bad at (remembering across many turns where it is in a long enumeration) into a property a tool is good at (maintaining a list). The agent's contribution per turn shrinks to: read the next item, perform a small unit of work, mark it done.</p>
+
+<p>The scratchpad is doing the same job as the discovery step in §3.1, but for the <em>plan</em> rather than the <em>data</em>: it externalizes extension to a substrate the model can read from instead of generate.</p>
+
+<h3 id="orchestration-tax">3.3 The Orchestration Tax</h3>
+
+<p>The serial loop is correct but slow. Every turn pays:</p>
+
+<ul>
+    <li>A round-trip latency cost (network + queueing + scheduling).</li>
+    <li>A planning-token cost (each turn the model re-reads the task, re-orients, decides what to do).</li>
+    <li>A context-management cost (older turns are summarized or evicted, sometimes with information loss).</li>
+    <li>A drift cost — the longer the loop, the higher the chance the agent forgets a constraint, double-edits a file, or skips an item.</li>
+</ul>
+
+<p>For a hundred-call sites this is annoying; for ten thousand, it is unworkable. The orchestration tax scales linearly with extension, which is exactly the wrong scaling.</p>
+
+<hr>
+
+<h2 id="coding-shortcut">4. The Coding Shortcut</h2>
+
+<h3 id="rename-example">4.1 The Rename Example</h3>
+
+<p>Watch a competent agent handle <em>"rename function <code>fooBar</code> to <code>foo_bar</code> across the repository"</em> and a different pattern often appears: the agent does not iterate. It writes a small script — a <code>sed</code>/<code>perl</code>/AST-rewrite invocation — that finds every appearance and applies the change in one execution. Then it runs the script, checks the diff, and reports.</p>
+
+<p>This is both laziness and being smart. The agent has noticed that the <em>operation</em> is expressible as a pure function from source-state to source-state, and has chosen to <strong>encode the entire output as a program</strong> rather than emit it as decoded tokens.</p>
+
+<h3 id="why-it-works">4.2 Why It Works</h3>
+
+<p>The script is a closed-form representative for the entire extension. The model only has to decode the <em>generator</em> of the answer, not the answer itself — the answer is whatever rows of edits the script produces when it runs against the actual source. This sidesteps every pressure from §2 simultaneously:</p>
+
+<ul>
+    <li><strong>No output-length cost.</strong> The decoded artifact is a few dozen lines; the realized effect is unbounded.</li>
+    <li><strong>No attention dilution.</strong> The model never had to attend to the corpus in the first place.</li>
+    <li><strong>No orchestration tax.</strong> The execution is deterministic and runs in a single subprocess, not a turn loop.</li>
+</ul>
+
+<p>Coding is not a stylistic choice the agent makes. It is the only known mechanism for delivering extensional answers without paying extensional decode costs.</p>
+
+<h3 id="where-it-breaks">4.3 Where It Breaks</h3>
+
+<p>The shortcut works when the operation is uniform — a single transformation applied identically to every member of the set. It breaks the moment the operation is heterogeneous: <em>refactor each call site, but each one needs a different argument depending on what the surrounding function does</em>. A regex cannot make that decision. A naive script either oversimplifies (treating heterogeneous cases as homogeneous, producing broken code) or balloons into a special-case nest that no longer fits in the model's working window.</p>
+
+<p>This is the pinch point. Pure code scales to large extensions but only for shallow per-item decisions. Pure model calls scale to deep per-item decisions but only for small extensions. Most real agent tasks live in the middle: <em>large extension, non-trivial per-item judgment</em>. Neither side of the existing toolkit reaches that quadrant cleanly.</p>
+
+<hr>
+
+<h2 id="proposal">5. A Generalized Operator Language</h2>
+
+<p>The escape from §4.3 is to keep the programmatic skeleton — a script-shaped orchestration the model emits once — but allow individual operations <em>inside</em> that skeleton to be model calls rather than primitive transforms. The skeleton stays cheap and verifiable; the per-item judgment goes where it belongs, in a contained subagent invocation. The remainder of this section sketches the vocabulary that makes such skeletons composable.</p>
+
+<h3 id="selectors">5.1 Selectors, Cursors, Collections</h3>
+
+<p>Before lifting operators onto typed classes, we need a vocabulary for the <em>sets</em> those operators act on. The proposal uses three primitives, in the spirit of set-builder notation and database cursors:</p>
+
+<ul>
+    <li><strong>Selector</strong> — a <em>declarative description</em> of a set: <em>"all tasks such that the status is open and the priority is at least 3."</em> A Selector is a typed predicate against a typed world. It has no cardinality, no materialized members, and no I/O cost. It is just the question.</li>
+    <li><strong>Cursor</strong> — a <em>handle</em> on the materialization of a Selector. Discovering a Selector against the world produces a Cursor: a lazy, possibly bounded, possibly streaming iterator over members. A Cursor knows how to fetch in batches, page through external systems, and (optionally) stay open as the underlying set changes.</li>
+    <li><strong>Collection</strong> — a <em>resolved</em> set of typed members. Collections are where the algebra lives: <code>map</code>, <code>filter</code>, <code>reduce</code>, <code>flat_map</code>, <code>partition</code>, <code>group_by</code>, <code>union</code>, <code>intersect</code>, <code>diff</code>, <code>zip</code>. Each operator has fixed cardinality semantics (<code>map</code> preserves cardinality; <code>filter</code> is non-increasing; <code>reduce</code> collapses to a value).</li>
+</ul>
+
+<p>The shape of the pipeline:</p>
+
+<pre><code>Selector  →  .discover()  →  Cursor  →  .collect()  →  Collection
+                                                         │
+                                                         ▼
+                                          map / filter / reduce / partition / ...</code></pre>
+
+<p>The agent never enumerates members in tokens. It emits a Selector (the question) and an operator pipeline (what to do with the answer). The runtime is responsible for materializing, parallelizing, caching, and streaming.</p>
+
+<pre><code># 1. Pose a question. No I/O, no materialization, no cost.
+open_tasks: Selector[Task] = (
+    World.tasks
+        .where(lambda t: t.status == "open")
+        .where(lambda t: t.priority &gt;= 3)
+)
+
+# 2. Discover. The Cursor is now a handle on the (possibly large,
+#    possibly streaming) result set. Still no full materialization.
+cursor: Cursor[Task] = open_tasks.discover()
+
+# 3. Collect when the algebra needs the whole set; stream through
+#    the Cursor when it doesn't.
+discovered: Collection[Task] = cursor.collect()</code></pre>
+
+<p>The separation matters for three reasons:</p>
+
+<ul>
+    <li><strong>A Selector is auditable as a question.</strong> A reviewer can read it and decide whether the question is the right one before any inference fires.</li>
+    <li><strong>A Cursor lets the runtime decide how to materialize.</strong> It can page, parallelize, stream, or skip materialization entirely if the downstream operator is associative.</li>
+    <li><strong>A Collection is the only place the algebra runs.</strong> A <code>map</code> over a Collection always covers every member, full stop. There is no "the model summarized the tail."</li>
+</ul>
+
+<p>In set-builder notation, a Selector is <code>{ x ∈ World : P(x) }</code>; a Cursor is the iterator that lazily walks that set; a Collection is the realized set on which the algebra is closed. The agent writes the comprehension; the runtime walks it.</p>
+
+<h3 id="programmatic-agentic">5.2 Programmatic and Agentic Operators</h3>
+
+<p>The pseudo-Python in §5.1 makes it look as though every predicate and every per-element function is a programmatic callable — a Python lambda the runtime invokes deterministically. That is the default, but it is not the only mode, and the alternative is the move that distinguishes this operator language from a traditional query algebra. <strong>Each predicate, transformer, or aggregator can be either programmatic or agentic</strong>, and the algebra is closed under either choice.</p>
+
+<ul>
+    <li><strong>Programmatic mode.</strong> A callable: <code>lambda t: t.priority &gt;= 3</code>, <code>def deterministic_rewrite(site): ...</code>. Cheap, fast, fully auditable, runs in process. The right default whenever the per-element decision <em>can</em> be expressed as code.</li>
+    <li><strong>Agentic mode.</strong> A <em>textual instruction</em>: <code>"the user seems frustrated in the comments"</code>, <code>"rewrite each call site to use process_record instead of process, preserving its original behavior"</code>. The runtime evaluates the instruction per-element via a subagent call, returning the same typed shape the programmatic counterpart would have returned. The right choice when the per-element decision <em>cannot</em> be cleanly expressed as code.</li>
+</ul>
+
+<pre><code># A Selector with mixed predicates. The cheap programmatic filter narrows
+# the candidate set first; the agentic predicate handles what code can't.
+frustrated_open_tasks: Selector[Task] = (
+    World.tasks
+        .where(lambda t: t.status == "open")                 # programmatic
+        .where("the user seems frustrated in the comments")  # agentic
+)
+
+# A map with an agentic transformer. Cardinality and coverage guarantees
+# of `map` are unchanged; only the per-element semantics differ.
+edits: Collection[Edit] = discovered.map(
+    "rewrite each call site to use process_record, "
+    "preserving its original behavior"
+)</code></pre>
+
+<p>Two properties of this polymorphism matter:</p>
+
+<ul>
+    <li><strong>An agentic predicate is sugar for an agentic <code>map</code> followed by <code>filter</code>.</strong> <code>Selector.where(text)</code> desugars to a per-element classifier call producing booleans, followed by a filter on the result. Promoting it to a first-class predicate keeps the algebra closed and the pipeline auditable; the alternative is a sprawl of bespoke per-element classifier scripts. This is precisely the case the user describes when there is no easy programmatic way to express the selector — describe the condition, and a per-item interpretation deduces membership.</li>
+    <li><strong>Programmatic narrows; agentic interprets.</strong> The discipline for cost is to push cheap programmatic filters as early in the pipeline as possible — they shrink the candidate set the agentic step has to interpret. An agentic predicate over the full corpus is expensive; an agentic predicate after a programmatic prefilter usually is not.</li>
+</ul>
+
+<p>This polymorphism is the contribution of the operator language relative to LINQ-style query algebras (which assume predicates are programmatic) and relative to free-form prompt-based agents (which have no algebra at all). The operator language keeps the algebra and lets predicates, transformers, and aggregators be either programmatic or agentic — chosen per operator, not per pipeline.</p>
+
+<h3 id="structured-classes">5.3 Operators Over Structured-Agency Classes</h3>
+
+<p><a href="structured-agency.html">Structured Agency</a> defines typed classes for the objects an agent manipulates — Queries, Evidence, Plans, Edits, Claims, Tasks. With the Selector / Cursor / Collection plumbing from §5.1, the standard collection algebra lifts cleanly onto these classes. Each operator's <em>structural</em> meaning is fixed; the <em>per-element</em> function can be a model call, a tool call, or a deterministic transform.</p>
+
+<p>The heterogeneous refactor from §4.3 — <em>"rename <code>process</code> to <code>process_record</code>, but only where it is the data-pipeline function and not the unrelated request handler"</em> — becomes:</p>
+
+<pre><code># Pose the question declaratively.
+sites: Selector[CallSite] = (
+    World.code
+        .of_type(CallSite)
+        .where(lambda s: s.callee.name == "process")
+)
+
+discovered: Collection[CallSite] = sites.discover().collect()
+
+# Per-site judgment is delegated to a subagent. The cardinality of
+# `edits` matches `discovered` exactly — the orchestration guarantees
+# coverage of the extension.
+edits: Collection[Edit] = discovered.map(
+    lambda s: agent.decide_refactor(
+        s,
+        context=s.surrounding_function,
+        rename_to="process_record",
+    )
+)
+
+# Set algebra over the results.
+risky, safe = edits.partition(lambda e: e.confidence &lt; 0.8)
+to_review: Collection[Edit] = risky.union(
+    edits.filter(lambda e: e.touches_public_api)
+)
+
+by_module: dict[str, Collection[Edit]] = safe.group_by(lambda e: e.module)
+total_loc: int = edits.reduce(lambda acc, e: acc + e.lines_changed, initial=0)
+
+# Side effects materialize when a Collection is dispatched to a write tool — see §5.4.
+safe.apply(write_to_disk_tool)
+to_review.apply(human_review_tool)</code></pre>
+
+<p>Three properties of this style:</p>
+
+<ul>
+    <li><strong>The orchestration is programmatic.</strong> A static read of the pipeline is sufficient to confirm that every member of the Collection was visited.</li>
+    <li><strong>The judgment is contained.</strong> Each <code>map</code> invocation is a subagent call with only the local context it needs. The model never decodes the full list; the script never needs to encode the per-site decision.</li>
+    <li><strong>The middle quadrant is reachable.</strong> Tasks that are <em>extensional in coverage</em> but <em>judgmental per element</em> — the gap pure scripts and pure model calls each fail to span — collapse to a one-line <code>map</code>.</li>
+</ul>
+
+<p>The <code>.apply(tool)</code> calls in the example are not a side-effect primitive; they are typed dispatch over the existing <a href="structured-agency.html">Structured Agency</a> tool-calling machinery. The next subsection makes that precise.</p>
+
+<h3 id="apply">5.4 Apply: Tool Dispatch Over Typed Collections</h3>
+
+<p><code>apply</code> is the operator the rest of §5 has been pointing toward, and it is not new infrastructure. <a href="structured-agency.html#why-tools-are-state">Structured Agency §3.3</a> already specifies the harness behavior:</p>
+
+<blockquote>"Tool calls generate K tasks. When the agent calls a tool, the harness creates a task for that call. K is one in the simplest case (a synchronous tool that returns a value). It is more than one when the tool's semantics are inherently parallel: a multi-query tool that fans out to several datasources creates one parent task and K child tasks; a batched action tool creates a parent and one task per item."</blockquote>
+
+<p>The Collection determines K declaratively. The Tool determines per-element semantics. The harness already tracks the parent and the K children. <code>apply</code> is the operator-algebra name for this lift: <strong>applying a Collection of typed Structure Class objects to a Tool</strong>. <a href="structured-agency.html#tools-as-state">Tools are themselves state</a> in the Structured Agency framing, so a typed <code>Tool[T → U]</code> is coherent with the rest of the type system rather than a foreign abstraction bolted on.</p>
+
+<h4>Type signature</h4>
+
+<pre><code>Collection[T].apply(tool: Tool[T → U]) → Collection[Result[U, T]]
+
+Result[U, T] = Ok[U] | Failure[T, Error]</code></pre>
+
+<p>A <code>Failure[T, Error]</code> preserves the input element, not just the error message. That makes the failed sub-Collection itself eligible for further operators — retry, route to a different Tool, escalate to human review — using the same algebra as the success path.</p>
+
+<h4>map vs. apply</h4>
+
+<ul>
+    <li><strong><code>map(f)</code></strong> — pointwise transformation by an arbitrary callable. No structural guarantees beyond cardinality.</li>
+    <li><strong><code>apply(tool)</code></strong> — pointwise transformation by a Tool. Inherits the Tool's <a href="structured-agency.html#tool-design">validators, multi-level descriptions, introspective errors, and harness observability</a>. Inherits the harness's parent/child task tracking. The per-element semantics are auditable from the Tool definition alone.</li>
+</ul>
+
+<p><code>apply</code> is the typed, validated, observable specialization of <code>map</code>. When the per-element function is a Tool with a defined input type, prefer <code>apply</code>; when it is an arbitrary lambda or in-process function, <code>map</code> is the right primitive.</p>
+
+<h4>Worked example</h4>
+
+<pre><code># A Tool with a typed input domain. See Structured Agency §3.4 (#tool-design).
+refactor_site: Tool[CallSite, Edit] = Tool(
+    name="refactor_site",
+    input_type=CallSite,
+    output_type=Edit,
+    validators=[CallSite.has_resolved_callee],
+    description="Rewrite a single call site to use the renamed callee...",
+    handler=...,
+)
+
+# Selector → Cursor → Collection (§5.1).
+discovered: Collection[CallSite] = (
+    World.code
+        .of_type(CallSite)
+        .where(lambda s: s.callee.name == "process")
+        .discover()
+        .collect()
+)
+
+# apply: one parent task, K child tasks, one per CallSite.
+results: Collection[Result[Edit, CallSite]] = discovered.apply(refactor_site)
+
+# Successes and failures are themselves Collections.
+edits: Collection[Edit] = results.successes()
+failures: Collection[Failure[CallSite]] = results.failures()
+
+# Retry/escalation is just another apply.
+escalated: Collection[Result[Edit, CallSite]] = (
+    failures.map(lambda f: f.input)
+            .apply(human_review_tool)
+)
+
+# Side effects come from write-tools, not from apply itself.
+edits.apply(write_to_disk_tool)</code></pre>
+
+<h4>Why this matters</h4>
+
+<ul>
+    <li><strong>Tool selection is structural.</strong> Which tool handles which Collection is visible in the pipeline, not buried inside a <code>map</code> lambda. A reviewer reads <code>discovered.apply(refactor_site)</code> and knows what semantics are about to fire.</li>
+    <li><strong>Per-element behavior is inherited, not re-specified.</strong> Validators, error introspection, and observability come from the existing Tool definition. The operator language adds no new contract for any of them.</li>
+    <li><strong>The K-tasks fan-out already exists.</strong> The harness has been doing parent/child task tracking for batched tool calls since Structured Agency. <code>apply</code> lifts that behavior to the operator algebra so it is named, composable, and reusable across Collections.</li>
+</ul>
+
+<h4>Side effects vs. transformations</h4>
+
+<p>Under this framing, <code>apply</code> is neutral. Side effects come from <em>write-tools</em> — tools whose handler does I/O, mutates external state, or invokes a human. A <code>Collection[Edit]</code> becomes a side effect only when applied to a tool whose input type is <code>Edit</code> and whose semantics include writes. The algebra over Collections stays pure; the dispatch is typed and observable. This is the resolution to the §5.3 question of what <code>.apply()</code> "really" does — it is exactly tool dispatch, no more, with the orchestration coming for free from the Structured Agency harness.</p>
+
+<h3 id="parallel-delegation">5.5 Parallel Cognitive Delegation</h3>
+
+<p>Once orchestration is programmatic, the per-element calls in a <code>map</code> or <code>apply</code> over a Collection are independent and can be issued in parallel — the runtime can pick a parallel executor without the agent having to plan it. Under <code>apply</code>, the parallelism is exactly the K-tasks fan-out from §5.4: one parent task, K independent children, aggregated back into a typed <code>Collection[Result]</code>. The orchestration tax from §3.3 collapses: latency is bounded by the slowest single call, not by the cardinality of the set. KV-cache economics work in our favor here too — and they work better for <code>apply</code> than for <code>map</code>, because a Tool's prompt prefix is stable by construction (it is part of the Tool definition), so cached prefixes hit reliably across the K children <a class="citation" href="#ref-token-econ">[7]</a>.</p>
+
+<p>This is the structural answer to <em>"how do you handle ten thousand call sites?"</em> — you don't. You issue ten thousand cheap, independent, cache-warm calls and aggregate the results. The agent's cognitive load stays constant.</p>
+
+<h3 id="rlm-connection">5.6 Connection to Recursive Language Models</h3>
+
+<p>The proposal is adjacent to the <strong>Recursive Language Models</strong> framing of Zhang, Kraska, and Khattab <a class="citation" href="#ref-rlm">[8]</a>, which treats long prompts as part of an external environment that the model programmatically examines, decomposes, and recursively calls itself over. RLM's empirical claim is that this recursion can process inputs two orders of magnitude beyond the model's context window while matching or beating long-context scaffolds at comparable cost <a class="citation" href="#ref-rlm">[8]</a>.</p>
+
+<p>The operator language proposed here is the typed, structured-class version of the same recursion: instead of free-form recursive calls over arbitrary text snippets, the recursion is constrained to operators that compose over Structured Agency classes. The constraint is the point — it is what makes the orchestration auditable, what guarantees coverage of the extension, and what lets the executor parallelize without the agent having to plan the parallelism. <code>apply</code> is the typed, observable specialization of RLM-style recursion when the recursion is bounded: a single fan-out level, dispatched to a Tool whose semantics are known statically.</p>
+
+<hr>
+
+<h2 id="open">6. Open Questions</h2>
+
+<ul>
+    <li><strong>Aggregation semantics.</strong> A <code>reduce</code> over agent outputs needs commutativity and associativity it does not get for free; what does a principled merge look like for typed classes like <em>Edit</em> or <em>Claim</em>? Per-element <code>apply</code> answers per-element semantics, but it does not answer combine.</li>
+    <li><strong>Cost-aware planning.</strong> When should the agent <code>map</code>, <code>apply</code>, fall back to a deterministic script, or revert to the §3 multi-turn loop? A static heuristic feels wrong; a learned planner feels premature.</li>
+    <li><strong>Subagent contamination.</strong> Parallel <code>apply</code> children share cache prefixes by construction — does that introduce subtle correlations across nominally independent decisions, and how would we detect it?</li>
+    <li><strong>Tool-domain coverage.</strong> <code>apply</code> assumes a Tool exists with the right typed input. What is the discipline for deciding when an operation deserves a first-class Tool versus when it should stay a <code>map</code> lambda? The choice has structural consequences (auditability, observability, cache behavior) that are easy to underrate.</li>
+    <li><strong>Failure routing as policy.</strong> A <code>Collection[Failure]</code> can be retried, escalated, or dropped. Which choice is right depends on the Tool, the cost of the input, and the consequences of being wrong. The operator algebra exposes the choice; it does not make it.</li>
+</ul>
+
+<hr>
+
+<h2 id="references">References</h2>
+
+<p id="ref-rlhf-length">[1] P. Singhal et al., "A Long Way to Go: Investigating Length Correlations in RLHF." <a href="https://openreview.net/forum?id=G8LaO1P0xv">openreview.net/forum?id=G8LaO1P0xv</a>. See also "Explaining Length Bias in LLM-Based Preference Evaluations," <em>arXiv:2407.01085</em>. <a href="https://arxiv.org/abs/2407.01085">arxiv.org/abs/2407.01085</a></p>
+
+<p id="ref-tttlc">[2] "Test-Time Training for Long-Context LLMs," <em>arXiv:2512.13898</em> (December 2025) — identifies <em>score dilution</em> as a fundamental long-context limitation. <a href="https://arxiv.org/abs/2512.13898">arxiv.org/abs/2512.13898</a></p>
+
+<p id="ref-context-length">[3] "Context Length Alone Hurts LLM Performance Despite Perfect Retrieval," <em>arXiv:2510.05381</em>. <a href="https://arxiv.org/abs/2510.05381">arxiv.org/abs/2510.05381</a></p>
+
+<p id="ref-lost-middle">[4] N. F. Liu et al., "Lost in the Middle: How Language Models Use Long Contexts," <em>TACL</em> 2024 / <em>arXiv:2307.03172</em>. <a href="https://arxiv.org/abs/2307.03172">arxiv.org/abs/2307.03172</a></p>
+
+<p id="ref-found-middle">[5] "Found in the Middle: Calibrating Positional Attention Bias Improves Long Context Utilization," <em>ACL Findings</em> 2024. <a href="https://openreview.net/forum?id=fPmScVB1Td">openreview.net/forum?id=fPmScVB1Td</a></p>
+
+<p id="ref-inference-guide">[6] "LLM Inference: Prefill, Decode, KV Cache &amp; Cost Guide," Morph (2026). <a href="https://www.morphllm.com/llm-inference">morphllm.com/llm-inference</a>. See also "Mastering LLM Techniques: Inference Optimization," NVIDIA Technical Blog. <a href="https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/">developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization</a></p>
+
+<p id="ref-token-econ">[7] "Token Economics Vocabulary: The LLM Cost Glossary." <a href="https://www.digitalapplied.com/blog/token-economics-vocabulary-guide-llm-cost-2026">digitalapplied.com/blog/token-economics-vocabulary-guide-llm-cost-2026</a>. See also "KV Cache Explained," Morph. <a href="https://www.morphllm.com/kv-cache-explained">morphllm.com/kv-cache-explained</a></p>
+
+<p id="ref-rlm">[8] A. L. Zhang, T. Kraska, O. Khattab, "Recursive Language Models," <em>arXiv:2512.24601</em>. <a href="https://arxiv.org/abs/2512.24601">arxiv.org/abs/2512.24601</a></p>
+
+<hr>
+<p><strong>Document Status</strong>: Wireframe<br>
+<strong>Last Updated</strong>: 2026-05-04<br>
+<strong>Author</strong>: Mario Garrido</p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/theme-toggle.js"></script>
+    <script>
+        initStickyHeader();
+        initSidebarTOC({
+            sectionSelector: '#content h2, #content h3',
+            scrollOffset: 40
+        });
+    </script>
+</body>
+</html>

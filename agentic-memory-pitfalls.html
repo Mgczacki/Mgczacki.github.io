@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Memory's Pitfalls | Mario Garrido</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/base.css">
+    <style>
+        .wip-banner {
+            background: #fff0f0;
+            border: 2px solid #c00;
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            color: #900;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        [data-theme="dark"] .wip-banner {
+            background: #2b1414;
+            border-color: #a33;
+            color: #e8a0a0;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 60px 120px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .content-wrapper {
+            min-width: 0;
+            max-width: 900px;
+        }
+
+        .page-header {
+            margin-bottom: 48px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-faint);
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        .meta {
+            color: var(--text-faint);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        #content {
+            background: transparent;
+        }
+
+        #content h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 56px 0 20px 0;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            line-height: 1.3;
+            padding-top: 8px;
+        }
+
+        #content h2:first-child {
+            margin-top: 0;
+        }
+
+        #content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 36px 0 16px 0;
+            color: var(--text);
+            letter-spacing: -0.2px;
+            line-height: 1.35;
+        }
+
+        #content p {
+            margin-bottom: 1.5em;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        #content ul, #content ol {
+            margin-bottom: 1.5em;
+            padding-left: 24px;
+        }
+
+        #content li {
+            margin-bottom: 0.65em;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        #content li ul {
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+        #content strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        #content code {
+            background: var(--bg-alt);
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 14px;
+            color: var(--text);
+            border: 1px solid var(--border-faint);
+        }
+
+        #content a {
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: underline;
+            text-decoration-color: var(--border-light);
+            transition: text-decoration-color 0.2s;
+        }
+
+        #content a:hover {
+            text-decoration-color: var(--text);
+        }
+
+        #content a.citation {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.88em;
+        }
+
+        #content a.citation:hover {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        #content hr {
+            border: none;
+            border-top: 1px solid var(--border-light);
+            margin: 48px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: none;
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masthead-inner {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                gap: 16px;
+            }
+
+            .container {
+                padding: 40px 24px 80px;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            #content h2 {
+                font-size: 22px;
+            }
+
+            #content h3 {
+                font-size: 17px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="assets/sidebar-toc.css">
+    <script src="assets/sidebar-toc.js"></script>
+    <link rel="stylesheet" href="assets/sticky-header.css">
+    <script src="assets/sticky-header.js"></script>
+</head>
+<body>
+    <header class="masthead">
+        <div class="masthead-inner">
+            <a href="index.html" class="logo">Mario Garrido</a>
+            <div class="masthead-right">
+                <div class="nav-links">
+                    <a href="writings.html">Writings</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="cv.html">CV</a>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Contents</h3>
+            <nav>
+                <ul>
+                    <li><a href="#premise">1. Premise</a></li>
+                    <li><a href="#background">2. Background</a>
+                        <ul class="subsection">
+                            <li><a href="#bg-search">2.1 The Search Engine Paradigm</a></li>
+                            <li><a href="#bg-rag">2.2 RAG Blurs Document and Operator</a></li>
+                            <li><a href="#bg-agents-as-operators">2.3 Agents as Operators</a></li>
+                            <li><a href="#bg-structure">2.4 Where Structure Helps and Where It Doesn't</a></li>
+                            <li><a href="#bg-retrieval-problem">2.5 The Retrieval Problem by Other Names</a></li>
+                            <li><a href="#bg-workaround">2.6 The Current Workaround: Generate Your Own Structure</a></li>
+                            <li><a href="#bg-thesis">2.7 The Thesis: AgentDB</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#prior-research">3. Prior Research</a>
+                        <ul class="subsection">
+                            <li><a href="#prior-graphrag">3.1 GraphRAG &amp; the Graph Layer</a></li>
+                            <li><a href="#prior-hybrid">3.2 Hybrid Graph + Vector Retrieval</a></li>
+                            <li><a href="#prior-temporal">3.3 Temporal Knowledge Graphs</a></li>
+                            <li><a href="#prior-virtual">3.4 Virtual Context &amp; Agent-Controlled Memory</a></li>
+                            <li><a href="#prior-extraction">3.5 Extraction, Consolidation, Taxonomy</a></li>
+                            <li><a href="#prior-substrate">3.6 Incremental Indexing Substrate</a></li>
+                            <li><a href="#prior-evaluation">3.7 Evaluation</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#pitfalls">4. The Pitfalls</a></li>
+                    <li><a href="#layered">5. A Layered Sketch</a></li>
+                    <li><a href="#open">6. Open Questions</a></li>
+                    <li><a href="#references">References</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1>Agentic Memory's Pitfalls</h1>
+                <div class="meta">Mario Garrido • May 2026 • Wireframe</div>
+            </div>
+
+            <div id="content">
+
+<div class="wip-banner">
+<strong>Wireframe.</strong> This is a working scaffold, not a finished essay. The structure here is a frame for prior-research integration; each pitfall will be expanded into prose with examples in later passes.
+</div>
+
+<h2 id="premise">1. Premise</h2>
+
+<p>"Memory" is the wrong abstraction for long-horizon agents. The interesting object is a <strong>live, inspectable context substrate</strong> — fresh, traceable, temporally aware, and governed by explicit write policies. Most production "agent memory" stacks today are a single store (vectors, sometimes a graph) that conflates raw events, derived facts, episodic traces, and procedural rules under one schema and lifecycle. Almost every pitfall in §4 follows from that single design choice.</p>
+
+<p>But conflation is a symptom, not a root cause. The deeper claim of this piece is that <strong>agents are still operating on retrieval infrastructure designed for humans.</strong> The dominant workarounds — build your own knowledge graph, build your own LLM wiki, build your own RAG variant — are bespoke reimplementations rather than reusable infrastructure. Agents need their search engine moment: a substrate (call it <em>AgentDB</em>) shaped around how agents actually operate, not around how a person types into a search box. §2 walks the framing that gets us there. §3 inventories the prior research that already addresses individual layers. §4 names the failure modes a purpose-built substrate would have to make impossible by construction.</p>
+
+<hr>
+
+<h2 id="background">2. Background</h2>
+
+<h3 id="bg-search">2.1 The Search Engine Paradigm</h3>
+
+<p>Web search starts from a simple premise: a human operator generates a query — often a very short one — and a set of documents is returned, ranked by relevance. The ranking model mixes term weights, document importance, recency, link structure, and personalization. Power users compose advanced operators (boolean, <code>site:</code>, <code>filetype:</code>, <code>intitle:</code>) that improve precision, but the central contract is the same: <strong>the engine returns ranked documents; the operator decides what to do with them.</strong> Search is fast. It does not reason. It does not synthesize. It does not act on the user's behalf. The locus of cognition sits with the human.</p>
+
+<h3 id="bg-rag">2.2 RAG Blurs Document and Operator</h3>
+
+<p>Traditional RAG inherits the search-engine contract but quietly violates it. <strong>Chunking creates a new document.</strong> The unit of retrieval is no longer the document the user authored; it is a synthetic fragment generated by an indexing decision (chunk size, overlap, splitting strategy). Retrieval techniques then drift further into operator territory: pulling contextual metadata associated with a chunk, bringing structurally matched information, expanding to surrounding chunks, hybrid (vector + lexical) retrieval, segmented retrieval restricted to a subset of chunks. Each enrichment is a small operator decision baked into the index. The result is that "retrieval" stops being a clean primitive — the engine is performing pre-ranking judgments that should belong to the consumer.</p>
+
+<h3 id="bg-agents-as-operators">2.3 Agents as Operators</h3>
+
+<p>It is worth being precise about what "operator" meant in the search-engine era. The operator was <em>the user</em> — a person doing research, with a query as one partial step toward a larger purpose. The tacit contract was that the engine returned a slice of relevance, not an answer; synthesis, judgment, and follow-up belonged to the operator. Better operators wrote better queries: ones more fit to the task at hand. The existence of <strong>specialized engines for specialized tasks</strong> — Google for the open web, Google Scholar for academic literature, code search engines for source — was itself a recognition that operator work depends on the engine being shaped to the kind of question being asked.</p>
+
+<p>Agentic workflows push that operator role onto the model itself. Coding agents are the cleanest example: given <strong>composable simple tools</strong> — <code>grep</code>, <code>ls</code>, <code>cat</code>, <code>head</code>, <code>tail</code>, <code>find</code> — an agent can perform progressive exploration over a structure, narrowing its scope as it learns. These primitives can be combined with RAG-like approaches for speed: memoization of past results, semantic indexes as cheap entry points, embeddings for fuzzy navigation. The agent acts as the operator that early Google assumed was the human: it generates queries, inspects results, decides what to do next.</p>
+
+<h3 id="bg-structure">2.4 Where Structure Helps and Where It Doesn't</h3>
+
+<p>This pattern thrives in <strong>small-scoped, highly structured environments</strong> — codebases, OS filesystems, well-typed APIs. The reason is not that the agent is smart there; it is that the environment exposes a <strong>bridging structure</strong> that can be traversed. A file imports modules; modules resolve to installed packages; packages declare dependencies; dependencies expose APIs; APIs are called from other files. Given enough effort, time, and cognitive budget, the full dependency graph is reachable, and the moving pieces of the system can be understood through structural traversal. <strong>The domain boundary is known, and traversable.</strong></p>
+
+<p>Most data is not like this. Unstructured documents — meetings, tickets, chat, support cases, research notes — have no canonical bridging structure. Even nominally structured data fails: cross-referencing between sources (entity disambiguation, "is this the same customer / same product / same incident?") cannot be solved at retrieval time without the data itself having been designed for it. There are too many unknowns.</p>
+
+<h3 id="bg-retrieval-problem">2.5 The Retrieval Problem by Other Names</h3>
+
+<p>The retrieval problem appears in the literature under several aliases — the memory problem, the context problem, the long-horizon state problem. Most non-cognitive failures in agentic systems trace back to it: <strong>when to perform retrieval, how to perform it, and when to trust the result.</strong> Under-retrieval is particularly nasty, because it produces false negatives that the agent has no signal for; the agent then proceeds with overconfidence in the completeness of an incomplete result.</p>
+
+<h3 id="bg-workaround">2.6 The Current Workaround: Generate Your Own Structure</h3>
+
+<p>The dominant response, when retrieval-on-unstructured-data underperforms, is to <em>generate</em> the missing structure. Karpathy's "LLM wiki" framing, Microsoft's GraphRAG <a class="citation" href="#ref-2">[2]</a>, and the broader family of structured-index approaches are different points on the same idea: extract entities, relations, summaries, and an index from raw data, then run retrieval over the synthetic structure rather than over raw text.</p>
+
+<p>The approach works. But it has not become infrastructure. Memory systems are not yet plug-and-play; each project re-implements its own variant. The cognitive cost — latency and token spend — to traverse, expand, and maintain these structures is high, and reindexing as the source data drifts is its own engineering problem (a substantial part of why CocoIndex exists; see §3.6).</p>
+
+<h3 id="bg-thesis">2.7 The Thesis: AgentDB</h3>
+
+<p>Search engines became infrastructure because they were designed around a specific operator: a human typing a short query into a box. The interface, the ranking model, the index format, and the latency budget were all shaped by what a human can usefully consume in a fraction of a second. <strong>Agents are a different operator.</strong> They have different semantic strengths (composition, structured tool use, iterated query refinement), different weaknesses (overconfidence under partial retrieval, narrow context windows, expensive long-horizon state), and a different operational profile (machine-speed query generation, programmatic consumption of results, willingness to run multi-step exploration if the cost model allows).</p>
+
+<p>The bet of this piece is that <strong>agentic memory will not be solved by stacking more retrieval tricks on top of human-era databases.</strong> The systems surveyed in §3 are early signals of what a purpose-built substrate — <em>AgentDB</em> — has to address: incremental indexing, lineage and provenance, temporal validity, hybrid retrieval planning, explicit write policies, taxonomic separation of memory types, and end-to-end evaluation. The pitfalls in §4 are the failure modes such a substrate has to make impossible by construction, not patchable by hand.</p>
+
+<hr>
+
+<h2 id="prior-research">3. Prior Research in Consideration</h2>
+
+<p>Before naming pitfalls, the relevant frameworks. These are organized by the layer of the stack they address rather than by chronology.</p>
+
+<h3 id="prior-graphrag">3.1 GraphRAG &amp; the Graph Layer</h3>
+
+<ul>
+    <li><strong>Microsoft GraphRAG</strong> — extracts an entity graph from a corpus and pre-generates community summaries so global, query-focused summarization can synthesize across many documents instead of pulling scattered chunks <a class="citation" href="#ref-2">[2]</a>.
+        <ul>
+            <li>Local search combines structured graph data with source-document text, then ranks/filters/prioritizes candidates to fit a fixed context window <a class="citation" href="#ref-3">[3]</a>.</li>
+            <li>Strength: global synthesis, entity/community structure.</li>
+            <li>Limit: indexing-time representation; freshness, temporal validity, contradiction, and write policy are out of scope.</li>
+        </ul>
+    </li>
+</ul>
+
+<h3 id="prior-hybrid">3.2 Hybrid Graph + Vector Retrieval</h3>
+
+<ul>
+    <li><strong>LightRAG</strong> — integrates graph structure with vector representations and uses a dual-level retrieval (low-level detail and high-level knowledge) <a class="citation" href="#ref-8">[8]</a>.</li>
+    <li><strong>HippoRAG</strong> — hippocampal-indexing analogy; orchestrates LLMs, knowledge graphs, and Personalized PageRank. Reports up to 20% gains on multi-hop QA and 10–30× cheaper / 6–13× faster than iterative retrieval like IRCoT <a class="citation" href="#ref-9">[9]</a>.</li>
+    <li>Design lesson: vector for <em>semantic entry</em>, graph for <em>relationship expansion</em>, source text for <em>evidence grounding</em>. Don't collapse the three.</li>
+</ul>
+
+<h3 id="prior-temporal">3.3 Temporal Knowledge Graphs</h3>
+
+<ul>
+    <li><strong>Zep / Graphiti</strong> — temporal knowledge graph as an agent-memory layer; facts are triplets with datetime attributes for when they become valid or invalid <a class="citation" href="#ref-10">[10]</a>.</li>
+    <li>Zep paper reports 94.8% on Deep Memory Retrieval (vs. MemGPT 93.4%), up to 18.5% accuracy improvement on LongMemEval, and ~90% latency reduction vs. baseline implementations <a class="citation" href="#ref-11">[11]</a>.</li>
+    <li>Use case fit: agents acting on changing user/business state — preferences, permissions, ticket lifecycle, code state. A timeless edge like <code>user — prefers — X</code> is a bug in this regime.</li>
+</ul>
+
+<h3 id="prior-virtual">3.4 Virtual Context &amp; Agent-Controlled Memory</h3>
+
+<ul>
+    <li><strong>MemGPT</strong> — virtual context management inspired by OS hierarchical memory; treats the context window as a managed resource, uses interrupts for system/user flow control <a class="citation" href="#ref-12">[12]</a>.</li>
+    <li><strong>Letta</strong> — exposes archival memory as a semantically searchable long-term store; agents query it through tools, can insert memories during conversations, can filter by tags; archival fragments cannot be pinned directly <a class="citation" href="#ref-13">[13]</a>.</li>
+    <li>Tradeoff: agency over memory introduces governance load — overfitting to a transient utterance, duplicating facts, persisting sensitive content. Memory operations must be tools with policy, observability, and review.</li>
+</ul>
+
+<h3 id="prior-extraction">3.5 Extraction, Consolidation, Taxonomy</h3>
+
+<ul>
+    <li><strong>Mem0</strong> — extraction-centric memory architecture: dynamically extracts, consolidates, and retrieves salient information from ongoing conversations; graph-memory variant for relational structure. Reports 26% relative LLM-as-judge improvement over OpenAI memory on LOCOMO, 91% lower p95 latency, &gt;90% token-cost savings vs. full context <a class="citation" href="#ref-14">[14]</a>.</li>
+    <li><strong>LangChain / LangMem</strong> — taxonomy: short-term (thread-scoped) vs. long-term (cross-session); within long-term, semantic / episodic / procedural <a class="citation" href="#ref-15">[15]</a>.
+        <ul>
+            <li>Hot-path writes: immediate availability, higher latency.</li>
+            <li>Background writes: lower path latency, requires consistency/frequency decisions.</li>
+        </ul>
+    </li>
+    <li><strong>Cognee</strong> — pipeline framework for AI memory apps; pluggable LLM, embedding, vector, and graph backends with custom tasks <a class="citation" href="#ref-16">[16]</a>.</li>
+</ul>
+
+<h3 id="prior-substrate">3.6 Incremental Indexing Substrate</h3>
+
+<ul>
+    <li><strong>CocoIndex</strong> — declarative, state-driven model: target state is a function of source data; Python frontend, Rust engine; "React for data engineering" framing <a class="citation" href="#ref-1">[1]</a><a class="citation" href="#ref-4">[4]</a>.
+        <ul>
+            <li>Fine-grained incremental processing at component/source-item, function/memoization, and target CRUD levels; content-hash fingerprints decide recomputation <a class="citation" href="#ref-4">[4]</a><a class="citation" href="#ref-5">[5]</a>.</li>
+            <li>Bidirectional lineage: forward source → derived (vector IDs, graph nodes); backward derived → source for precise deletion <a class="citation" href="#ref-5">[5]</a>.</li>
+            <li>Knowledge-graph example: LLM extraction guided by Python dataclasses, S-P-O triples, Neo4j export with primary-key dedup, Postgres for incremental tracking <a class="citation" href="#ref-6">[6]</a>.</li>
+            <li>Best understood as the <em>maintenance substrate under</em> GraphRAG, not GraphRAG itself; not a memory policy or retrieval planner.</li>
+        </ul>
+    </li>
+</ul>
+
+<h3 id="prior-evaluation">3.7 Evaluation</h3>
+
+<ul>
+    <li><strong>GraphRAG-Bench</strong> — built because traditional QA benchmarks under-measure reasoning; evaluates the full pipeline (graph construction → retrieval → generation) on college-level, domain-specific, multi-hop questions across 16 disciplines and 20 textbooks <a class="citation" href="#ref-7">[7]</a>.</li>
+    <li>Implication: nearest-neighbor recall is not the right top-line metric for agentic memory. Task success, reasoning coherence, freshness lag, and auditability are.</li>
+</ul>
+
+<hr>
+
+<h2 id="pitfalls">4. The Pitfalls</h2>
+
+<p>Each pitfall below pairs a common failure mode with the prior work that has already isolated it. The wireframe lists; later passes will turn each into a section with a concrete example.</p>
+
+<h3>4.1 Staleness — indexes drift from source-of-truth</h3>
+<ul>
+    <li>Re-indexing on every change is too slow and too expensive; not re-indexing is worse.</li>
+    <li>Symptom: agent confidently cites a deleted file, a closed ticket, a renamed function, a stale CRM field.</li>
+    <li>Frame: <strong>incremental dataflow</strong> (CocoIndex) <a class="citation" href="#ref-1">[1]</a><a class="citation" href="#ref-4">[4]</a><a class="citation" href="#ref-5">[5]</a>.</li>
+</ul>
+
+<h3>4.2 Lost provenance — "why did the agent believe that?"</h3>
+<ul>
+    <li>Embeddings, graph edges, and summaries are derived; without source linkage they cannot be invalidated, audited, or selectively deleted.</li>
+    <li>Symptom: a user retracts a fact and the system has no idea which derived artifacts to purge.</li>
+    <li>Frame: <strong>bidirectional lineage</strong> (CocoIndex) <a class="citation" href="#ref-5">[5]</a>.</li>
+</ul>
+
+<h3>4.3 Timeless edges — facts modeled as eternally true</h3>
+<ul>
+    <li>Real worlds have validity intervals: users move, prefs change, permissions expire, code is refactored.</li>
+    <li>Symptom: <code>user — prefers — X</code> survives long after the user said the opposite.</li>
+    <li>Frame: <strong>temporal knowledge graphs</strong> (Zep / Graphiti) <a class="citation" href="#ref-10">[10]</a><a class="citation" href="#ref-11">[11]</a>.</li>
+</ul>
+
+<h3>4.4 Conflated memory types — one bucket for everything</h3>
+<ul>
+    <li>Semantic facts, episodic events, procedural rules, working memory, raw source text, summaries — different lifecycles, different write paths, different retention.</li>
+    <li>Symptom: a transient chat utterance overwrites a canonical business fact; or canonical facts get re-summarized into noise.</li>
+    <li>Frame: <strong>memory taxonomy</strong> (LangMem) <a class="citation" href="#ref-15">[15]</a>.</li>
+</ul>
+
+<h3>4.5 Implicit write policy — every fragment becomes durable memory</h3>
+<ul>
+    <li>If "everything the agent sees" gets persisted, signal-to-noise collapses; if "nothing" gets persisted, no learning.</li>
+    <li>Symptom: agent remembers a one-off mistake forever; or forgets a multi-session preference.</li>
+    <li>Frame: <strong>hot-path vs. background writes</strong> (LangMem) <a class="citation" href="#ref-15">[15]</a>; <strong>extraction/consolidation</strong> (Mem0) <a class="citation" href="#ref-14">[14]</a>; <strong>agent-as-tool-user</strong> (Letta) <a class="citation" href="#ref-13">[13]</a>.</li>
+</ul>
+
+<h3>4.6 No contradiction or deletion semantics</h3>
+<ul>
+    <li>Two sources disagree, a user corrects a fact, a retention policy fires — the system has no first-class notion of supersession or scoped deletion.</li>
+    <li>Symptom: contradictions retrieve together; "right to be forgotten" requires manual archaeology.</li>
+    <li>Frame: <strong>provenance + temporal validity</strong> (CocoIndex lineage <a class="citation" href="#ref-5">[5]</a> + Zep/Graphiti validity intervals <a class="citation" href="#ref-10">[10]</a>).</li>
+</ul>
+
+<h3>4.7 Retrieval-only thinking — vector-search-as-memory</h3>
+<ul>
+    <li>"Top-k chunks for a prompt" is a retrieval pattern, not a memory architecture. It misses relationship paths, source-of-truth lookups, and tool calls.</li>
+    <li>Symptom: agent fails on multi-hop questions a graph traversal would have answered cheaply.</li>
+    <li>Frame: <strong>hybrid retrieval</strong> (LightRAG <a class="citation" href="#ref-8">[8]</a>, HippoRAG <a class="citation" href="#ref-9">[9]</a>); <strong>virtual context management</strong> (MemGPT <a class="citation" href="#ref-12">[12]</a>).</li>
+</ul>
+
+<h3>4.8 Recall-only evaluation — measuring the wrong thing</h3>
+<ul>
+    <li>Nearest-neighbor recall on a synthetic QA set is not the right top-line metric.</li>
+    <li>Symptom: a retrieval upgrade looks good on benchmarks and degrades real task success.</li>
+    <li>Frame: <strong>end-to-end pipeline evaluation</strong> (GraphRAG-Bench) <a class="citation" href="#ref-7">[7]</a>; cost / latency / freshness as first-class axes.</li>
+</ul>
+
+<h3>4.9 Agent-written memory without rails</h3>
+<ul>
+    <li>Letting the model decide what to remember without permissions, scopes, retention rules, or a review path is unsafe in production.</li>
+    <li>Symptom: durable storage of sensitive content; persistence of a transient or adversarial assertion.</li>
+    <li>Frame: <strong>memory operations as explicit tools</strong> (Letta archival memory) <a class="citation" href="#ref-13">[13]</a>.</li>
+</ul>
+
+<h3>4.10 Brittle entity resolution</h3>
+<ul>
+    <li>Graph memory depends on "is this the same entity?" LLM extraction alone is insufficient at scale.</li>
+    <li>Symptom: duplicated nodes, fractured neighborhoods, retrieval that misses obvious matches.</li>
+    <li>Frame: open problem; partial mitigation via primary-key dedup at extraction time (CocoIndex KG example) <a class="citation" href="#ref-6">[6]</a>.</li>
+</ul>
+
+<h3>4.11 Graph noise drift</h3>
+<ul>
+    <li>Without incremental maintenance and pruning, graphs accumulate low-confidence edges that hurt rather than help retrieval.</li>
+    <li>Symptom: graph-augmented answers get worse over time as more "facts" are extracted.</li>
+    <li>Frame: <strong>incremental maintenance</strong> (CocoIndex) <a class="citation" href="#ref-4">[4]</a><a class="citation" href="#ref-5">[5]</a> + write-policy gates.</li>
+</ul>
+
+<hr>
+
+<h2 id="layered">5. A Layered Sketch (Mitigation Frame)</h2>
+
+<p>Most pitfalls dissolve when the architecture is layered rather than monolithic. Sketch:</p>
+
+<ol>
+    <li><strong>Source / event capture</strong> — raw truth before summarization (DBs, logs, documents, chat events, CDC, queues).</li>
+    <li><strong>Incremental transformation</strong> — keep derived context fresh without full rebuilds (CocoIndex-style declarative dataflow, memoized transforms).</li>
+    <li><strong>Structured extraction</strong> — entities, facts, relations, summaries from raw text/events (LLM extraction, schemas, validators).</li>
+    <li><strong>Storage</strong> — different memory forms in different stores: vector, graph, relational, object, event log.</li>
+    <li><strong>Temporal / provenance layer</strong> — when facts are valid; where they came from (temporal KG, lineage, validity intervals).</li>
+    <li><strong>Retrieval / query planning</strong> — choose between vector search, graph traversal, SQL, source lookup, tool call.</li>
+    <li><strong>Memory write policy</strong> — agent tools, background consolidation, deterministic rules, human review.</li>
+    <li><strong>Evaluation / observability</strong> — task success, freshness lag, latency, cost, auditability.</li>
+</ol>
+
+<p>Mapping prior work onto this stack:</p>
+
+<ul>
+    <li>Layers 2–4, partly 5: <strong>CocoIndex</strong>.</li>
+    <li>Layers 3, 4, 6: <strong>Microsoft GraphRAG</strong>, <strong>LightRAG</strong>, <strong>HippoRAG</strong>.</li>
+    <li>Layers 4–6, with temporal strength: <strong>Zep / Graphiti</strong>.</li>
+    <li>Layers 6–7: <strong>Letta / MemGPT</strong>.</li>
+    <li>Extraction + consolidation across user/session: <strong>Mem0</strong>.</li>
+    <li>Taxonomy and write-path patterns: <strong>LangGraph / LangMem</strong>.</li>
+    <li>Pluggable pipeline infrastructure: <strong>Cognee</strong>.</li>
+</ul>
+
+<hr>
+
+<h2 id="open">6. Open Questions</h2>
+
+<ul>
+    <li>Independent benchmarks remain uneven; reported gains are hard to compare across baselines, judges, and datasets.</li>
+    <li>Entity resolution is still brittle.</li>
+    <li>Contradiction handling lacks shared semantics ("supersedes," "valid only during T," "two sources disagree").</li>
+    <li>Memory quality is hard to measure: relevant-but-harmful, accurate-but-stale, useful-here-distracting-there.</li>
+    <li>Agent-written memory needs scopes, retention rules, and review.</li>
+    <li>Graphs become expensive noise without incremental maintenance.</li>
+    <li>Multimodal memory (code, image, audio, UI traces, video) is early; provenance and temporal context for non-text artifacts is largely unsolved.</li>
+</ul>
+
+<hr>
+
+<h2 id="references">References</h2>
+
+<p id="ref-1">[1] CocoIndex — incremental data framework for AI agents. <a href="https://cocoindex.io/">cocoindex.io</a></p>
+<p id="ref-2">[2] D. Edge et al., "From Local to Global: A Graph RAG Approach to Query-Focused Summarization," <em>arXiv preprint arXiv:2404.16130</em>. <a href="https://arxiv.org/abs/2404.16130">arxiv.org/abs/2404.16130</a></p>
+<p id="ref-3">[3] "Local Search," GraphRAG documentation, Microsoft. <a href="https://microsoft.github.io/graphrag/query/local_search/">microsoft.github.io/graphrag/query/local_search</a></p>
+<p id="ref-4">[4] "CocoIndex Overview," CocoIndex Docs. <a href="https://cocoindex.io/docs/getting_started/overview">cocoindex.io/docs/getting_started/overview</a></p>
+<p id="ref-5">[5] "Building a Real-Time Data Substrate for AI Agents: The Architecture Behind CocoIndex," CocoIndex (Medium). <a href="https://medium.com/@cocoindex.io/building-a-real-time-data-substrate-for-ai-agents-the-architecture-behind-cocoindex-729981f0f3a4">medium.com/@cocoindex.io/...</a></p>
+<p id="ref-6">[6] "Build Real-Time Knowledge Graph For Documents with LLM," CocoIndex blog. <a href="https://cocoindex.io/blogs/knowledge-graph-for-docs">cocoindex.io/blogs/knowledge-graph-for-docs</a></p>
+<p id="ref-7">[7] "GraphRAG-Bench: Challenging Domain-Specific Reasoning for Evaluating Graph Retrieval-Augmented Generation," <em>arXiv preprint arXiv:2506.02404</em>. <a href="https://arxiv.org/abs/2506.02404">arxiv.org/abs/2506.02404</a></p>
+<p id="ref-8">[8] Z. Guo et al., "LightRAG: Simple and Fast Retrieval-Augmented Generation," <em>arXiv preprint arXiv:2410.05779</em>. <a href="https://arxiv.org/abs/2410.05779">arxiv.org/abs/2410.05779</a></p>
+<p id="ref-9">[9] B. J. Gutiérrez et al., "HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models," <em>arXiv preprint arXiv:2405.14831</em>. <a href="https://arxiv.org/abs/2405.14831">arxiv.org/abs/2405.14831</a></p>
+<p id="ref-10">[10] "Graph Overview," Zep documentation. <a href="https://help.getzep.com/graph-overview">help.getzep.com/graph-overview</a></p>
+<p id="ref-11">[11] P. Rasmussen et al., "Zep: A Temporal Knowledge Graph Architecture for Agent Memory," <em>arXiv preprint arXiv:2501.13956</em>. <a href="https://arxiv.org/abs/2501.13956">arxiv.org/abs/2501.13956</a></p>
+<p id="ref-12">[12] C. Packer et al., "MemGPT: Towards LLMs as Operating Systems," <em>arXiv preprint arXiv:2310.08560</em>. <a href="https://arxiv.org/abs/2310.08560">arxiv.org/abs/2310.08560</a></p>
+<p id="ref-13">[13] "Archival memory," Letta documentation. <a href="https://docs.letta.com/guides/core-concepts/memory/archival-memory/">docs.letta.com/guides/core-concepts/memory/archival-memory</a></p>
+<p id="ref-14">[14] P. Chhikara et al., "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory," <em>arXiv preprint arXiv:2504.19413</em>. <a href="https://arxiv.org/abs/2504.19413">arxiv.org/abs/2504.19413</a></p>
+<p id="ref-15">[15] "Memory overview," LangChain Docs. <a href="https://docs.langchain.com/oss/python/concepts/memory">docs.langchain.com/oss/python/concepts/memory</a></p>
+<p id="ref-16">[16] Cognee Documentation. <a href="https://docs.cognee.ai/">docs.cognee.ai</a></p>
+
+<hr>
+<p><strong>Document Status</strong>: Wireframe<br>
+<strong>Last Updated</strong>: 2026-05-03<br>
+<strong>Author</strong>: Mario Garrido</p>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/theme-toggle.js"></script>
+    <script>
+        initStickyHeader();
+        initSidebarTOC({
+            sectionSelector: '#content h2, #content h3',
+            scrollOffset: 40
+        });
+    </script>
+</body>
+</html>

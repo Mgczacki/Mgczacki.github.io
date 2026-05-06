@@ -721,14 +721,21 @@
                                     <li><a href="#delegation-challenges">Delegation Challenges</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#planning">3.8 Planning</a></li>
-                            <li><a href="#error-handling">3.9 Error Handling</a>
+                            <li><a href="#tasks">3.8 Tasks</a>
                                 <ul class="subsection">
-                                    <li><a href="#interruptions">Interruptions</a></li>
+                                    <li><a href="#task-as-unit">Tasks as the Unit of Computation</a></li>
+                                    <li><a href="#task-synchronization">Synchronization Primitives</a></li>
+                                    <li><a href="#task-patterns">Patterns Enabled by Task Encapsulation</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#evaluation">3.10 Evaluation</a></li>
-                            <li><a href="#safety">3.11 Safety &amp; Security</a></li>
+                            <li><a href="#planning">3.9 Planning</a></li>
+                            <li><a href="#error-handling">3.10 Error Handling</a>
+                                <ul class="subsection">
+                                    <li><a href="#interruptions">Interruptions, Cancellations, Preemption</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#evaluation">3.11 Evaluation</a></li>
+                            <li><a href="#safety">3.12 Safety &amp; Security</a></li>
                         </ul>
                     </li>
                     <li><a href="#future">4. Open Questions</a></li>
@@ -779,7 +786,7 @@
 <li>Predictable behavior</li>
 <li>Simple interfaces</li>
 </ul>
-<p>The convergence on composable tooling has gone beyond individual systems to produce open standards. The Model Context Protocol (MCP) <a class="citation" href="#ref-46">[46]</a> standardized how agents connect to tools through typed interfaces; Google&#39;s Agent2Agent Protocol (A2A) <a class="citation" href="#ref-99">[99]</a> standardized inter-agent communication through capability discovery (&quot;Agent Cards&quot;); Anthropic&#39;s Agent Skills specification <a class="citation" href="#ref-100">[100]</a> standardized reusable capability packages. By late 2025, MCP alone had 97M+ monthly SDK downloads and adoption from every major provider. This is not accidental—it reflects a structural insight: composable, well-defined tool interfaces are the foundation of reliable agent behavior.</p>
+<p>The convergence on composable tooling has gone beyond individual systems to produce open standards. The Model Context Protocol (MCP) <a class="citation" href="#ref-46">[46]</a> standardized how agents connect to tools through typed interfaces; Google&#39;s Agent2Agent Protocol (A2A) <a class="citation" href="#ref-99">[99]</a> standardized inter-agent communication through capability discovery (&quot;Agent Cards&quot;); Anthropic&#39;s Agent Skills specification <a class="citation" href="#ref-100">[100]</a> standardized reusable capability packages. By late 2025, MCP alone had 97M+ monthly SDK downloads and adoption from every major provider. This is not accidental: composable, well-defined tool interfaces are the foundation of reliable agent behavior.</p>
 <p><strong>2. The most effective agents exploit the underlying structure of their problem domain.</strong></p>
 <p>Composable tools are the mechanism, but the deeper pattern is that capable agents don&#39;t treat the world as unstructured text to reason over—they navigate the domain&#39;s own organization. Every major coding agent—Claude Code <a class="citation" href="#ref-7">[7]</a>, Codex <a class="citation" href="#ref-84">[84]</a>, Copilot <a class="citation" href="#ref-85">[85]</a>, Jules <a class="citation" href="#ref-86">[86]</a>, Cursor, Amazon Q—exploits the inherent structure of code: grepping file trees, following import graphs, reading type signatures, querying language server protocols <a class="citation" href="#ref-81">[81]</a><a class="citation" href="#ref-82">[82]</a>. A database agent that queries schemas before writing SQL exploits the structure of relational data. In each case, effectiveness comes not from raw reasoning over tokens but from leveraging domain structure that already exists—or, where it doesn&#39;t exist, creating it (Section 3.6).</p>
 <p><strong>3. External systems validate better and cheaper than models self-assess</strong> <a class="citation" href="#ref-17">[17]</a><a class="citation" href="#ref-18">[18]</a>.</p>
@@ -950,7 +957,7 @@
 </div>
 </details>
 
-<p>Structure also carries implicit alignment—a point developed fully in Section 3.11.</p>
+<p>Structure also carries implicit alignment—a point developed fully in Section 3.12.</p>
 <h3 id="unconstrained">2.2 The Cost of Unconstrained Systems</h3>
 <p>The existing literature is clear on <em>what</em> structure to apply but largely silent on <em>when</em> the investment is justified. Anthropic advises &quot;find the simplest solution possible&quot; <a class="citation" href="#ref-3">[3]</a>; OpenAI recommends &quot;an incremental approach&quot; <a class="citation" href="#ref-9">[9]</a>. These are useful heuristics but not decision frameworks. This section proposes a formal cost model for reasoning about the structure investment—arguably the most distinctive contribution of this paper.</p>
 <p>What happens when you ignore structure? A fully unconstrained agent (no structure, no verification, no premade tools, no limitations) <em>might</em> solve a problem, but at what cost? To reason about this clearly, it helps to think in terms of two competing cost functions.</p>
@@ -1148,7 +1155,7 @@
 <div class="counterpoints-body">
 <p>Long-context models consistently outperform RAG in average performance when sufficient compute is available <a class="citation" href="#ref-29">[29]</a>. Databricks (2024) shows that corpora under 2M tokens can be fed directly without retrieval. This suggests that aggressive context minimization is often counterproductive—more context, properly structured, yields better results than aggressive filtering. The real skill is knowing what to include, not how little you can get away with.</p>
 <div class="author-response">
-<p>I agree, and maximizing recall remains incredibly useful in some domains—particularly narrow, well-scoped tasks where the relevant corpus fits in context and the agent's job is bounded. But for general-purpose and flexible agents, defaulting to maximum recall is a lower-quality design. It works until it doesn't: the moment the corpus exceeds the context window, or the task requires navigating across domains, the agent has no mechanism for deciding what matters. This is exactly why I frame the principle as context *engineering* rather than context *minimization*. The goal is deliberate structure, not minimal tokens. When everything fits, load everything. When it doesn't—which is the common case for agents operating over large codebases, document corpora, or multi-session histories—progressive disclosure provides the mechanism for deciding what to load and when. The principle is about intentionality, not austerity. The connection to agentic maturity (Section 1.2) is worth noting: the lower on the evolution curve a task sits (bespoke prompts, simple workflows), the more context stuffing dominates. As agents take on more flexible, multi-step tasks, deliberate context management becomes essential.</p>
+<p>I agree, and maximizing recall remains incredibly useful in some domains—particularly narrow, well-scoped tasks where the relevant corpus fits in context and the agent's job is bounded. But for general-purpose and flexible agents, defaulting to maximum recall is a lower-quality design. It works until it doesn't: the moment the corpus exceeds the context window, or the task requires navigating across domains, the agent has no mechanism for deciding what matters. This is exactly why I frame the principle as context *engineering* rather than context *minimization*. The goal is deliberate structure, not minimal tokens. When everything fits, load everything. When it doesn't—which is the common case for agents operating over large codebases, document corpora, or multi-session histories—progressive disclosure provides the mechanism for deciding what to load and when. The principle is about intentionality, not austerity. This connects to agentic maturity (Section 1.2): the lower on the evolution curve a task sits (bespoke prompts, simple workflows), the more context stuffing dominates. As agents take on more flexible, multi-step tasks, deliberate context management becomes essential.</p>
 </div>
 </div>
 </details>
@@ -1161,7 +1168,7 @@
 <li><strong>Mature processes</strong> → Benefit from rigidity, predictability, and structure</li>
 </ul>
 <p>While some agents work well as completely flexible, <strong>reliability and low latency come from structure</strong>. Agents built with these structural harnesses—structured agents—occupy the upper-right of this space: high flexibility through model reasoning, high reliability through external constraints.</p>
-<p><strong>Key insight</strong>: Even with increased agentic capabilities, reducing the problem space and &quot;degrees of freedom&quot; leads to reduced latencies and improved reliability. The structured agency approach is fundamentally about moving agents upward on this chart by adding harnesses rather than restricting what they can do.</p>
+<p>Even with increased agentic capabilities, reducing the problem space and &quot;degrees of freedom&quot; leads to reduced latencies and improved reliability. The structured agency approach is fundamentally about moving agents upward on this chart by adding harnesses rather than restricting what they can do.</p>
 <h4 id="harness-obsolescence">Designing for Harness Obsolescence</h4>
 <p>The flexibility-reliability tradeoff has a temporal dimension that is central to how structured agency should be practiced: <strong>build harnesses expecting them to weaken over time.</strong></p>
 <p>The Bitter Lesson has been applied directly to agent scaffolding by Martin <a class="citation" href="#ref-93">[93]</a>, Bowne-Anderson <a class="citation" href="#ref-95">[95]</a>, and others, with the practical observation that agent harnesses must be &quot;repeatedly simplified as models improve&quot;—that teams at Anthropic and elsewhere rebuild their agent infrastructure on the order of months, not years. We agree with this framing and formalize it as a design principle: harness obsolescence is not a failure of design but a <em>feature</em> of well-designed systems.</p>
@@ -1186,7 +1193,7 @@
 <li><strong>Streaming, token counting, and cost tracking</strong> as cross-cutting concerns independent of which model is being called</li>
 </ul>
 <p>Importantly, benefiting from these niceties does not require buying into any framework&#39;s full ecosystem or opinionated agent architecture. The retry loops, structured output validation, and provider abstraction are composable building blocks—you can use them to construct your own harnesses without adopting the framework&#39;s opinions about how agents should be structured. The value is in the operational primitives, not the orchestration philosophy.</p>
-<p>The key insight is that these primitives are themselves harnesses in the structured agency sense. They sit between your application logic and the intelligence provider, adding structure (retries, validation, provider abstraction) that makes the system more reliable. The model produces the intelligence; the harness ensures that intelligence is delivered reliably, affordably, and in the right format.</p>
+<p>These primitives are themselves harnesses in the structured agency sense. They sit between your application logic and the intelligence provider, adding structure (retries, validation, provider abstraction) that makes the system more reliable. The model produces the intelligence; the harness ensures that intelligence is delivered reliably, affordably, and in the right format.</p>
 <details class="counterpoints">
 <summary>Counterpoints & Discussion</summary>
 <div class="counterpoints-body">
@@ -1251,7 +1258,7 @@
 <li><strong>Design for leverage, not just compliance</strong> — When adding a structural element, ask not just "does this prevent the agent from failing?" but "does this enable the agent to succeed in ways it couldn't without it?" The best harnesses do both.</li>
 </ul>
 <p>This principle connects back to the clarification at the opening of this section: structure is not the old-style rigid workflow that constrains the agent into a fixed path. It is the set of capabilities, boundaries, and information architecture that the agent can leverage to reason better, act faster, and recover from errors more gracefully. The agent that understands its own harness is more capable than the unstructured agent — not less flexible, but more <em>powerful</em>.</p>
-<p><strong>Security caveat</strong>: A capable-enough agent that can fully introspect its harness could also reason about how to circumvent its safety limitations. This means the harness must combine introspectable structure with non-negotiable boundaries: read-only, non-modifiable constraints that the agent can observe but not alter, and implicit guardrails — limited-access credentials, sandboxed execution environments, scoped permissions — that enforce safety regardless of what the agent reasons about them. Harness awareness amplifies capability, but the safety-critical parts of the harness must remain outside the agent&#39;s ability to modify. See Section 3.11 for how structured harnesses can be applied creatively to security.</p>
+<p><strong>Security caveat</strong>: A capable-enough agent that can fully introspect its harness could also reason about how to circumvent its safety limitations. This means the harness must combine introspectable structure with non-negotiable boundaries: read-only, non-modifiable constraints that the agent can observe but not alter, and implicit guardrails — limited-access credentials, sandboxed execution environments, scoped permissions — that enforce safety regardless of what the agent reasons about them. Harness awareness amplifies capability, but the safety-critical parts of the harness must remain outside the agent&#39;s ability to modify. See Section 3.12 for how structured harnesses can be applied creatively to security.</p>
 
 <h4 id="permeable-boundaries">Permeable Boundaries</h4>
 <div class="principle">
@@ -1345,7 +1352,7 @@
 </div>
 </details>
 
-<p><strong>Interruptions as a lifecycle property</strong>: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling&#39;s failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.9 for how interruptions propagate through hierarchical systems.</p>
+<p><strong>Interruptions as a lifecycle property</strong>: Invocations can be interrupted—by the user, by the parent agent, by budget exhaustion, or by a sibling&#39;s failure. An invocation that is interrupted mid-execution must leave state in a recoverable condition. This means state must be designed to survive interruption: partial writes should be atomic or rollback-safe, and in-progress markers should be distinguishable from completed ones. Interruption is not an edge case—it is a first-class lifecycle event that the agent model must account for. See Section 3.10 for how interruptions propagate through hierarchical systems.</p>
 <h4 id="llm">Model</h4>
 <div class="definition">
 
@@ -1471,7 +1478,7 @@
 <li><strong>Validation at the boundary.</strong> Structured state carries its own invariants. A tool that creates a task can enforce required fields, valid transitions, and referential integrity at creation time — validation moves from the prompt (unreliable, model-dependent) to the type system (reliable, deterministic). This is why structure classes (below) define lifecycle properties including creation, mutation, and validation rules: the constraints live in the state definition, not in the instructions.</li>
 <li><strong>Cognitive economy.</strong> State-facing tools let the agent offload information from working memory to state and retrieve it on demand, reducing the cognitive load of any single turn. The agent doesn't need to carry everything in attention; it needs to know where to look. This is the mechanism behind the "shorter-term dependency on the context window" principle: information that lives in addressable state does not need to persist in working memory.</li>
 <li><strong>Composability.</strong> Structured state is the substrate for multi-agent coordination (Section 3.7). When state has known types and consistent access patterns, agents can share, inspect, and build on each other's work without parsing free-form text. An agent that reads another agent's task output gets typed data with validated structure, not a string to be interpreted.</li>
-<li><strong>Observability.</strong> Because all mutations go through tools and all state is typed, the system has a complete, structured record of what changed, when, and through what action. This is the foundation for the observability layer (Section 3.10) — without structured state, audit trails are string logs rather than queryable data.</li>
+<li><strong>Observability.</strong> Because all mutations go through tools and all state is typed, the system has a complete, structured record of what changed, when, and through what action. This is the foundation for the observability layer (Section 3.11) — without structured state, audit trails are string logs rather than queryable data.</li>
 </ul>
 <p><img src="assets/agents/image9-state-anatomy.svg" alt="State and Structure Classes"></p>
 <h4 id="structure-classes">Structure Classes</h4>
@@ -1482,12 +1489,12 @@
 <li><strong>Tools</strong> — The agent&#39;s action interface, elevated to a first-class state type. Tools live in state, can be introspected, and in coding agents can be modified (see Tools as State below). Listed here because tools are not external to the agent&#39;s state — they <em>are</em> state that the agent acts through.</li>
 <li><strong>Contexts</strong> — Addressable information blocks that agents can load, search, and reference — the building blocks of context engineering (Section 2.3). Listed here because they are a state type: they exist in state, are updated through actions, and have lifecycle properties. See Section 3.6 for the full treatment.</li>
 <li><strong>Messaging Channels</strong> — Structured records of inter-agent and user-agent communication. Not just log entries but typed objects with sender, recipient, content, timestamp, and thread/conversation metadata. Channels are the substrate for composition (Section 3.7) — without structured messaging, multi-agent coordination reduces to string passing.</li>
-<li><strong>Plans</strong> — Structured plan representations that live in state. A plan is itself a state object that can be inspected, validated, and revised (see Section 3.8).</li>
-<li><strong>Action History</strong> — Structured log of actions taken and their outcomes. Each entry records the tool called, its arguments, its result, and any state mutations it caused. This is the basis for observability (Section 3.10) and recovery (Section 3.9).</li>
+<li><strong>Plans</strong> — Structured plan representations that live in state. A plan is itself a state object that can be inspected, validated, and revised (see Section 3.9).</li>
+<li><strong>Action History</strong> — Structured log of actions taken and their outcomes. Each entry records the tool called, its arguments, its result, and any state mutations it caused. This is the basis for observability (Section 3.11) and recovery (Section 3.10).</li>
 </ul>
 <p><strong>Extended structure classes</strong> — not required for every agent, but valuable when the problem demands them:</p>
 <ul>
-<li><strong>Tasks</strong> — An encapsulation of work. Having tasks as a first-class structure class — not strings in a plan but structured objects with status, dependencies, ownership, and outcome descriptions — enables referencing work across invocations of the same agent, tracking the work of other agents, deferring or scheduling asynchronous work, and integrating tasks that arise from external systems. This is analogous to task primitives in orchestration frameworks (Celery, Temporal, Airflow), elevated to a core concept of agent state. Tasks carry lifecycle metadata (created, assigned, in-progress, blocked, completed, failed) that enables the planning (Section 3.8) and composition (Section 3.7) layers to operate on them programmatically.
+<li><strong>Tasks</strong> — An encapsulation of work. Having tasks as a first-class structure class — not strings in a plan but structured objects with status, dependencies, ownership, and outcome descriptions — enables referencing work across invocations of the same agent, tracking the work of other agents, deferring or scheduling asynchronous work, and integrating tasks that arise from external systems. This is analogous to task primitives in orchestration frameworks (Celery, Temporal, Airflow), elevated to a core concept of agent state. Tasks carry lifecycle metadata (created, assigned, in-progress, blocked, completed, failed) that enables the planning (Section 3.9) and composition (Section 3.7) layers to operate on them programmatically. Section 3.8 develops the full treatment of tasks as the unit of computation across tool calls, subagent invocations, and the root agent itself.
 <br><br>A well-designed task structure separates three concerns: the <strong>task</strong> itself holds lifecycle metadata and a brief outcome description; the <strong>result</strong> (the actual artifact or data produced) exists as separate state that the task <em>references</em> but does not contain; and the <strong>execution log</strong> (what was done, intermediate steps) is a Context associated with the task, not embedded in it. This decomposition maximizes component reusability — results can be consumed by other tasks or agents without parsing task objects, and execution logs can be loaded selectively via progressive disclosure rather than inflating every task read.</li>
 <li><strong>Subagents</strong> — Child agents spawned by a parent, represented as structured state with their own invocation lifecycle, budget, tool access, and results. Making subagents a structure class — rather than opaque function calls — enables the parent to inspect progress, redirect work, and recover from child failures. See Section 3.7 for composition patterns.</li>
 <li><strong>Skills</strong> — Reusable, composable capability bundles that package directives, tool configurations, and context together. A skill is a structured recipe that can be invoked, parameterized, and combined — enabling agents to acquire new capabilities without modifying their core architecture.</li>
@@ -1661,7 +1668,7 @@
 <p><strong>Principle</strong>: Treat communication as a tool.</p>
 </div>
 
-<p>Communication channels—whether user-facing output, inter-agent messaging (see <a href="#inter-agent-messaging">Section 3.7</a>), or external notifications—should be idempotent where possible, scoped to a clear purpose, and observable. Communication is the mechanism by which the hierarchical system propagates signals, including interruptions (see Section 3.9).</p>
+<p>Communication channels—whether user-facing output, inter-agent messaging (see <a href="#inter-agent-messaging">Section 3.7</a>), or external notifications—should be idempotent where possible, scoped to a clear purpose, and observable. Communication is the mechanism by which the hierarchical system propagates signals, including interruptions (see Section 3.10).</p>
 <h4 id="communication-patterns">Communication Patterns</h4>
 <p>Because communication is modeled as tools, different message delivery patterns emerge naturally from tool invocation mechanisms already present in the harness:</p>
 <ol>
@@ -1670,7 +1677,7 @@
 <li><p><strong>Asynchronous communication via external queues.</strong> Messages arrive while the agent is mid-turn or between invocations. An external message queue (or equivalent) receives them and holds them for delivery. Two sub-patterns apply depending on urgency:</p>
 <ul>
 <li><strong>Enqueue for next turn.</strong> The message is placed in the queue and delivered at the next turn boundary (via forced tool use or on-demand polling). The agent processes it when its current turn completes. This is appropriate for supplementary instructions, non-urgent updates, or context additions that can wait.</li>
-<li><strong>Interrupt then enqueue.</strong> For urgent signals — the agent has taken a wrong path, a parent agent needs to cancel a subtask, a user wants to redirect — the external system first calls an interrupt method on the harness, which terminates the current model turn. It then enqueues the message so the agent receives it at the start of its next turn. The harness re-invokes the agent with the new message in working memory. This pattern is how interruptions (Section 3.9) are implemented in practice: the signal propagates through the communication channel, not through a separate interruption mechanism.</li>
+<li><strong>Interrupt then enqueue.</strong> For urgent signals — the agent has taken a wrong path, a parent agent needs to cancel a subtask, a user wants to redirect — the external system first calls an interrupt method on the harness, which terminates the current model turn. It then enqueues the message so the agent receives it at the start of its next turn. The harness re-invokes the agent with the new message in working memory. This pattern is how interruptions (Section 3.10) are implemented in practice: the signal propagates through the communication channel, not through a separate interruption mechanism.</li>
 </ul>
 </li>
 </ol>
@@ -1713,7 +1720,7 @@
 <li><p><strong>Dead letter.</strong> If the invocation has been permanently terminated — budget exhausted, user cancelled, task no longer relevant — results are routed to a dead letter log. They are not processed, but they are observable: the system records that a result arrived, which invocation it was addressed to, and why it was not delivered. Dead letters are an evaluation signal — a high dead letter rate may indicate that the agent is launching async work it cannot follow up on, or that invocations are being terminated too aggressively.</p></li>
 </ol>
 <p>The critical enabling property is <strong>state serialization</strong> (Section 3.3). If state cannot be persisted and restored, wake-on-message and task-driven resumption are impossible — the harness has nothing to load into the new invocation. This is why serialization is listed as a lifecycle property of structure classes: not for caching convenience, but because it enables the system to survive the gap between invocations. The agent is ephemeral; the state is not.</p>
-<p>Note the symmetry with interruption (Section 3.9). Interruption handles the case where an invocation must stop prematurely; durability handles the case where an invocation must start in response to deferred work. Both are harness mechanisms. Both rely on persisted state. And both are invisible to the agent — it does not reason about "was I interrupted?" or "am I resuming?" It simply sees working memory at the start of its turn and acts.</p>
+<p>Note the symmetry with interruption (Section 3.10). Interruption handles the case where an invocation must stop prematurely; durability handles the case where an invocation must start in response to deferred work. Both are harness mechanisms. Both rely on persisted state. And both are invisible to the agent — it does not reason about "was I interrupted?" or "am I resuming?" It simply sees working memory at the start of its turn and acts.</p>
 <h3 id="contexts">3.6 Contexts</h3>
 <div class="definition">
 
@@ -1806,7 +1813,7 @@
 <p>This is a special case of the contexts taxonomy above: different retrieval mechanisms are different strategies for accessing contexts, each with tradeoffs in precision, recall, latency, and setup cost. Traditional RAG trades setup cost (embedding, chunking, indexing) for broad recall across unstructured corpora. Agentic search trades generality for high precision in structured domains—it&#39;s fast and accurate when the domain has navigable structure, but inapplicable when it doesn&#39;t. GraphRAG occupies a middle ground: it invests heavily in creating structure (knowledge graph construction) to enable structured retrieval over originally unstructured data. The choice between these mechanisms is itself a context engineering decision—matching the retrieval strategy to the structure (or lack thereof) of the domain.</p>
 <h3 id="composition">3.7 Subagents &amp; Multi-Agent Systems</h3>
 <p>The previous sections establish the primitives of a single agent: its state (Section 3.3), tools (Section 3.4), communication channels (Section 3.5), and contexts (Section 3.6). But most production systems involve more than one agent. Two fundamentally different patterns govern how agents relate to each other, and the distinction matters because it determines state visibility, lifecycle coupling, and the communication mechanisms available.</p>
-<p><strong>Subagents</strong> are, in a meaningful sense, <em>part of</em> a larger agent. A subagent is spawned by a parent agent — typically via a tool call — and operates within the parent's invocation lifecycle. The subagent's lifetime is bounded by the parent's: it is created during the parent's execution, performs its work, and terminates before (or when) the parent completes. This containment relationship enables the hierarchical patterns discussed throughout this framework: parent-child delegation (Section 3.4, Forced Tool Use), interrupt propagation from parent to child (Section 3.9), synchronous and asynchronous composition via shared communication channels (Section 3.5), and scoped state sharing where the parent grants the subagent partial or complete access to its own state. The subagent inherits its operating context from the parent — its existence is not independent but derived.</p>
+<p><strong>Subagents</strong> are, in a meaningful sense, <em>part of</em> a larger agent. A subagent is spawned by a parent agent — typically via a tool call — and operates within the parent's invocation lifecycle. The subagent's lifetime is bounded by the parent's: it is created during the parent's execution, performs its work, and terminates before (or when) the parent completes. This containment relationship enables the hierarchical patterns discussed throughout this framework: parent-child delegation (Section 3.4, Forced Tool Use), interrupt propagation from parent to child (Section 3.10), synchronous and asynchronous composition via shared communication channels (Section 3.5), and scoped state sharing where the parent grants the subagent partial or complete access to its own state. The subagent inherits its operating context from the parent — its existence is not independent but derived.</p>
 <p><strong>Multi-agent systems</strong> involve agents that share no state. Each agent exists as part of the <em>world</em> of every other agent (Section 3.1) — an external entity to be observed and communicated with, not an internal component to be directly controlled. Their invocations are independent: one agent's lifecycle is not contained within another's. They may run concurrently, sequentially, or with non-overlapping lifetimes entirely — one agent may complete its work long before another begins. Because there is no shared state, all coordination must happen through explicit message passing over communication channels, and each agent must treat the other's outputs as external, potentially stale data subject to the same staleness concerns as any other world observation (Section 3.3).</p>
 <p><img src="assets/agents/image6-subagent-topology.svg" alt="Subagent vs. Multiagent Topology"></p>
 <h4 id="subagents">Subagents</h4>
@@ -1826,7 +1833,7 @@
 <li><strong>Isolation</strong>: The subagent modifies its copy freely during execution. No writes propagate to the parent in real time.</li>
 <li><strong>Reconciliation</strong>: On completion, a <em>reducer function</em> merges the subagent's modified state back into the parent's current state. The reducer handles conflicts — last-write-wins, merge, reject, or custom logic — based on the structure class's semantics.</li>
 </ol>
-<p>This pattern is inspired by LangGraph's state machine design <a class="citation" href="#ref-111">[111]</a>, where each node in the graph receives a state copy and returns updates that are merged via reducers. The key insight is the same: isolate mutation during execution, reconcile on completion.</p>
+<p>This pattern is inspired by LangGraph's state machine design <a class="citation" href="#ref-111">[111]</a>, where each node in the graph receives a state copy and returns updates that are merged via reducers. The pattern is the same: isolate mutation during execution, reconcile on completion.</p>
 <p><strong>When isolation breaks.</strong> Some domains resist clean isolation. Coding agents operating on a shared filesystem cannot fully snapshot and isolate file state — two agents editing the same file will conflict regardless of state-layer protections. In these cases, accept the breakage and compensate at the domain level: git worktrees for filesystem isolation, file locking for critical sections, or optimistic concurrency with conflict detection. This connects to the coding agent deep dive in <a href="#state-staleness">Section 3.3</a>: the filesystem <em>is</em> the state, and its concurrency model is the filesystem's, not the framework's.</p>
 <h5>Subagent Bootstrap</h5>
 <p>The parent configures forced tool calls for the subagent's bootstrap (<a href="#bootstrap">Section 3.2</a>) — the same mechanism used for single agents, but parent-configured rather than harness-configured. These bootstrap calls load contexts, read messaging channel messages, query task state, and otherwise initialize the subagent's working memory before it begins autonomous reasoning.</p>
@@ -1879,7 +1886,7 @@
 <h4 id="delegation-challenges">Delegation Challenges</h4>
 <p>Delegation—whether to subagents or across multi-agent systems—introduces costs that are easy to underestimate. Two failure patterns dominate production systems:</p>
 <p><strong>Scope rediscovery.</strong> Each delegated agent starts with a fresh or partial context window. The parent agent has built up a rich working memory over the course of the task—observations, intermediate results, implicit assumptions, domain context. When it delegates to a subagent, much of this working memory must be <em>re-established</em> in the subagent&#39;s context. This creates a <strong>working-memory discontinuity</strong> (see Section 2.3): the subagent must spend tokens and reasoning cycles recontextualizing before it can do useful work. The more complex the parent&#39;s accumulated context, the more expensive this rediscovery becomes. This is why delegation works best for tasks that are relatively self-contained—where the required context can be transmitted cheaply and the subagent doesn&#39;t need to reconstruct the full reasoning history of the parent.</p>
-<p><strong>Tool segmentation failures.</strong> In systems with a router or orchestrator that dispatches tasks to specialized agents, a common failure mode is routing to an agent that lacks the right tools or context for the task. The agent attempts the task, fails, and the error bubbles back up to the router, which must retry—potentially multiple times—before either finding the right agent or escalating. This retry cycle compounds latency and cost, and is especially pernicious because it&#39;s often silent: the system <em>eventually</em> succeeds, masking the inefficiency. Structured composition (clear tool boundaries, explicit capability declarations, well-defined routing rules) mitigates this, but doesn&#39;t eliminate it. This pattern connects directly to the error handling concerns in Section 3.9.</p>
+<p><strong>Tool segmentation failures.</strong> In systems with a router or orchestrator that dispatches tasks to specialized agents, a common failure mode is routing to an agent that lacks the right tools or context for the task. The agent attempts the task, fails, and the error bubbles back up to the router, which must retry—potentially multiple times—before either finding the right agent or escalating. This retry cycle compounds latency and cost, and is especially pernicious because it&#39;s often silent: the system <em>eventually</em> succeeds, masking the inefficiency. Structured composition (clear tool boundaries, explicit capability declarations, well-defined routing rules) mitigates this, but doesn&#39;t eliminate it. This pattern connects directly to the error handling concerns in Section 3.10.</p>
 <p>The upshot: delegation is not free. It works best for <strong>cheaper, more reliable subtasks</strong> where the cost of recontextualization is justified by the benefits of isolation, parallelism, or specialization. When a subtask requires deep access to the parent&#39;s accumulated context, the cost of transmitting that context may exceed the cost of simply having the parent do the work itself.</p>
 <h4 id="skills">Skills</h4>
 <p><strong>Definition</strong>: Pre-packaged instructions and context bundles.</p>
@@ -1901,8 +1908,69 @@
 </div>
 </details>
 
-<p>Composition defines the <em>who</em> of agent systems. Planning defines the <em>what</em> and <em>when</em>—the mechanism by which composed agents coordinate their work.</p>
-<h3 id="planning">3.8 Planning</h3>
+<p>Composition defines the <em>who</em> of agent systems. Tasks define the <em>unit</em> of work composed agents operate on. Planning defines the <em>what</em> and <em>when</em>—the mechanism by which composed agents coordinate that work.</p>
+<h3 id="tasks">3.8 Tasks</h3>
+<div class="definition">
+
+<p><strong>Task</strong> — A structured object that encapsulates a unit of computation: its goal, lifecycle state, parent, children, result slot, and synchronization primitives. Every unit of work in a structured agent system — from a single tool call to the top-level invocation — can be modeled as a task.</p>
+</div>
+
+<p>An agent system has many shapes of work. A tool call returns a result. A subagent invocation does the same, but takes longer. A retrieval can fan out into parallel queries that must be joined. The user's request is itself work the system has accepted. Without a unifying abstraction, each of these has its own lifecycle, its own way to wait on completion, and its own way to be stopped. Tasks collapse these shapes into one structural unit, and that unification is what makes asynchronous, interruptible, and recoverable agent execution tractable.</p>
+
+<p>Tasks were introduced as an extended structure class in Section 3.3 — lifecycle metadata over a unit of work. This section develops the claim that they belong at every level of agent computation, not only as items in a plan.</p>
+
+<h4 id="task-as-unit">Tasks as the Unit of Computation</h4>
+
+<p>A task is the smallest object the harness can address. It can be created, observed, awaited, cancelled, and finalized. It carries:</p>
+<ul>
+<li><strong>Identity</strong> — so other parts of the system can reference it across turns and invocations.</li>
+<li><strong>Parent and children</strong> — so signals (failure, cancellation, replanning) can propagate along the hierarchy.</li>
+<li><strong>Lifecycle state</strong> — created, scheduled, running, blocked, completed, failed, cancelled. Transitions are typed and validated like any other structure class (Section 3.3).</li>
+<li><strong>Goal description</strong> — what success looks like for this task, captured at creation rather than reconstructed from working memory.</li>
+<li><strong>Result slot</strong> — what the task produces, written exactly once at terminal state. This is the addressable artifact that consumers reference; the result lives separately from the task object so other tasks and agents can read it without parsing task metadata (the decomposition described in Section 3.3 — task, result, and execution log as three separable concerns).</li>
+<li><strong>Synchronization primitives</strong> — the operations that let other tasks await it, cancel it, or attach handlers.</li>
+</ul>
+
+<p>Most production systems already implement these properties for some subset of work — futures and promises in async runtimes, jobs in orchestration frameworks (Celery, Temporal, Airflow), the operating system's process abstraction. The contribution here is recognizing that the same structural object covers every level of agent computation, not just the orchestration layer.</p>
+
+<p><strong>Tool calls generate K tasks.</strong> When the agent calls a tool, the harness creates a task for that call. K is one in the simplest case (a synchronous tool that returns a value). It is more than one when the tool's semantics are inherently parallel: a multi-query tool that fans out to several datasources creates one parent task and K child tasks; a batched action tool creates a parent and one task per item. K can be zero in degenerate cases (a tool that schedules deferred work and returns immediately, where the scheduled work is a separate task whose lifecycle outlives the current turn). Treating tool calls as task-generating means the harness tracks, time-bounds, and cancels them uniformly, regardless of whether the work runs in-process, on a worker pool, or in another agent.</p>
+
+<p><strong>Tasks can have subtasks.</strong> A task may decompose into sub-tasks — sequential, parallel fan-out, or a DAG. The parent observes children through the same primitives it offers its own caller: <code>await</code>, <code>cancel</code>, status inspection, result reads. This makes the framework recursive: a subagent invocation (Section 3.7) is structurally identical to a tool call from the parent's perspective. Both are tasks the parent created and is responsible for. The difference is only in what the task encapsulates — a single function execution versus an entire agent invocation — not in how the parent interacts with it.</p>
+
+<p><strong>The main agent is itself a task.</strong> The top-level invocation is the root task. Whatever launched the agent — a user message, a scheduler, a parent agent — is its caller. The invocation lifecycle from Section 3.2 (start, run, terminate, return result) is the lifecycle of this root task. This collapses the apparent distinction between "the agent" and "what the agent does": at every level the agent <em>is</em> a task, and the harness operates on it through the same primitives it uses for any other task. There is no separate "invocation API" and "task API" — there is one set of operations, applied uniformly from the root down to the leaves.</p>
+
+<p><strong>Asynchronous programming becomes the default.</strong> Once tasks are first-class, the harness gets concurrency for free. A tool call that takes ten seconds does not block other tasks — its task awaits in the background while the parent continues. A user message arriving mid-execution is just another task entering the queue. Long-running subagent invocations can be spawned, polled, and joined without bespoke control flow. The patterns are the same patterns familiar from structured concurrency in modern programming languages — Python's asyncio, Go's goroutines, Rust's async/await, Erlang's processes — applied at the level of agent computation rather than at the level of a single program. Without tasks as a uniform abstraction, every async pattern in the harness becomes bespoke; with them, the harness inherits decades of work on cancellation, structured concurrency, and supervision trees.</p>
+
+<p><strong>Tasks satisfy the structure class lifecycle.</strong> The properties from Section 3.3 apply directly. Tasks are created through tools, mutated through typed transitions (a task cannot move from <code>completed</code> back to <code>running</code>), validated against invariants (a task cannot complete if it has uncompleted required children), kept consistent at every observation, and serialized across invocation boundaries. A task that started in one invocation and was awaiting an external result can be reconstituted in a later invocation when the result arrives — task-driven resumption (Section 3.5, Durability Across Invocations) made concrete.</p>
+
+<h4 id="task-synchronization">Synchronization Primitives</h4>
+
+<p>Because tasks are first-class, the harness offers a small, predictable set of primitives that work uniformly across tool calls, subagent invocations, and the root invocation:</p>
+
+<ul>
+<li><code>spawn(goal, parent)</code> — Create a task and start it. Returns a task identity.</li>
+<li><code>await(task)</code> — Block (or yield) until the task reaches a terminal state.</li>
+<li><code>cancel(task, reason)</code> — Request that the task stop. Cooperative by default, with the option to escalate to forced termination if the task does not yield.</li>
+<li><code>status(task)</code> — Read the current lifecycle state.</li>
+<li><code>result(task)</code> — Read the task's result once terminal.</li>
+<li><code>children(task)</code> / <code>parent(task)</code> — Navigate the hierarchy.</li>
+</ul>
+
+<p>The agent does not call <code>spawn</code> directly — it calls a tool, which the harness implements by spawning a task. The same applies to <code>await</code>, <code>cancel</code>, and the rest: when the agent needs to manipulate one of its in-flight tasks (for instance, to cancel a deferred subtask that is no longer needed), the harness exposes the primitive through a tool. This keeps the agent-facing interface within the framework's discipline (all action through tools, Section 3.4) while giving the harness a uniform internal vocabulary for managing work.</p>
+
+<p>The synchronization primitives are also where the harness implements the discipline that the agent does not have to reason about: budget enforcement (a task that exceeds its token or wall-clock budget is cancelled), supervision (a task whose parent terminates is cancelled in turn), and recovery (a task whose result is required for a future invocation persists across the gap). The agent never sees this machinery directly — it sees only the tools and their results — but the machinery is what allows long-running, durable, and interruptible computation to be expressed without each tool reinventing the same primitives.</p>
+
+<h4 id="task-patterns">Patterns Enabled by Task Encapsulation</h4>
+
+<p>A task outputs to the state and to the world. Once that output channel is owned by a task with synchronization primitives, several patterns that would otherwise require bespoke machinery in every harness become straightforward.</p>
+
+<p><strong>Interruption-aware state mutation.</strong> A tool that mutates state can be designed as a task with an explicit yield point between observation and commit. After it has determined what change to apply but before it commits, the task checks whether an interruption signal is in flight for its identity. If one is present, it abandons the mutation; if none, it commits. The canonical case is human-in-the-loop confirmation: the tool waits on a signal from the user, treats arrival of approval as the green light to commit, and treats explicit rejection (or a timeout that elapses without approval) as an interruption that aborts. World-facing tools admit the same pattern wherever the side effect can be staged before commit — file writes that prepare a tempfile and rename only after a confirmation, API calls held in a pending queue, deferred message sends. Without tasks as a structural primitive, every state-mutating tool reinvents this checkpointing protocol; with them, the harness provides the cancellation channel and the tool just needs to expose the safe-yield point.</p>
+
+<p><strong>Cancellation preserves work without committing state.</strong> A cancelled task should not leave half-applied state, but cancellation does not require throwing the work away. The task can log what it observed, what it was about to do, and where the cancellation arrived — to its execution log or to a Context (Section 3.6) — without ever committing the state mutation it was preparing. The parent uses that trail to replan: the cancelled task produced no result, but it produced enough information about why it stopped and how far it got that the next attempt does not start from zero. This is the difference between cancellation as "throw it away" and cancellation as "pause this branch but remember what you learned." Both are valid; the second is what keeps multi-step recovery tractable in long-horizon work, because the cost of a cancelled task is bounded by what it logged, not by what it would have produced if it had completed.</p>
+
+<p><strong>Background tasks with UX continuity.</strong> Long-running tasks need not block the agent that spawned them. Because a task is addressable state, the harness can hand the user off to a companion agent that is aware of the in-flight work without doing the work itself. The worker continues in the background; a companion — initialized from the same state, with read access to the worker's task — takes over the conversation. The companion does not duplicate the work. It inspects the task's status, summarizes progress to the user, fields questions about the operation in flight, and accepts new requests that can be queued behind or alongside the worker. When the worker completes, its result becomes available through the same task primitives the companion was already using to observe it. This is a UX move that only works because tasks are first-class state: the companion knows what the worker is doing because it can read the worker's task object, not because the harness duplicated the worker's working memory. The same primitive that lets a parent agent observe a child subagent (Section 3.7) is what lets a UX-facing companion observe a backgrounded worker — it is the same composition pattern, applied at the boundary between the user and the system rather than between two agents.</p>
+
+<h3 id="planning">3.9 Planning</h3>
 <p>Planning is the mechanism by which agents decide <strong>what to do before doing it</strong> <a class="citation" href="#ref-58">[58]</a>. While reactive agents execute actions step-by-step based on immediate observations, planning introduces deliberation—a lookahead that evaluates potential action sequences before committing.</p>
 <p>Planning is best understood as <strong>pre-runtime verification</strong>—an analogue of compilation. Just as a compiler catches type errors, unresolved references, and unreachable code before a program runs, a planning phase catches invalid action sequences, unsatisfied preconditions, and resource conflicts before the agent commits to execution. The economics are compelling: cheap verification signals—schema checks, precondition validation, syntax parsing—run in milliseconds at negligible compute cost, and their precision reduces the reasoning the model must do on its own. The model does not need to <em>think</em> about whether a query's output schema matches a join condition if a deterministic checker can answer that in microseconds. Planning time shrinks when verification signals are fast and cheap, because the model offloads the hard parts to external checks and focuses its token budget on what only it can do: creative decomposition and goal reasoning. Execution, by contrast, is expensive (API calls, database writes, external side effects that may be irreversible). Without planning, an agent might invoke an expensive data transformation tool only to discover that the next tool in the sequence requires a property of the output that was never produced—forcing a costly redo. Planning catches this class of error at planning-time cost rather than execution cost.</p>
 <h4 id="planning-why">Why Planning Matters</h4>
@@ -1963,23 +2031,9 @@
 <p>In practice, each representation occupies a different point on the formality-flexibility spectrum. At Kuona, we use PDDL-style representations with declared preconditions and effects for tool sequences—a formal alternative that enables deterministic verification (see <a href="#planning-strategies">Verification-Driven Planning</a> below). This bridges the gap between state machines (deterministic but rigid) and DAGs (parallelizable but lacking formal verification): precondition/effect declarations give the planner enough formal structure to verify soundness while remaining flexible enough to compose novel tool sequences that were not anticipated at design time.</p>
 <h4 id="planning-strategies">Planning Strategies</h4>
 <h5>Decomposition</h5>
-<p>Breaking a task into subtasks before executing any of them. This is the most common planning pattern in current agentic systems <a class="citation" href="#ref-60">[60]</a><a class="citation" href="#ref-61">[61]</a>.</p>
-<p><strong>Approaches</strong>:</p>
-<ul>
-<li><strong>Top-down decomposition</strong> → Split high-level goal into subgoals recursively</li>
-<li><strong>Means-ends analysis</strong> → Identify the gap between current and goal state, then find actions that reduce it</li>
-<li><strong>Template-based</strong> → Match the task to a known plan template and fill in specifics</li>
-</ul>
-<p>[<strong>TODO</strong>: Document decomposition patterns you&#39;ve implemented]</p>
+<p>Breaking a task into subtasks before executing any of them — the most common planning pattern in current agentic systems <a class="citation" href="#ref-60">[60]</a><a class="citation" href="#ref-61">[61]</a>. Common variants include top-down decomposition (recursively splitting a goal into subgoals), means-ends analysis (identifying the gap between current and goal state and finding actions that close it), and template-based planning (matching the task to a known plan and filling in specifics). The shared assumption is that subtasks can be reasoned about — and validated — independently of one another; when that holds, decomposition makes the plan legible and the failures local.</p>
 <h5>Search-Based Planning</h5>
-<p>Exploring multiple possible action sequences and selecting the best one.</p>
-<p><strong>Approaches</strong>:</p>
-<ul>
-<li><strong>Tree-of-thought</strong> <a class="citation" href="#ref-55">[55]</a> → Generate and evaluate multiple reasoning paths</li>
-<li><strong>Monte Carlo methods</strong> → Sample rollouts and estimate value</li>
-<li><strong>Best-first search</strong> <a class="citation" href="#ref-59">[59]</a> → Expand the most promising partial plan</li>
-</ul>
-<p>[<strong>TODO</strong>: Document search-based approaches you&#39;ve experimented with]</p>
+<p>Exploring multiple possible action sequences and selecting the best one. Tree-of-thought <a class="citation" href="#ref-55">[55]</a> generates and evaluates several reasoning paths, Monte Carlo methods sample rollouts to estimate value, and best-first search <a class="citation" href="#ref-59">[59]</a> expands the most promising partial plan first. Search earns its overhead when the action space is large enough that the first plausible plan is unlikely to be the best — and when scoring a candidate is meaningfully cheaper than executing it.</p>
 <h5>Verification-Driven Planning</h5>
 <p>Using validation signals to guide plan construction—plans are iteratively refined until they pass verification checks.</p>
 <p><strong>Connection to the <a href="#validation-asymmetry">Validation Cost Asymmetry</a> (Section 2.2)</strong>: Planning is where the validation cost asymmetry pays its highest dividends. If verification signals are faster and cheaper than execution—and they almost always are—then <em>verify-before-execute</em> dominates <em>execute-then-recover</em> on cost, speed, reliability, and determinism. A single verification pass over a proposed plan can prevent multiple expensive execution failures. Planning exploits a temporal asymmetry: by shifting verification to before execution, the agent converts what would be runtime failures (expensive, stateful, potentially irreversible) into planning-time rejections (cheap, stateless, trivially retried).</p>
@@ -2017,7 +2071,7 @@
 
 <p><strong>Schema-aware multi-query planning.</strong> A second pattern from Kuona addresses data retrieval across heterogeneous datasources. The goal is to produce data matching a target schema. The planner decomposes this into individual queries to different datasources—including joins between query results—culminating in a unifying query that produces the final output.</p>
 <p>Verification signals validate the plan before any query executes: (1) each query's output schema is compatible with proposed joins, (2) the final unified schema matches the target. These checks are cheap deterministic operations—schema compatibility is type checking—applied before any expensive datasource interaction occurs. Notably, the plan does <em>not</em> specify exact SQL for each datasource. Instead, each subagent receives a natural language description of what data it must produce and which datasource to query. This shifts the responsibility of determining the best query strategy—dialect-specific syntax, available operations, optimization—to the subagent that owns the datasource interaction. The parent plans at the level of data contracts (schemas in, schemas out), not implementation details.</p>
-<p>Once the plan passes verification, individual queries are delegated to parallel subagents for execution. If a subagent fails (e.g., a datasource does not support a required operation), it first attempts local recovery. If local recovery fails, it escalates to the parent planner. The parent then: (1) interrupts all sibling agents—their work is now potentially invalid given the changed assumptions, (2) incorporates the failure information into its model of what went wrong, and (3) replans from the current state with the new constraint. This failure-triggered replanning connects directly to <a href="#interruptions">Interruptions as Hierarchical Signals</a> (Section 3.9): the subagent's escalation is an interruption that propagates up the agent hierarchy, and the parent's response—halt siblings, replan, re-delegate—is the structured recovery pattern that hierarchical composition enables.</p>
+<p>Once the plan passes verification, individual queries are delegated to parallel subagents for execution. If a subagent fails (e.g., a datasource does not support a required operation), it first attempts local recovery. If local recovery fails, it escalates to the parent planner. The parent then: (1) interrupts all sibling agents—their work is now potentially invalid given the changed assumptions, (2) incorporates the failure information into its model of what went wrong, and (3) replans from the current state with the new constraint. This failure-triggered replanning connects directly to <a href="#interruptions">Interruptions, Cancellations, and Preemption</a> (Section 3.10): the subagent's escalation is an interruption that propagates up the agent hierarchy, and the parent's response—halt siblings, replan, re-delegate—is the structured recovery pattern that hierarchical composition enables.</p>
 
 <details class="practical-example">
 <summary>Practical Example — Schema-Aware Multi-Query Planning at Kuona</summary>
@@ -2075,7 +2129,7 @@
 </div>
 </details>
 
-<h3 id="error-handling">3.9 Error Handling &amp; Recovery</h3>
+<h3 id="error-handling">3.10 Error Handling &amp; Recovery</h3>
 <p>Agents fail. Tools return errors, APIs time out, models hallucinate <a class="citation" href="#ref-17">[17]</a>. The question is not whether failures occur, but how the system responds <a class="citation" href="#ref-63">[63]</a>.</p>
 <h4 id="failure-modes">Failure Modes</h4>
 <table>
@@ -2113,26 +2167,39 @@
 </tr>
 </tbody></table>
 <h4 id="recovery-strategies">Recovery Strategies</h4>
-<ul>
-<li><strong>Retry with backoff</strong> → Transient failures (network, rate limits)</li>
-<li><strong>Fallback tools</strong> → Alternative paths to accomplish the same action (see Section 2.5, Redundancy)</li>
-<li><strong>Replanning</strong> <a class="citation" href="#ref-57">[57]</a> → Abandon current plan and construct a new one from current state</li>
-<li><strong>Escalation</strong> → Communicate the failure to a parent agent or user</li>
-<li><strong>Graceful degradation</strong> <a class="citation" href="#ref-40">[40]</a> → Accomplish a reduced version of the goal</li>
-</ul>
+<p>Five strategies cover most failure modes. <strong>Retry with backoff</strong> handles transient failures like network blips and rate limits. <strong>Fallback tools</strong> route around a broken capability via an alternative path (see Section 2.5, Redundancy). <strong>Replanning</strong> <a class="citation" href="#ref-57">[57]</a> abandons the current plan and constructs a new one from the current state, rather than blindly retrying a step whose assumptions no longer hold. <strong>Escalation</strong> surfaces the failure to a parent agent or user when local recovery is exhausted. <strong>Graceful degradation</strong> <a class="citation" href="#ref-40">[40]</a> accomplishes a reduced version of the goal — a partial answer is often more useful than no answer.</p>
 <div class="principle">
 
 <p><strong>Principle</strong>: Recovery strategies should be explicit, not emergent. An agent that silently retries indefinitely is worse than one that escalates after two failures.</p>
 </div>
 
-<p>[<strong>TODO</strong>: Document your error handling patterns and when each strategy applies]</p>
-<h4 id="interruptions">Interruptions as Hierarchical Signals</h4>
-<p>Interruptions are not just failures—they are first-class signals in hierarchical agent systems. When a parent agent determines that a subtask is no longer needed, it must be able to interrupt the child agent cleanly. This is distinct from error recovery: the child didn&#39;t fail—the parent&#39;s context changed.</p>
-<p><strong>Example</strong>: In a schema-aware multi-query system, if one query reveals that the schema assumption underlying all queries is wrong, the parent can interrupt the remaining queries since their results would be wasted work. The interruption signal propagates <em>down</em> the hierarchy (parent → children), while failure signals propagate <em>up</em> (child → parent). Both must be handled, but they have different semantics: a failure says &quot;I couldn&#39;t do what you asked,&quot; while an interruption says &quot;stop—what I asked is no longer relevant.&quot;</p>
-<p>This connects to composition (Section 3.7)—the parent-child relationship defines who can interrupt whom—and to planning (Section 3.8)—plan revision may trigger interruptions of in-progress subtasks that the revised plan no longer requires.</p>
-<p>[<strong>TODO</strong>: Interruption propagation patterns — how do interruptions cascade through a hierarchy? What happens to in-progress state when a subtask is interrupted?]</p>
-<p>[<strong>TODO</strong>: Interruption vs. cancellation vs. preemption — are these meaningfully different in practice, and should the agent model distinguish them?]</p>
-<h3 id="evaluation">3.10 Evaluation &amp; Observability</h3>
+<p>The choice of strategy follows the cost model (Section 2.2): when failures are cheap and instantly visible, retry dominates; when they are expensive or have invalidated upstream assumptions, replanning or escalation pay off. Section 3.9 shows how escalation, replanning, and sibling interruption compose in Kuona's multi-query planner — a worked example of these strategies operating together rather than in isolation. Section 2.2 covers the inverse case: why the planning layer was dropped entirely for DuckDB queries, where retry is cheaper than prevention.</p>
+<h4 id="interruptions">Interruptions, Cancellations, and Preemption</h4>
+
+<p>Interruptions are not just failures — they are first-class signals in hierarchical agent systems. When a parent determines that a subtask is no longer needed, it must be able to stop the child cleanly. This is distinct from error recovery: the child did not fail; the parent's context changed.</p>
+
+<p>With tasks as the structural unit (Section 3.8), three terms that are often used interchangeably become precise. They share a mechanism — a task is told to stop before it would otherwise complete — but they differ in <em>who</em> initiates the stop and <em>why</em>. Distinguishing them matters because each calls for a different recovery response.</p>
+
+<ul>
+<li><strong>Cancellation</strong> is initiated by the task itself or by its caller. The work is no longer needed (the caller no longer wants the result), or the task has determined it cannot succeed. Cancellation is cooperative: the task is asked to stop and given the opportunity to clean up. The expected follow-up is nothing — the result was abandoned on purpose.</li>
+<li><strong>Interruption</strong> is initiated by the parent in response to changed assumptions. The child did not fail and the parent has not abandoned its goal — but the specific work the child is doing is no longer the right work, because the parent's plan has been revised. The expected follow-up is replanning: the parent will re-task the child (or a different child) with a revised goal.</li>
+<li><strong>Preemption</strong> is initiated by the harness, not the parent, in response to resource pressure or external priority. A higher-priority task needs the resources the current task is holding, the token budget is exhausted, or the wall-clock budget for the invocation has elapsed. Preemption may or may not be cooperative — the harness reserves the right to terminate forcibly if the task does not yield. The expected follow-up is escalation, scope reduction, or deferral, not silent retry.</li>
+</ul>
+
+<p>In small systems the distinction may not matter — all three converge on "stop the task." It matters when the system needs to <em>react</em> to the stop. Cancellation typically warrants no further action. Interruption usually triggers replanning (Section 3.9). Preemption is a signal that resource budgets need attention. Treating them as a single primitive throws away information the harness needs to recover gracefully; treating them as distinct intents over a shared mechanism keeps the implementation small while preserving the semantics.</p>
+
+<p><strong>Propagation through the task hierarchy.</strong> When a task is told to stop, the signal propagates along the parent-child structure that Section 3.8 establishes:</p>
+
+<ul>
+<li><strong>Down the hierarchy.</strong> A cancelled or interrupted task cancels its children. Their work was in service of the parent's goal, and that goal has either been abandoned or revised. Propagation is recursive — children cancel their grandchildren — so a single signal at the top of a subtree retires the entire subtree without bespoke unwinding logic.</li>
+<li><strong>Up the hierarchy.</strong> A child's failure or cancellation surfaces to the parent, which decides how to respond. The recovery strategies above apply: retry, fallback, replan, escalate, or degrade. The parent is the decision point — the harness does not silently retry on the child's behalf, because retry is only correct when the parent's plan still holds.</li>
+<li><strong>Across siblings.</strong> Sibling tasks under a common parent can be cancelled together when the parent recognizes that one sibling's outcome has invalidated the others' assumptions. This is the multi-query planner pattern (Section 3.9): one query reveals a wrong schema assumption, and the parent cancels the still-running siblings whose results would now be wasted work. Sibling cancellation is not a primitive — it is the parent issuing cancellation to multiple children — but recognizing it as a recurring shape clarifies what hierarchical recovery looks like in practice.</li>
+</ul>
+
+<p><strong>In-progress state under interruption.</strong> A task that is told to stop mid-execution must leave state in a recoverable condition. The structure class lifecycle properties (Section 3.3) earn their keep here: because mutations are typed, validated, and atomic at the tool boundary, a stopped task either committed a mutation or did not — there is no half-applied state. Tasks should publish progress as a sequence of small committed mutations rather than holding intermediate work in working memory until completion. The agent itself is invisible to interruption — its working memory will be reconstructed from state on the next invocation, and that next invocation will see exactly the state that the last committed tool result produced. This is the same property that enables durability across invocations (Section 3.5): the harness does not need to checkpoint working memory because state itself is the checkpoint.</p>
+
+<p>The asymmetry between failure signals and interruption signals — failure propagates up, interruption propagates down — is what makes hierarchical recovery tractable. The parent is the only node with enough context to know whether a child's failure invalidates sibling work or whether the plan still holds; the children are the only nodes that know enough about their own progress to clean up gracefully. Tasks make both directions of propagation cheap by giving every level the same primitives, so the recovery logic can be written once at the harness layer rather than repeated at every composition boundary.</p>
+<h3 id="evaluation">3.11 Evaluation &amp; Observability</h3>
 <p>Building agents without the ability to measure their behavior is building blind <a class="citation" href="#ref-42">[42]</a>. This section covers how to observe, measure, and improve agentic systems.</p>
 <p><strong>Agentic testing is inherently integration testing</strong> <a class="citation" href="#ref-41">[41]</a><a class="citation" href="#ref-42">[42]</a>. You&#39;re not testing individual components in isolation—you&#39;re testing tool interactions, state updates, context retrieval, subagent coordination, and validation signals working together. This framing is essential: unit tests on individual tools or prompts are necessary but not sufficient. The interesting failures happen at the seams, and evaluation must be designed with this in mind.</p>
 <h4 id="what-to-measure">What to Measure</h4>
@@ -2145,23 +2212,33 @@
 <li><strong>Delegation quality</strong> → Are subagents given appropriate scope and context?</li>
 </ul>
 <h4 id="observability">Observability Primitives</h4>
-<ul>
-<li><strong>Traces</strong> <a class="citation" href="#ref-67">[67]</a> → Ordered log of every action, tool call, and result</li>
-<li><strong>State snapshots</strong> → Serialized state at key decision points</li>
-<li><strong>Decision logs</strong> → Why the agent chose action A over action B</li>
-<li><strong>Diff views</strong> → What changed in state after each action</li>
-</ul>
-<p>[<strong>TODO</strong>: Document what metrics and observability you&#39;ve built into your systems]</p>
+<p>Four primitives provide most of the visibility you need. <strong>Traces</strong> <a class="citation" href="#ref-67">[67]</a> are the ordered log of every action, tool call, and result. <strong>State snapshots</strong> capture serialized state at key decision points. <strong>Decision logs</strong> record why the agent chose action A over action B. <strong>Diff views</strong> show what changed in state after each action.</p>
+<details class="practical-example">
+<summary>Practical Example — Closing the Observability Loop at Kuona</summary>
+<div class="practical-example-body">
+
+<p>Key metrics for every agent are logged; traced actions and tools record average runtime, retry counts, and failure rates. Automated reports surface tools that fail excessively or run too slowly, along with the failure modes driving them, making the reports a prime source of system improvements and new feature development.</p>
+
+<p>Observability earns its overhead when it directly feeds the next iteration of the harness — instrumenting without a feedback loop just produces archives no one reads.</p>
+
+</div>
+</details>
 <h4 id="testing-agents">Testing Agentic Systems</h4>
-<p>Testing agentic systems is inherently integration testing (as framed above), but more specifically:</p>
-<ul>
-<li><strong>Scenario-based testing</strong> → Define input scenarios and expected outcomes</li>
-<li><strong>Regression suites</strong> → Capture past failures and ensure they don&#39;t recur</li>
-<li><strong>Adversarial testing</strong> → Intentionally degrade tools or state to test recovery</li>
-<li><strong>Benchmark tasks</strong> <a class="citation" href="#ref-64">[64]</a><a class="citation" href="#ref-65">[65]</a><a class="citation" href="#ref-66">[66]</a> → Standardized tasks with known-good solutions</li>
-</ul>
-<p>[<strong>TODO</strong>: Document your testing approaches and any benchmark suites you use]</p>
-<h3 id="safety">3.11 Safety &amp; Security</h3>
+<p>Testing agentic systems is inherently integration testing (as framed above), and four overlapping approaches cover most of what that entails. <strong>Scenario-based testing</strong> defines input scenarios and the outcomes they should produce. <strong>Regression suites</strong> capture past failures and assert they don&#39;t recur. <strong>Adversarial testing</strong> intentionally degrades tools or state to verify that the recovery strategies from Section 3.10 actually fire. <strong>Benchmark tasks</strong> <a class="citation" href="#ref-64">[64]</a><a class="citation" href="#ref-65">[65]</a><a class="citation" href="#ref-66">[66]</a> are standardized scenarios with known-good solutions — useful for comparing against other systems and tracking progress over time.</p>
+
+<details class="practical-example">
+<summary>Practical Example — UserAI: An Agentic Test Harness at Kuona</summary>
+<div class="practical-example-body">
+
+<p>UserAI is an agent harness that simulates a real user interacting with the agent under test, communicating through the same message channel a human would use. It is given access to the platform documentation — the same manuals a real user would consult — so it can navigate multi-step flows on its own when the agent prompts for clarification or routes the conversation through a guided workflow.</p>
+
+<p>Each test is specified as a single prompt that bundles both the task and its acceptance criteria — e.g., <em>&quot;Ask X, then evaluate that the agent can answer, that it does not ask for clarification, and that the answer is approximately Y.&quot;</em> UserAI carries out the interaction, then emits structured output stating whether the agent satisfied the criteria and, if not, which one failed. The runs slot into CI/CD as standard test cases.</p>
+
+<p>Because the test driver is itself an agent, it can exercise the conversational ambiguity — mid-flow clarification, branching dialogues, recoverable errors — that static input/output fixtures cannot. This is what makes the harness an honest integration test rather than a happy-path replay.</p>
+
+</div>
+</details>
+<h3 id="safety">3.12 Safety &amp; Security</h3>
 <p>Agents that interact with the real world—executing code, calling APIs, sending messages—introduce attack surfaces that don&#39;t exist in pure text generation. Safety is not a feature to bolt on after deployment; it is a structural concern that permeates every layer of a structured agent.</p>
 <h4 id="prompt-injection">Prompt Injection</h4>
 <p><strong>The core threat</strong>: Untrusted content (user inputs, web pages, tool results, file contents) can contain instructions that the model treats as authoritative <a class="citation" href="#ref-47">[47]</a><a class="citation" href="#ref-79">[79]</a>.</p>
@@ -2228,8 +2305,8 @@
 <ul>
 <li><strong>Scoped tool access</strong> → Each invocation grants only the tools needed for the task. A summarization agent does not need file-write permissions.</li>
 <li><strong>Read-before-write</strong> → Require observation before mutation. Prevent blind state changes by forcing the agent to inspect current state before modifying it.</li>
-<li><strong>Dry-run modes</strong> → Allow plan validation without execution for high-risk operations. Verification-driven planning (Section 3.8) provides a natural checkpoint—validate the safety properties of a plan before executing it.</li>
-<li><strong>Audit trails</strong> → Every tool call, its arguments, and its results are logged (Section 3.10). This is both an observability concern and a security requirement.</li>
+<li><strong>Dry-run modes</strong> → Allow plan validation without execution for high-risk operations. Verification-driven planning (Section 3.9) provides a natural checkpoint—validate the safety properties of a plan before executing it.</li>
+<li><strong>Audit trails</strong> → Every tool call, its arguments, and its results are logged (Section 3.11). This is both an observability concern and a security requirement.</li>
 <li><strong>Human-in-the-loop gates</strong> → Irreversible or externally-visible actions (sending messages, deleting data, modifying permissions) require explicit user confirmation before execution.</li>
 </ul>
 <p><strong>Connection to the cost model</strong>: From Section 2.2, the irreversibility cost component of C_f is what makes safety harnesses economically justified. The cost of a leaked API key or a deleted production database dwarfs the cost of adding a confirmation step.</p>
@@ -2278,7 +2355,7 @@
 <li><strong>Composition requires boundaries</strong> → Subagents, skills, and plans only work when responsibilities, contexts, and tools are clearly partitioned</li>
 </ol>
 <p>These principles are not a checklist to be applied independently. They are a connected framework: structure enables validation, validation enables tool reliability, tool reliability enables composition, and composition enables agents that solve complex problems without compounding errors at every step.</p>
-<p>The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. <strong>Harnesses are designed to weaken</strong>: the framework explicitly anticipates that today&#39;s structural scaffolding becomes tomorrow&#39;s unnecessary overhead as models internalize the patterns (Section 2.4, Harness Obsolescence). <strong>Structure provides alignment, not just reliability</strong>: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.11). <strong>Economy is orthogonal to capability</strong>: even when a model <em>can</em> derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: <strong>it is almost always cheaper to prevent failure through structure than to recover from it through flexibility</strong>.</p>
+<p>The field is evolving rapidly. Models will continue to improve, context windows will grow, and some of the structure advocated here may eventually be superseded by raw capability—the Bitter Lesson may yet apply. But several properties of structured agency are orthogonal to the capability curve. <strong>Harnesses are designed to weaken</strong>: the framework explicitly anticipates that today&#39;s structural scaffolding becomes tomorrow&#39;s unnecessary overhead as models internalize the patterns (Section 2.4, Harness Obsolescence). <strong>Structure provides alignment, not just reliability</strong>: human-defined boundaries embed task-appropriate behavior that would be difficult and expensive to convey through prompt context alone (Section 3.12). <strong>Economy is orthogonal to capability</strong>: even when a model <em>can</em> derive everything from scratch, the latency, cost, and predictability advantages of premade structural elements remain. As long as agents must interface with external systems, take irreversible actions, and operate under cost constraints, the economics of Structured Agency will hold: <strong>it is almost always cheaper to prevent failure through structure than to recover from it through flexibility</strong>.</p>
 <hr>
 <h2 id="appendix">Appendix: Terminology Reference</h2>
 <table>
