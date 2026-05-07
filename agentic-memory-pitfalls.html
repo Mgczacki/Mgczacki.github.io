@@ -275,7 +275,7 @@
             <div id="content">
 
 <div class="wip-banner">
-<strong>Wireframe.</strong> This is a working scaffold, not a finished essay. The structure here is a frame for prior-research integration; each pitfall will be expanded into prose with examples in later passes.
+<strong>Wireframe.</strong> This is a concept piece for future writing, serving as an exploration ground for product development still ahead. The structure here is a frame for prior-research integration; each pitfall will be expanded into prose with examples in later passes.
 </div>
 
 <h2 id="premise">1. Premise</h2>
@@ -305,6 +305,8 @@
 <h3 id="bg-structure">2.4 Where Structure Helps and Where It Doesn't</h3>
 
 <p>This pattern thrives in <strong>small-scoped, highly structured environments</strong> — codebases, OS filesystems, well-typed APIs. The reason is not that the agent is smart there; it is that the environment exposes a <strong>bridging structure</strong> that can be traversed. A file imports modules; modules resolve to installed packages; packages declare dependencies; dependencies expose APIs; APIs are called from other files. Given enough effort, time, and cognitive budget, the full dependency graph is reachable, and the moving pieces of the system can be understood through structural traversal. <strong>The domain boundary is known, and traversable.</strong></p>
+
+<p>Even here, the picture is optimistic. The bridging structure captures syntactic dependencies — what imports what, what calls what — but not semantic ones. A function's correctness may rest on an invariant enforced in another repository, a contract owned by a different microservice, or a business rule that was negotiated in a meeting and never written down. The <em>why</em> behind a piece of code — which constraints it satisfies, which compromise it encodes — is rarely reachable through structural traversal. The agent can confidently traverse an incomplete domain without realizing it, because the boundary of the domain does not end at the boundary of the code.</p>
 
 <p>Most data is not like this. Unstructured documents — meetings, tickets, chat, support cases, research notes — have no canonical bridging structure. Even nominally structured data fails: cross-referencing between sources (entity disambiguation, "is this the same customer / same product / same incident?") cannot be solved at retrieval time without the data itself having been designed for it. There are too many unknowns.</p>
 
